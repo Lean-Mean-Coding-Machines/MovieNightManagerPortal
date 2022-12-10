@@ -9,7 +9,8 @@
 
 # (Back End)
 
-1. Open up a separate instance of your your IDE and open the Java project
+1. Ensure you've installed the [Allow Cors Extension](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en) in your browswer of choice, you also need to enable it once it's installed
+2. Open up a separate instance of your your IDE and open the Java project
    a. Click Run & Debug on the left side panel if you're on Visual Studio Code
    b. Click Run & Debug to get the backend running and connected to the front end
 
