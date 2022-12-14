@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment } from '@mui/material';
+import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -104,7 +104,7 @@ export function LoginPage() {
         <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
 
         <div className='user-login'>
-          <h1>Log in</h1>
+          <h1>Login</h1>
           
           <div>
           <FormControl variant='standard'>
@@ -130,8 +130,14 @@ export function LoginPage() {
 
             </FormControl>
           </div>
+          
+          <div style={{marginTop: 10}}>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox defaultChecked sx={{color: 'black','&.Mui-checked': {color: 'black',},}}/>} label="Remember Me" />
+          </FormGroup>
+          </div>
 
-          <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }} onClick={toggle}>
+          <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 10 }} onClick={toggle}>
             {` Forgot Password?`}
           </div>
 
