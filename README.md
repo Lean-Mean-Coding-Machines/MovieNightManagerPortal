@@ -14,10 +14,6 @@
    a. Click Run & Debug on the left side panel if you're on Visual Studio Code
    b. Click Run & Debug to get the backend running and connected to the front end
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
