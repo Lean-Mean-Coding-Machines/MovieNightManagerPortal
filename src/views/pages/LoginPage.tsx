@@ -1,7 +1,7 @@
 import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -111,15 +111,10 @@ export function LoginPage() {
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
-              <Input sx={{ width: 220,}} id='login-password'
-              type={showPassword ? 'text' : 'password'}
+              <Input sx={{ width: 220,}} id='login-password' type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
+                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
