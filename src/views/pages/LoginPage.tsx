@@ -25,31 +25,50 @@ export function LoginPage() {
           <h1>Create an account</h1>
           <div>
             <TextField
-              id='standard-basic'
+              sx={{
+                width: 250,
+              }}
+              id='create-firstname'
               label='First Name'
               variant='standard'
             />
           </div>
           <div>
             <TextField
-              id='standard-basic'
+              sx={{
+                width: 250,
+              }}
+              id='create-lastname'
               label='Last Name'
               variant='standard'
             />
           </div>
           <div>
             <TextField
-              id='standard-basic'
-              label='UserName'
+              sx={{
+                width: 250,
+              }}
+              id='create-username'
+              label='Username'
               variant='standard'
             />
           </div>
           <div>
-            <TextField id='standard-basic' label='Email' variant='standard' />
+            <TextField
+              sx={{
+                width: 250,
+              }}
+              id='create-email'
+              label='Email'
+              variant='standard'
+            />
           </div>
           <div>
             <TextField
-              id='standard-basic'
+              sx={{
+                width: 250,
+              }}
+              id='create-password'
               label='Password'
               variant='standard'
             />
@@ -91,17 +110,20 @@ export function LoginPage() {
           <h1>Log in</h1>
           <div>
             <TextField
-              id='standard-basic'
-              label='UserName'
+              sx={{
+                width: 220,
+              }}
+              id='login-email'
+              label='Email'
               variant='standard'
             />
           </div>
           <div>
-            <TextField id='standard-basic' label='Email' variant='standard' />
-          </div>
-          <div>
             <TextField
-              id='standard-basic'
+              sx={{
+                width: 220,
+              }}
+              id='login-password'
               label='Password'
               variant='standard'
             />
