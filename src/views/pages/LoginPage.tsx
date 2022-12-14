@@ -4,15 +4,11 @@ import { useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const navigateHome = () => {
-    navigate('/');
-  };
+  const navigateHome = () => {navigate('/')};
 
   // Shows/Hides Login & Create Profile Divs
   const [loginActive, setLoginActive] = useState(true);
-  const loginHandler = () => {
-    setLoginActive(!loginActive);
-  };
+  const loginHandler = () => {setLoginActive(!loginActive)};
 
   if (!loginActive) {
     return (
