@@ -4,7 +4,7 @@ import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import MovieNightSegment from '../../component/MovieNightSegment';
 import React, { useState } from 'react';
-import Modal from '../../modals/NewNomintationModal';
+import NewNomintationModal from '../../modals/NewNomintationModal';
 import useModal from '../../hooks/useModal';
 
 export function HomePage() {
@@ -42,7 +42,7 @@ export function HomePage() {
         <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained' id='nomination-btn'>
           Nominate a film
         </Button>
-        <Modal isOpen={isOpen} toggle={toggle}></Modal>
+        <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
         </div>
           <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} />
         </Grid2>

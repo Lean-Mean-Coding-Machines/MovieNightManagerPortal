@@ -8,7 +8,7 @@ interface ModalType {
   toggle: () => void;
 }
 
-export default function Modal(props: ModalType) {
+export default function NewNomintationModal(props: ModalType) {
   return (
     <>
       {props.isOpen && (
