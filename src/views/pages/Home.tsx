@@ -18,7 +18,6 @@ export function HomePage() {
 
   const { isOpen, toggle } = useModal();
 
-
   return (
     <div className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
@@ -40,7 +39,7 @@ export function HomePage() {
         </Grid2>
         <Grid2 xs={12}>
         <div>        
-        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained'>
+        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained' id='nomination-btn'>
           Nominate a film
         </Button>
         <Modal isOpen={isOpen} toggle={toggle}></Modal>
