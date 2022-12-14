@@ -14,7 +14,7 @@ export function LoginPage() {
     setLoginActive(!loginActive);
   };
 
-  if (loginActive) {
+  if (!loginActive) {
     return (
       <>
         <nav>
@@ -148,10 +148,7 @@ export function LoginPage() {
               />
             </FormControl>
           </div>
-          <div
-            style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}
-            onClick={loginHandler}
-          >
+          <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}>
             {` Forgot Password?`}
           </div>
           <div className='create-account-btn'>
