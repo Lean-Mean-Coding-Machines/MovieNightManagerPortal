@@ -70,7 +70,7 @@ code {
   margin-top: 1rem;
 }
 
-.modal-overlay {
+.nomination-modal-overlay {
   z-index: 9999;
   width: 100vw;
   height: 100vh;
@@ -82,13 +82,40 @@ code {
   align-items: center;
 }
 
-.modal-box {
+.nomination-modal-box {
   display: block;
   background: white;
   width: 45%;
   height: 45%;
   padding: 1rem;
   border-radius: 1rem;
+}
+
+.reset-pw-modal-overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reset-pw-modal-box {
+  display: block;
+  background: white;
+  width: 30%;
+  height: 30%;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.reset-pw-btn {
+  bottom: 37%;
+  position: absolute;
+  right: 37%;
 }
 
 .new-nomitnation-btn {
@@ -101,4 +128,10 @@ code {
   position: absolute;
   left: 32%;
   top: 37%;
+}
+
+.reset-pw-email {
+  position: absolute;
+  left: 36%;
+  top: 45%;
 }

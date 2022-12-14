@@ -12,8 +12,8 @@ export default function NewNomintationModal(props: ModalType) {
   return (
     <>
       {props.isOpen && (
-        <div className="modal-overlay">
-          <div className="modal-box">
+        <div className="nomination-modal-overlay">
+          <div className="nomination-modal-box">
           <span style={{fontWeight: 'bold', fontSize: 40}}>Nominate a Film</span>
             <div style={{float: 'right'}} onClick={props.toggle}>
               <IconButton>
