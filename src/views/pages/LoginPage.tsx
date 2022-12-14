@@ -1,6 +1,9 @@
-import { Button, FormControl, InputLabel, Input } from '@mui/material';
+import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment } from '@mui/material';
+import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -9,6 +12,16 @@ export function LoginPage() {
   // Shows/Hides Login & Create Profile Divs
   const [loginActive, setLoginActive] = useState(true);
   const loginHandler = () => {setLoginActive(!loginActive)};
+
+//Shows/Hides Password Input for Login Page
+ const [showPassword, setShowPassword] = React.useState(false);
+ const handleClickShowPassword = () => setShowPassword((show) => !show);
+ const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+   event.preventDefault();
+  };
+
+
+
 
   if (!loginActive) {
     return (
@@ -100,7 +113,21 @@ export function LoginPage() {
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
-              <Input sx={{ width: 220,}} id='login-password'/>
+              <Input sx={{ width: 220,}} id='login-password'
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              />
+
             </FormControl>
           </div>
 
