@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, Input } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,55 +24,71 @@ export function LoginPage() {
         <div className='user-login'>
           <h1>Create an account</h1>
           <div>
-            <TextField
-              sx={{
-                width: 250,
-              }}
-              id='create-firstname'
-              label='First Name'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment-password'>
+                First Name
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 250,
+                }}
+                id='create-firstname'
+              />
+            </FormControl>
           </div>
           <div>
-            <TextField
-              sx={{
-                width: 250,
-              }}
-              id='create-lastname'
-              label='Last Name'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment-password'>
+                Last Name
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 250,
+                }}
+                id='create-lastname'
+              />
+            </FormControl>
           </div>
           <div>
-            <TextField
-              sx={{
-                width: 250,
-              }}
-              id='create-username'
-              label='Username'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment-password'>
+                Username
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 250,
+                }}
+                id='create-username'
+              />
+            </FormControl>
           </div>
           <div>
-            <TextField
-              sx={{
-                width: 250,
-              }}
-              id='create-email'
-              label='Email'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment-password'>
+                Email
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 250,
+                }}
+                id='create-email'
+              />
+            </FormControl>
           </div>
           <div>
-            <TextField
-              sx={{
-                width: 250,
-              }}
-              id='create-password'
-              label='Password'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment-password'>
+                Password
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 250,
+                }}
+                id='create-password'
+              />
+            </FormControl>
           </div>
+
           <div className='create-account-btn'>
             <Button
               variant='contained'
@@ -108,25 +124,35 @@ export function LoginPage() {
         </nav>
         <div className='user-login'>
           <h1>Log in</h1>
+          <FormControl variant='standard'>
+            <div>
+              <InputLabel htmlFor='standard-adornment-password'>
+                Email
+              </InputLabel>
+              <Input
+                sx={{
+                  width: 220,
+                }}
+                id='login-email'
+              />
+            </div>
+          </FormControl>
           <div>
-            <TextField
-              sx={{
-                width: 220,
-              }}
-              id='login-email'
-              label='Email'
-              variant='standard'
-            />
+            <FormControl variant='standard'>
+              <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
+              <Input
+                sx={{
+                  width: 220,
+                }}
+                id='login-password'
+              />
+            </FormControl>
           </div>
-          <div>
-            <TextField
-              sx={{
-                width: 220,
-              }}
-              id='login-password'
-              label='Password'
-              variant='standard'
-            />
+          <div
+            style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}
+            onClick={loginHandler}
+          >
+            {` Forgot Password?`}
           </div>
           <div className='create-account-btn'>
             <Button
