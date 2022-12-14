@@ -25,7 +25,7 @@ export function HomePage() {
       </Backdrop>
 
       <nav className='login-btn'>
-        <Button onClick={navigateToLogin} variant='contained'>
+        <Button onClick={navigateToLogin} variant='contained' sx={{width: 150,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
           Login/Sign up
         </Button>
       </nav>
@@ -39,7 +39,7 @@ export function HomePage() {
         </Grid2>
         <Grid2 xs={12}>
         <div>        
-        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained' id='nomination-btn'>
+        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained' sx={{width: 200,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}} id='nomination-btn'>
           Nominate a film
         </Button>
         <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>

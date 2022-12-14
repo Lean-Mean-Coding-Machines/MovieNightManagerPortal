@@ -1,9 +1,11 @@
 import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
-import { Form, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import useModal from '../../hooks/useModal';
+import ResetModal from '../../modals/ResetModal';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -19,6 +21,9 @@ export function LoginPage() {
  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
    event.preventDefault();
   };
+
+  const { isOpen, toggle } = useModal();
+
 
 
   if (!loginActive) {
@@ -96,6 +101,8 @@ export function LoginPage() {
         <nav>
           <Button onClick={navigateHome}>MnM Logo</Button>
         </nav>
+        <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
+
         <div className='user-login'>
           <h1>Log in</h1>
           
@@ -124,7 +131,7 @@ export function LoginPage() {
             </FormControl>
           </div>
 
-          <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}>
+          <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }} onClick={toggle}>
             {` Forgot Password?`}
           </div>
 
