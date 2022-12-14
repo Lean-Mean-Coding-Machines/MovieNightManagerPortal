@@ -122,7 +122,7 @@ export function LoginPage() {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? <VisibilityOff sx={{color: 'black'}} /> : <Visibility sx={{color: 'black'}} />}
                   </IconButton>
                 </InputAdornment>
               }
@@ -149,7 +149,7 @@ export function LoginPage() {
 
           <div className='account-text'>
             Don't have an account?
-            <span style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={loginHandler}>
+            <span style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 5 }} onClick={loginHandler}>
               {` Create`}
             </span>
           </div>

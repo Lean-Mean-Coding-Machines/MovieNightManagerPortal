@@ -19,7 +19,7 @@ export default function ResetModal(props: ModalType) {
                <CloseIcon/>
               </IconButton>
             </div>
-          <span style={{fontWeight: 'bold', fontSize: 40}}>Forgot Your Password</span>
+          <span style={{fontWeight: 'bold', fontSize: 40}}>Forgot Your Password?</span>
           <div>Provide your account email address to receive an email to reset your password.</div>
             {props.children}
           
