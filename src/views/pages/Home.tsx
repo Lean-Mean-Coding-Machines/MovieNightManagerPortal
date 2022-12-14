@@ -1,8 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { Backdrop, Button, CircularProgress } from '@mui/material';
+import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import MovieNightSegment from '../../component/MovieNightSegment';
 import React, { useState } from 'react';
+import Modal from '../../modals/NewNomintationModal';
+import useModal from '../../hooks/useModal';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -12,6 +15,9 @@ export function HomePage() {
   const [appLoading, setAppLoading] = useState(true);
 
   const handleAppLoadingChange = (newState: boolean) => {setAppLoading(newState)};
+
+  const { isOpen, toggle } = useModal();
+
 
   return (
     <div className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
@@ -24,6 +30,7 @@ export function HomePage() {
           Login/Sign up
         </Button>
       </nav>
+      
       <Grid2 container>
         <Grid2 xs={12}>
           <div>
@@ -32,6 +39,12 @@ export function HomePage() {
           </div>
         </Grid2>
         <Grid2 xs={12}>
+        <div>        
+        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained'>
+          Nominate a film
+        </Button>
+        <Modal isOpen={isOpen} toggle={toggle}></Modal>
+        </div>
           <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} />
         </Grid2>
       </Grid2>

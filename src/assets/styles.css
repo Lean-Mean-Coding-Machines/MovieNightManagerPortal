@@ -69,3 +69,37 @@ code {
 .account-text {
   margin-top: 1rem;
 }
+
+.modal-overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  display: block;
+  background: white;
+  width: 45%;
+  height: 45%;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+
+.new-nomitnation-btn {
+  bottom: 30%;
+  position: absolute;
+  right: 30%;
+}
+
+.nomination-name {
+  position: absolute;
+  left: 32%;
+  top: 37%;
+}
