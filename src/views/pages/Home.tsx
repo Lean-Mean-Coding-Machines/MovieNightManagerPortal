@@ -7,25 +7,15 @@ import React, { useState } from 'react';
 export function HomePage() {
   const navigate = useNavigate();
 
-  const navigateToLogin = () => {
-    navigate('/login');
-  };
+  const navigateToLogin = () => {navigate('/login')};
 
   const [appLoading, setAppLoading] = useState(true);
 
-  const handleAppLoadingChange = (newState: boolean) => {
-    setAppLoading(newState);
-  };
+  const handleAppLoadingChange = (newState: boolean) => {setAppLoading(newState)};
 
   return (
-    <div
-      className='App'
-      style={{ backgroundColor: 'ghostwhite', height: '100vh' }}
-    >
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={appLoading}
-      >
+    <div className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
+      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
 

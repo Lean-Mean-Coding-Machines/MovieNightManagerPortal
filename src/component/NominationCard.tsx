@@ -1,6 +1,6 @@
 import React from "react";
 import INomination from "../model/INomination";
-import {Box, Card, CardContent, CardHeader, Stack, Typography} from "@mui/material";
+import {Box, Card, CardContent, Typography} from "@mui/material";
 
 interface NominationCardsProps {
     nomination: INomination
@@ -18,7 +18,7 @@ export default function NominationCard(props: NominationCardsProps) {
                         {props.nomination.watchType}
                     </Typography>
                     <Typography>
-                        {props.nomination.likes == undefined ? 0 : props.nomination.likes.length} Likes
+                        {props.nomination.likes === undefined ? 0 : props.nomination.likes.length} Likes
                     </Typography>
                     <Typography>
                         Submitted By: {props.nomination.submittedBy}

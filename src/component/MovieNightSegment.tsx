@@ -10,20 +10,15 @@ interface MovieNightSegmentProps {
 }
 
 export default function MovieNightSegment(props: MovieNightSegmentProps) {
-  const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(
-    null
-  );
+  const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(null);
 
   useEffect(() => {
     MovieNightSegmentService.getCurrentSegment()
       .then(
-        (res) => {
-          setSegment(res.data.data);
+        (res) => {setSegment(res.data.data); 
           props.handleAppLoadingChange(false);
         },
-        (err) => console.log(err)
-      )
-      .catch((err) => console.log(err.message));
+        (err) => console.log(err)).catch((err) => console.log(err.message));
   }, [props]);
 
   if (segment != null) {
@@ -36,14 +31,8 @@ export default function MovieNightSegment(props: MovieNightSegmentProps) {
           </h2>
         </Grid2>
         <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Stack
-            direction='row'
-            justifyContent='center'
-            alignItems='center'
-            spacing={2}
-          >
-            {segment.nominations.map((nom) => (
-              <NominationCard nomination={nom} />
+          <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>
+            {segment.nominations.map((nom) => (<NominationCard nomination={nom} />
             ))}
           </Stack>
         </Grid2>

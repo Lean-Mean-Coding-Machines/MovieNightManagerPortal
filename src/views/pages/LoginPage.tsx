@@ -23,93 +23,60 @@ export function LoginPage() {
 
         <div className='user-login'>
           <h1>Create an account</h1>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-password'>
                 First Name
               </InputLabel>
-              <Input
-                sx={{
-                  width: 250,
-                }}
-                id='create-firstname'
-              />
+              <Input sx={{ width: 250,}} id='create-firstname'/>
             </FormControl>
           </div>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-password'>
                 Last Name
               </InputLabel>
-              <Input
-                sx={{
-                  width: 250,
-                }}
-                id='create-lastname'
-              />
+              <Input sx={{ width: 250,}} id='create-lastname'/>
             </FormControl>
           </div>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-password'>
                 Username
               </InputLabel>
-              <Input
-                sx={{
-                  width: 250,
-                }}
-                id='create-username'
-              />
+              <Input sx={{ width: 250,}} id='create-username'/>
             </FormControl>
           </div>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-password'>
                 Email
               </InputLabel>
-              <Input
-                sx={{
-                  width: 250,
-                }}
-                id='create-email'
-              />
+              <Input sx={{ width: 250,}}id='create-email'/>
             </FormControl>
           </div>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-password'>
                 Password
               </InputLabel>
-              <Input
-                sx={{
-                  width: 250,
-                }}
-                id='create-password'
-              />
+              <Input sx={{width: 250,}} id='create-password'/>
             </FormControl>
           </div>
 
           <div className='create-account-btn'>
-            <Button
-              variant='contained'
-              sx={{
-                width: 275,
-                backgroundColor: 'black',
-                borderRadius: 22,
-                ':hover': {
-                  backgroundColor: 'black',
-                },
-              }}
-            >
+            <Button variant='contained' sx={{ width: 275, backgroundColor: 'black', borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
               Create Account
             </Button>
           </div>
           <div className='account-text'>
             Already have an account?
-            <span
-              style={{ fontWeight: 'bold', cursor: 'pointer' }}
-              onClick={loginHandler}
-            >
+            <span style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={loginHandler}>
               {` Log In`}
             </span>
           </div>
@@ -124,55 +91,36 @@ export function LoginPage() {
         </nav>
         <div className='user-login'>
           <h1>Log in</h1>
+          
+          <div>
           <FormControl variant='standard'>
-            <div>
               <InputLabel htmlFor='standard-adornment-password'>
                 Email
               </InputLabel>
-              <Input
-                sx={{
-                  width: 220,
-                }}
-                id='login-email'
-              />
-            </div>
+              <Input sx={{ width: 220,}} id='login-email'/>
           </FormControl>
+          </div>
+          
           <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
-              <Input
-                sx={{
-                  width: 220,
-                }}
-                id='login-password'
-              />
+              <Input sx={{ width: 220,}} id='login-password'/>
             </FormControl>
           </div>
+
           <div style={{ fontWeight: 'bold', cursor: 'pointer', marginTop: 15 }}>
             {` Forgot Password?`}
           </div>
+
           <div className='create-account-btn'>
-            <Button
-              variant='contained'
-              sx={{
-                width: 225,
-                backgroundColor: 'black',
-                borderRadius: 22,
-                ':hover': {
-                  backgroundColor: 'black',
-                },
-              }}
-            >
+            <Button variant='contained' sx={{width: 225,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
               Login
             </Button>
           </div>
 
           <div className='account-text'>
             Don't have an account?
-            <span
-              style={{ fontWeight: 'bold', cursor: 'pointer' }}
-              onClick={loginHandler}
-            >
+            <span style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={loginHandler}>
               {` Create`}
             </span>
           </div>
