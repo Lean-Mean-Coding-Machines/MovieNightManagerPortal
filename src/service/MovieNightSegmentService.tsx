@@ -6,8 +6,6 @@ const getCurrentSegment = () => {
     return http.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current");
 };
 
-const MovieNightSegmentService = {
-    getCurrentSegment
-};
+const MovieNightSegmentService = {getCurrentSegment};
 
 export default MovieNightSegmentService;
