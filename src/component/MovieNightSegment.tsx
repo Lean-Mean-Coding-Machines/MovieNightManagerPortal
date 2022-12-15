@@ -10,8 +10,8 @@ interface MovieNightSegmentProps {
 }
 
 export default function MovieNightSegment(props: MovieNightSegmentProps) {
+  
   const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(null);
-
   useEffect(() => {
     MovieNightSegmentService.getCurrentSegment()
       .then(
@@ -26,8 +26,8 @@ export default function MovieNightSegment(props: MovieNightSegmentProps) {
       <Grid2 container>
         <Grid2 xs={12}>
           <h2>
-            {segment.nominationStartDate.toString()} -{' '}
-            {segment.segmentEndDate.toString()}
+            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/')} -{' '}
+            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/')}
           </h2>
         </Grid2>
         <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>
