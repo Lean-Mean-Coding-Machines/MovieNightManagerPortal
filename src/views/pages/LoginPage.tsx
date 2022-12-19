@@ -10,6 +10,8 @@ import ResetModal from '../../modals/ResetModal';
 export function LoginPage() {
   const navigate = useNavigate();
   const navigateHome = () => {navigate('/')};
+  const navigateToProfile = () => {navigate('/profile')};
+
 
   // Shows/Hides Login & Create Profile Divs
   const [loginActive, setLoginActive] = useState(true);
@@ -23,8 +25,6 @@ export function LoginPage() {
   };
 
   const { isOpen, toggle } = useModal();
-
-
 
   if (!loginActive) {
     return (
@@ -142,7 +142,7 @@ export function LoginPage() {
           </div>
 
           <div className='create-account-btn'>
-            <Button variant='contained' sx={{width: 225,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+            <Button onClick={navigateToProfile} variant='contained' sx={{width: 225,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
               Login
             </Button>
           </div>
