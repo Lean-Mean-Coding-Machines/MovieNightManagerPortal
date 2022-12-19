@@ -6,6 +6,8 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import useModal from '../../hooks/useModal';
 import ResetModal from '../../modals/ResetModal';
+import '../../assets/LoginPage.css';
+
 
 export function LoginPage() {
   const navigate = useNavigate();

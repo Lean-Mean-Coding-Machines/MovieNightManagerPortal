@@ -1,6 +1,8 @@
 import { Button, FormControl, IconButton, Input, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React, { ReactNode } from "react";
+import '../assets/ResetModal.css';
+
 
 interface ModalType {
   children?: ReactNode;
