@@ -55,7 +55,7 @@ export  function ProfilePage() {
   <h4 style={{marginLeft: 15, marginBottom: 25}}>Manage your account settings and preferences</h4>
   <hr style={{color: '#000000',backgroundColor: '#000000',height: .1,borderColor : '#000000', width: 625, marginLeft: 15}}/>    
   <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}>
-      <Tabs orientation="vertical" TabIndicatorProps={{ sx: { backgroundColor: 'black'} }} value={value} onChange={handleChange} aria-label="Profile Tab Group" sx={{  borderColor: 'black', marginTop: 4 }}>
+      <Tabs orientation="vertical" TabIndicatorProps={{ sx: { backgroundColor: '#1F1F1F'} }} value={value} onChange={handleChange} aria-label="Profile Tab Group" sx={{  borderColor: '#1F1F1F', marginTop: 4 }}>
         <Tab label="Profile" {...a11yProps(0)} />
         <Tab label="Email" {...a11yProps(1)} />
         <Tab label="Password" {...a11yProps(2)} />

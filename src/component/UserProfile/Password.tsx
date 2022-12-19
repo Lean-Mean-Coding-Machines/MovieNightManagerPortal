@@ -24,7 +24,7 @@ const Password: FC<{}> = () => {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
-                    {showPassword ? <VisibilityOff sx={{color: 'black'}} /> : <Visibility sx={{color: 'black'}} />}
+                    {showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}} /> : <Visibility sx={{color: '#1F1F1F'}} />}
                   </IconButton>
                 </InputAdornment>
               } />
@@ -38,14 +38,14 @@ const Password: FC<{}> = () => {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
-                    {showPassword ? <VisibilityOff sx={{color: 'black'}} /> : <Visibility sx={{color: 'black'}} />}
+                    {showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}} /> : <Visibility sx={{color: '#1F1F1F'}} />}
                   </IconButton>
                 </InputAdornment>
               } />
             </FormControl>
           </div>
           <div>
-          <Button  variant='contained' sx={{width: 185,backgroundColor: 'black', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+          <Button  variant='contained' sx={{width: 185,backgroundColor: '#1F1F1F', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
           Update Password
         </Button>
           </div>

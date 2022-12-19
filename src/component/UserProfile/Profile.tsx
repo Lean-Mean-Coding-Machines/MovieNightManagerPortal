@@ -13,7 +13,7 @@ const Profile: FC<{}> = () => {
       <div style={{marginLeft: 50}}>
       <h3>Customize Profile</h3>
       <div>
-          <Button onClick={navigateToLogin} variant='contained' sx={{width: 155,backgroundColor: 'red', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+          <Button onClick={navigateToLogin} variant='contained' sx={{width: 155,backgroundColor: 'red', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
           Logout
         </Button>
           </div>

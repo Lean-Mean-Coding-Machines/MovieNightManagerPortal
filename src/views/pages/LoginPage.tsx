@@ -84,7 +84,7 @@ export function LoginPage() {
           </div>
 
           <div className='create-account-btn'>
-            <Button variant='contained' sx={{ width: 275, backgroundColor: 'black', borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+            <Button variant='contained' sx={{ width: 275, backgroundColor: '#1F1F1F', borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
               Create Account
             </Button>
           </div>
@@ -124,7 +124,7 @@ export function LoginPage() {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
-                    {showPassword ? <VisibilityOff sx={{color: 'black'}} /> : <Visibility sx={{color: 'black'}} />}
+                    {showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}} /> : <Visibility sx={{color: '#1F1F1F'}} />}
                   </IconButton>
                 </InputAdornment>
               }
@@ -135,7 +135,7 @@ export function LoginPage() {
           
           <div style={{marginTop: 10}}>
           <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked sx={{color: 'black','&.Mui-checked': {color: 'black',},}}/>} label="Remember Me" />
+            <FormControlLabel control={<Checkbox defaultChecked sx={{color: '#1F1F1F','&.Mui-checked': {color: '#1F1F1F',},}}/>} label="Remember Me" />
           </FormGroup>
           </div>
 
@@ -144,7 +144,7 @@ export function LoginPage() {
           </div>
 
           <div className='create-account-btn'>
-            <Button onClick={navigateToProfile} variant='contained' sx={{width: 225,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+            <Button onClick={navigateToProfile} variant='contained' sx={{width: 225,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
               Login
             </Button>
           </div>

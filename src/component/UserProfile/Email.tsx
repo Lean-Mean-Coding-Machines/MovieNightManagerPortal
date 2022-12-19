@@ -76,7 +76,7 @@ const Email: FC<{}> = () => {
             </FormControl>
           </div>
           <div>
-          <Button  variant='contained' sx={{width: 155,backgroundColor: 'black', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: 'black',},}}>
+          <Button  variant='contained' sx={{width: 155,backgroundColor: '#1F1F1F', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
           Save Changes
         </Button>
           </div>
