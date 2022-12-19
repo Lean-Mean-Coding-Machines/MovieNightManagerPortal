@@ -26,8 +26,8 @@ export default function MovieNightSegment(props: MovieNightSegmentProps) {
       <Grid2 container>
         <Grid2 xs={12}>
           <h2>
-            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/')} -{' '}
-            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/')}
+            {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)} -{' '}
+            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)}
           </h2>
         </Grid2>
         <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>
