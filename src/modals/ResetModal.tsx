@@ -1,6 +1,8 @@
 import { Button, FormControl, IconButton, Input, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React, { ReactNode } from "react";
+import '../assets/ResetModal.css';
+
 
 interface ModalType {
   children?: ReactNode;
@@ -33,7 +35,7 @@ export default function ResetModal(props: ModalType) {
           </div>
           
             <div className="reset-pw-btn">
-            <Button variant='contained' sx={{width: 100,backgroundColor: 'black',borderRadius: 22,':hover': {backgroundColor: 'black',},}} onClick={props.toggle}>Send</Button>
+            <Button variant='contained' sx={{width: 100,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} onClick={props.toggle}>Send</Button>
             </div>
           </div>
         </div>
