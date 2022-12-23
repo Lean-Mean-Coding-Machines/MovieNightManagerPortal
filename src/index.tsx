@@ -3,14 +3,27 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+// Global configuration for Mui Btn style. We can add more variables here.
+const theme = createTheme({
+  typography: {
+    button: {
+      fontFamily: "SoraBold"
+    }
+  }
+});
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <ThemeProvider theme={theme}>
       <App />
+      </ThemeProvider>,
     </BrowserRouter>
   </React.StrictMode>
 );

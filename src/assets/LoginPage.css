@@ -1,11 +1,11 @@
-.user-login {
-    margin: 10rem 0 0 16rem;
-  }
-
-.login-btn {
-    float: right;
-    margin: 1rem 2rem 0 0;
-  }
+.user-login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  width: auto;
+}  
   
   .create-account-btn {
     margin-top: 1.5rem;

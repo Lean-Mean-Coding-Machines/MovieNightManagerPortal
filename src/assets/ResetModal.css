@@ -13,8 +13,8 @@
   .reset-pw-modal-box {
     display: block;
     background: white;
-    width: 30%;
-    height: 30%;
+    width: 26%;
+    height: 25%;
     padding: 1rem;
     border-radius: 1rem;
   }
@@ -25,10 +25,8 @@
     right: 37%;
   }
   
-  
-  
   .reset-pw-email {
     position: absolute;
-    left: 36%;
-    top: 45%;
+    left: 42%;
+    top: 48%;
   }
