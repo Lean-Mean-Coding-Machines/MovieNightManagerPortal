@@ -26,7 +26,10 @@
   }
   
   .reset-pw-email {
-    position: absolute;
-    left: 42%;
-    top: 48%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    width: auto;
   }
