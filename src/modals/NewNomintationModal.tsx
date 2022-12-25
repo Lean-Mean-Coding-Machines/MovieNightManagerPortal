@@ -1,11 +1,7 @@
-import { Button, FormControl, IconButton, Input, InputLabel, NativeSelect, TextField } from "@mui/material";
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { Button, FormControl, IconButton, Input, InputLabel, NativeSelect, Stack, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React, { ReactNode } from "react";
 import '../assets/NominationModal.css';
-import dayjs, { Dayjs } from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 interface ModalType {
@@ -15,15 +11,6 @@ interface ModalType {
 }
 
 export default function NewNomintationModal(props: ModalType) {
-  
-  const [value, setValue] = React.useState<Dayjs | null>(
-    dayjs('2014-08-18T21:11:54'),
-  );
-
-  const handleChange = (newValue: Dayjs | null) => {
-    setValue(newValue);
-  };
-
 
   return (
     <>
@@ -39,6 +26,8 @@ export default function NewNomintationModal(props: ModalType) {
             {props.children}
           
           <div className="nomination-inputs-container">
+          
+          {/* Film Input */}
           <div>
           <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-film-name'>
@@ -48,7 +37,15 @@ export default function NewNomintationModal(props: ModalType) {
           </FormControl>
           </div>
 
-          <div>
+          {/* Watch Date Picker */}
+          <div style={{marginTop: 20}}>
+          <Stack component="form" noValidate>
+          <TextField id="datetime-picker" label="Preferred Date" type="datetime-local" defaultValue="2022-01-01T10:30" sx={{ width: 250 }} InputLabelProps={{ shrink: true,}}/>
+          </Stack>
+          </div>
+          
+          {/* Watch Type Picker */}
+          <div style={{marginTop: 15}}>
           <FormControl >
             <InputLabel variant="standard" htmlFor="watch-type"> Watch Type </InputLabel>
             <NativeSelect defaultValue={'Pool'} inputProps={{name: 'watch-type', id: 'watch-type',}}>
@@ -58,12 +55,6 @@ export default function NewNomintationModal(props: ModalType) {
               <option value={'Pool'}>Pool</option>
             </NativeSelect>
           </FormControl>
-          </div>
-          
-          <div style={{marginTop: 15}}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <MobileDatePicker label="Preferred Watch Date" inputFormat="MM/DD/YYYY" value={value} onChange={handleChange} renderInput={(params) => <TextField {...params} />}/>
-          </LocalizationProvider>
           </div>
           </div>
 
