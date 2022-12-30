@@ -1,25 +1,20 @@
 import { Button } from "@mui/material";
-import React, { FC, Fragment } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { Fragment } from "react";
 
-const Profile: FC<{}> = () => {
-
-    const navigate = useNavigate();
-
-    const navigateToLogin = () => {navigate('/login')};
+  export default function Profile({toggle}: any) {
 
     return (
+    <>
     <Fragment>
-      <div style={{marginLeft: 50}}>
-      <h3>Customize Profile</h3>
-      <div>
-          <Button onClick={navigateToLogin} variant='contained' sx={{width: 155,backgroundColor: 'red', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
-          Logout
-        </Button>
+        <div style={{ marginLeft: 50 }}>
+          <h3>Customize Profile</h3>
+          <div>
+            <Button variant='contained'  onClick={toggle} sx={{ width: 155, backgroundColor: 'red', marginTop: 2, borderRadius: 22, ':hover': { backgroundColor: 'red', }, }}>
+              Delete Profile
+            </Button>
           </div>
-      </div>
-
+        </div>
     </Fragment>
+      </>
   );
 };
-export default Profile;

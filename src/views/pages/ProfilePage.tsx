@@ -9,6 +9,8 @@ import Profile from '../../component/UserProfile/Profile';
 import Password from '../../component/UserProfile/Password';
 import Email from '../../component/UserProfile/Email';
 import { Avatar, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
+import DeleteAccountModal from '../../modals/DeleteAccountModal';
+import useModal from '../../hooks/useModal';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -57,6 +59,9 @@ export  function ProfilePage() {
      setAnchorEl(null);
    };
 
+// Toggles Delete Modal open and close
+  const { isOpen, toggle } = useModal();
+
   return (
     <>
     <nav>
@@ -100,15 +105,13 @@ export  function ProfilePage() {
         <Divider/>
         <MenuItem> Your Nominations </MenuItem>
         <Divider/>
-        {/* Need to include an ngif here when you're actually signed in */}
         <MenuItem onClick={navigateToLogin}> Sign Out</MenuItem>
       </Menu>
     </React.Fragment>
-
-
     </div>
-
   </nav>
+
+
 <h1 style={{marginLeft: 15}}>Settings</h1>
   <h4 style={{marginLeft: 15, marginBottom: 25}}>Manage your account settings and preferences</h4>
   <hr style={{color: '#000000',backgroundColor: '#000000',height: .1,borderColor : '#000000', width: 625, marginLeft: 15}}/>    
@@ -119,7 +122,7 @@ export  function ProfilePage() {
         <Tab label="Password" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Profile></Profile>
+        <Profile toggle={toggle}></Profile>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Email></Email>
@@ -128,6 +131,9 @@ export  function ProfilePage() {
        <Password></Password>
       </TabPanel>
     </Box>
+
+        {/* Delete Account Modal */}
+    <DeleteAccountModal isOpen={isOpen} toggle={toggle} ></DeleteAccountModal>
     </>
   );
 }

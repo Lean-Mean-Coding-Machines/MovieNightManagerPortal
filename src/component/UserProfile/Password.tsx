@@ -1,10 +1,10 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, FormControl, IconButton, InputAdornment, OutlinedInput } from "@mui/material";
-import React, {  FC, Fragment } from "react";
+import React, { Fragment } from "react";
 
 
 
-const Password: FC<{}> = () => {
+export default function Password() {
     //Shows/Hides Password Input for Login Page
     const [showPassword, setShowPassword] = React.useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -56,4 +56,3 @@ const Password: FC<{}> = () => {
     </Fragment>
   );
 };
-export default Password;
