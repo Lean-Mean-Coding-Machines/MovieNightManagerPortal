@@ -1,9 +1,7 @@
-import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Button, FormControl, InputLabel, Input, Checkbox, FormControlLabel, FormGroup, TextField, Box } from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import useModal from '../../hooks/useModal';
 import ResetModal from '../../modals/ResetModal';
 import '../../assets/LoginPage.css';
@@ -20,18 +18,10 @@ export function LoginPage() {
   const [loginActive, setLoginActive] = useState(true);
   const loginHandler = () => { setLoginActive(!loginActive) };
 
-  //Shows/Hides Password Input for Login Page
-  const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
-
   const { isOpen, toggle } = useModal();
 
-  const [userRequest, setUserRequest] = useState<IUserCreateRequest>({} as IUserCreateRequest);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
   }
 
@@ -45,58 +35,57 @@ export function LoginPage() {
         <div className='user-login'>
           <h1>Create an account</h1>
 
-          <form onSubmit={handleSubmit}>
-            <div>
-              <FormControl variant='standard'>
-                <InputLabel htmlFor='standard-adornment-password'>
-                  First Name2
-                </InputLabel>
-                <Input sx={{ width: 250 }} type='firstname' id='create-firstname' />
-              </FormControl>
-            </div>
+          <Box
+            component="form"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              '& .MuiTextField-root': { m: 1, width: '40ch' },
+            }}
+            noValidate
+            autoComplete="on"
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              required
+              label="First Name"
+              id="create-user-firstname"
+            />
 
-            <div>
-              <FormControl variant='standard'>
-                <InputLabel htmlFor='standard-adornment-password'>
-                  Last Name
-                </InputLabel>
-                <Input sx={{ width: 250 }} type='lastname' id='create-lastname' />
-              </FormControl>
-            </div>
+            <TextField
+              required
+              label="Last Name"
+              id="create-user-lastname"
+            />
 
-            <div>
-              <FormControl variant='standard'>
-                <InputLabel htmlFor='standard-adornment-password'>
-                  Username
-                </InputLabel>
-                <Input sx={{ width: 250 }} type='username' id='create-username' />
-              </FormControl>
-            </div>
+            <TextField
+              required
+              label="Username"
+              id="create-user-username"
+            />
 
-            <div>
-              <FormControl variant='standard'>
-                <InputLabel htmlFor='standard-adornment-password'>
-                  Email
-                </InputLabel>
-                <Input sx={{ width: 250 }} type='email' id='create-email' />
-              </FormControl>
-            </div>
+            <TextField
+              required
+              label="Email"
+              id="email"
+            />
 
-            <div>
-              <FormControl variant='standard'>
-                <InputLabel htmlFor='standard-adornment-password'>
-                  Password
-                </InputLabel>
-                <Input sx={{ width: 250 }} type='password' id='create-password' />
-              </FormControl>
-            </div>
+            <TextField
+              required
+              label="Password"
+              id="create-user-password"
+              type="password"
+              autoComplete="current-password"
+            />
 
-            <div className='create-account-btn'>
-              <Button type="submit" variant='contained' sx={{ width: 275, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }}>
-                Create Account
-              </Button>
-            </div>
-          </form>
+            <Button
+              sx={{ m: 1, width: '30ch' }}
+              type="submit"
+              variant="outlined"
+              size="large">
+              Create
+            </Button>
+          </Box>
 
           <div className='account-text'>
             Already have an account?
@@ -127,7 +116,7 @@ export function LoginPage() {
             </FormControl>
           </div>
 
-          <div>
+          {/* <div>
             <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
               <Input sx={{ width: 220, }} id='login-password' type={showPassword ? 'text' : 'password'}
@@ -141,7 +130,7 @@ export function LoginPage() {
               />
 
             </FormControl>
-          </div>
+          </div> */}
 
           <div style={{ marginTop: 10 }}>
             <FormGroup>
