@@ -9,6 +9,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@font-face {
+  font-family: "SoraBold";
+  src: local("SoraBold"),
+   url("../fonts/Sora/Sora-Bold.ttf") format("truetype");
+  }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -51,4 +57,9 @@ code {
   to {
     transform: rotate(360deg);
   }
+}
+
+.profile-dropdown {
+  float: right;
+  margin: 1rem 2rem 0 0;
 }
