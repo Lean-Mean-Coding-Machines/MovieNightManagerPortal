@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import Profile from '../../component/UserProfile/Profile';
 import Password from '../../component/UserProfile/Password';
 import Email from '../../component/UserProfile/Email';
-import { Avatar, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
@@ -45,19 +44,8 @@ export function ProfilePage() {
 
   const navigate = useNavigate();
   const navigateHome = () => { navigate('/') };
-  const navigateToLogin = () => { navigate('/login') };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  // Profile btn functionality
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   // Toggles Delete Modal open and close
@@ -65,7 +53,10 @@ export function ProfilePage() {
 
   return (
     <>
+    <nav>
+      <Button onClick={navigateHome}>MnM Logo</Button>
       <AccountDropdownNav />
+    </nav>
 
       <h1 style={{ marginLeft: 15 }}>Settings</h1>
       <h4 style={{ marginLeft: 15, marginBottom: 25 }}>Manage your account settings and preferences</h4>
