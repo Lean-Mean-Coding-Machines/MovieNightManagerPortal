@@ -20,7 +20,8 @@ export default function MovieNightSegment(props: MovieNightSegmentProps) {
           }
           props.handleAppLoadingChange(false);
         },
-        (err) => console.log(err)).catch((err) => console.log(err.message));
+        (err) => console.log(err))
+      .catch((err) => console.log(err.message));
   }, [props]);
 
   if (segment.nominationStartDate != null) {
