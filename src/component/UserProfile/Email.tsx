@@ -62,32 +62,32 @@ const IOSSwitch = styled((props: SwitchProps) => (
 export default function Email() {
   return (
     <Fragment>
-        <div style={{marginLeft: 50}}>
+      <div style={{ marginLeft: 50 }}>
         <h3>Update Email Address</h3>
-         <div style={{fontWeight: 'bold'}}> Current Email
-          </div>
-            <div>{`Your current email address is GlobLauncher@gmail.com`}</div>
-
-          <div style={{marginTop: 10, fontWeight: 'bold'}}> New Email</div>
-
-          <div>
-            <FormControl variant='outlined'>
-              <OutlinedInput sx={{ width: 250, height: 30}}id='update-email'/>
-            </FormControl>
-          </div>
-          <div>
-          <Button  variant='contained' sx={{width: 155,backgroundColor: '#1F1F1F', marginTop: 2, borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
-          Save Changes
-        </Button>
-          </div>
-
-
-        <FormControl>  
-        <div style={{marginTop: 10}}>
-      <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} label="Email Notifications"/>
+        <div style={{ fontWeight: 'bold' }}> Current Email
         </div>
+        <div>{`Your current email address is GlobLauncher@gmail.com`}</div>
+
+        <div style={{ marginTop: 10, fontWeight: 'bold' }}> New Email</div>
+
+        <div>
+          <FormControl variant='outlined'>
+            <OutlinedInput sx={{ width: 250, height: 30 }} id='update-email' />
+          </FormControl>
+        </div>
+        <div>
+          <Button variant='contained' sx={{ width: 155, backgroundColor: '#1F1F1F', marginTop: 2, borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }}>
+            Save Changes
+          </Button>
+        </div>
+
+
+        <FormControl>
+          <div style={{ marginTop: 10 }}>
+            <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} label="Email Notifications" />
+          </div>
         </FormControl>
-        </div>
+      </div>
     </Fragment>
   );
 };
