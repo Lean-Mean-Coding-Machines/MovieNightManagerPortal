@@ -3,7 +3,7 @@ export default interface IUserCreateResponse {
     userRole: string,
     firstName: string,
     lastName: string,
-    username: String,
-    password: String,
-    email: String
+    username: string,
+    password: string,
+    email: string
 }

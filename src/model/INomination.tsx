@@ -5,6 +5,6 @@ export default interface INomination {
     movieTitle: string,
     chosen: boolean,
     watchType: string,
-    submittedBy: String,
+    submittedBy: string,
     likes: INominationLike[]
 }
