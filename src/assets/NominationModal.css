@@ -1,5 +1,5 @@
 .nomination-modal-overlay {
-    z-index: 9999;
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -11,6 +11,7 @@
   }
   
   .nomination-modal-box {
+    z-index: 1;
     display: block;
     background: white;
     width: 45%;
@@ -21,7 +22,7 @@
 
 
 .nomination-name {
-    position: absolute;
+    /* position: absolute; */
     left: 32%;
     top: 37%;
   }
