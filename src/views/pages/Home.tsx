@@ -19,8 +19,9 @@ export function HomePage() {
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
-
-      <AccountDropdownNav />
+      <nav>
+      <AccountDropdownNav/>
+      </nav>
 
       <Grid2 container>
         <Grid2 xs={12}>

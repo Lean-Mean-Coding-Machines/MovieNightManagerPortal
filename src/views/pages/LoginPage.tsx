@@ -18,7 +18,7 @@ export function LoginPage() {
   const loginHandler = () => {setLoginActive(!loginActive)};
 
 //Shows/Hides Password Input for Login Page
- const [showPassword, setShowPassword] = React.useState(false);
+ const [showPassword, setShowPassword] = useState(false);
  const handleClickShowPassword = () => setShowPassword((show) => !show);
  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
    event.preventDefault();

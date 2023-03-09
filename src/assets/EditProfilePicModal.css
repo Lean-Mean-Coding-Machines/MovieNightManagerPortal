@@ -1,0 +1,63 @@
+.edit-account-modal-overlay {
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .edit-account-modal-box {
+    display: block;
+    background: white;
+    height: 57%;
+    padding: 1rem 1rem 2rem 3rem;
+    border-radius: 1rem;
+  }
+  
+  .edit-profile-header, .edit-profile-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 45rem; 
+    height: 40px;
+  }
+
+  .edit-profile-header{
+    font-size: 38px;
+    font-weight: bold; 
+    justify-content: center;
+  }
+
+  .edit-profile-desc {
+    font-size: 25px;
+    font-weight: 400;
+    margin-top: 10px;
+  }
+
+  .update-pic-btn {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: -55px;
+  }
+
+  .save-btn-container {
+    bottom: 22%;
+    position: absolute;
+    right: 30%;
+  }
+
+
+  .dropzone-container {
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
