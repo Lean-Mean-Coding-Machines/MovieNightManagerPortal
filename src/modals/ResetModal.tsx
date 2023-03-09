@@ -21,7 +21,8 @@ export default function ResetModal(props: ModalType) {
                <CloseIcon/>
               </IconButton>
             </div>
-          <div style={{fontWeight: 'bold', fontSize: 40}}>Forgot Your Password?</div>
+           <div>
+          <div className="password-reset-desc">Forgot Your Password?</div>
           <div style={{width: 425}}>Provide your account email address to receive an email to reset your password.</div>
             {props.children}
           
@@ -30,13 +31,14 @@ export default function ResetModal(props: ModalType) {
               <InputLabel htmlFor='standard-adornment-email-address'>
                 Email 
               </InputLabel>
-              <Input sx={{ width: 300,}} id='email-reset-input'/>
+              <Input sx={{ width: 425,}} id='email-reset-input'/>
           </FormControl>
           </div>
           
-            <div className="reset-pw-btn">
-            <Button variant='contained' sx={{width: 100,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} onClick={props.toggle}>Send</Button>
+            <div className="reset-desc">
+              <Button variant='contained' sx={{width: 100,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} onClick={props.toggle}>Send</Button>
             </div>
+            </div> 
           </div>
         </div>
       )}

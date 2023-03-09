@@ -1,4 +1,4 @@
-import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
+import { Button, FormControl, InputLabel, Input, IconButton, InputAdornment, Checkbox, FormControlLabel, FormGroup} from '@mui/material';
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -8,12 +8,10 @@ import useModal from '../../hooks/useModal';
 import ResetModal from '../../modals/ResetModal';
 import '../../assets/LoginPage.css';
 
-
 export function LoginPage() {
   const navigate = useNavigate();
   const navigateHome = () => {navigate('/')};
   const navigateToProfile = () => {navigate('/profile')};
-
 
   // Shows/Hides Login & Create Profile Divs
   const [loginActive, setLoginActive] = useState(true);
@@ -35,7 +33,7 @@ export function LoginPage() {
           <Button onClick={navigateHome}>MnM Logo</Button>
         </nav>
 
-        <div className='user-login'>
+        <div className='user-login-container'>
           <h1>Create an account</h1>
           
           <div>
@@ -105,7 +103,7 @@ export function LoginPage() {
         </nav>
         <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
 
-        <div className='user-login'>
+        <div className='user-login-container'>
           <h1>Login</h1>
           
           <div>

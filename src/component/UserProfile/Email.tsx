@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { Fragment } from "react";
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
@@ -59,7 +59,7 @@ const IOSSwitch = styled((props: SwitchProps) => (
 
 
 
-const Email: FC<{}> = () => {
+export default function Email() {
   return (
     <Fragment>
         <div style={{marginLeft: 50}}>
@@ -91,4 +91,3 @@ const Email: FC<{}> = () => {
     </Fragment>
   );
 };
-export default Email;
