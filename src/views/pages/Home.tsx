@@ -1,8 +1,11 @@
 import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import MovieNightSegment from '../../component/MovieNightSegment';
-import React, { useState } from 'react';
+import { Stack } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import NominationCard from '../../component/NominationCard';
+import IMovieNightSegment from '../../model/IMovieNightSegment';
+import MovieNightSegmentService from '../../service/MovieNightSegmentService';
 import NewNomintationModal from '../../modals/NewNomintationModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
@@ -13,6 +16,18 @@ export function HomePage() {
   const handleAppLoadingChange = (newState: boolean) => { setAppLoading(newState) };
 
   const { isOpen, toggle } = useModal();
+
+  const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(null);
+
+  useEffect(() => {
+    MovieNightSegmentService.getCurrentSegment()
+      .then(
+        (res) => {setSegment(res.data.data); 
+          handleAppLoadingChange(false);
+        },
+        (err) => console.log(err)).catch((err) => console.log(err.message));
+  }, []);
+
 
   return (
     <Box className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
@@ -35,7 +50,23 @@ export function HomePage() {
             </Button>
             <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
           </div>
-          <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} />
+          {/* Movie Night Segment */}
+          {!!segment ? (
+            <Grid2 container>
+              <Grid2 xs={12}>
+                <h2>
+                  {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)} -{' '}
+                  {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)}
+                </h2>
+              </Grid2>
+              <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>
+                  {segment.nominations.map((nom) => (<NominationCard nomination={nom} />
+                  ))}
+                </Stack>
+              </Grid2>
+            </Grid2>
+          ) : (<Grid2 container />)}
         </Grid2>
       </Grid2>
     </Box>
