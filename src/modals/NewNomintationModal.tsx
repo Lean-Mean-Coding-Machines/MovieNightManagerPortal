@@ -63,7 +63,7 @@ export default function NewNomintationModal(props: ModalType) {
           </div>
 
 
-            <div className="new-nomitnation-btn">
+            <div className="new-nomination-btn">
             <Button variant='contained' sx={{width: 100,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} onClick={props.toggle}>Submit</Button>
             </div>
           </div>
