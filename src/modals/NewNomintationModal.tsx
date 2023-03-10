@@ -5,6 +5,7 @@ import '../assets/NominationModal.css';
 import DateSelector from "../component/DatePicker";
 
 
+
 interface ModalType {
   children?: ReactNode;
   isOpen: boolean;
