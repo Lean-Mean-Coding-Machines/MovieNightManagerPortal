@@ -13,9 +13,9 @@
   .reset-pw-modal-box {
     display: block;
     background: white;
-    width: 30%;
-    height: 30%;
-    padding: 1rem;
+    width: 464px;
+    height: 25%;
+    padding: 1rem 1rem 2rem 3rem;
     border-radius: 1rem;
   }
   
@@ -25,10 +25,26 @@
     right: 37%;
   }
   
-  
-  
-  .reset-pw-email {
-    position: absolute;
-    left: 36%;
-    top: 45%;
+  .reset-pw-email, .password-reset-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 425px; 
+  }
+
+  .password-reset-desc {
+    font-size: 40px;
+    font-weight: bold; 
+    overflow: auto;
+  }
+
+  .reset-desc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 425px;
+    margin-top: 35px;
   }

@@ -1,52 +1,43 @@
-import { useNavigate } from 'react-router-dom';
-import { Backdrop, Button, CircularProgress } from '@mui/material';
+import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import MovieNightSegment from '../../component/MovieNightSegment';
 import React, { useState } from 'react';
 import NewNomintationModal from '../../modals/NewNomintationModal';
 import useModal from '../../hooks/useModal';
+import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 
 export function HomePage() {
-  const navigate = useNavigate();
-
-  const navigateToLogin = () => {navigate('/login')};
-
   const [appLoading, setAppLoading] = useState(true);
 
-  const handleAppLoadingChange = (newState: boolean) => {setAppLoading(newState)};
+  const handleAppLoadingChange = (newState: boolean) => { setAppLoading(newState) };
 
   const { isOpen, toggle } = useModal();
 
   return (
-    <div className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
+    <Box className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
 
-      <nav className='login-btn'>
-        <Button onClick={navigateToLogin} variant='contained' sx={{width: 150,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>
-          Login/Sign up
-        </Button>
-      </nav>
-      
+      <AccountDropdownNav />
+
       <Grid2 container>
         <Grid2 xs={12}>
-          <div>
-            <h1>Movie Night Manager</h1>
-            <span></span>
-          </div>
+          <Box component='h1'>
+            Movie Night Manager
+          </Box>
         </Grid2>
         <Grid2 xs={12}>
-        <div>        
-        <Button endIcon={<LocalMoviesIcon/>} onClick={toggle} variant='contained' sx={{width: 200,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} id='nomination-btn'>
-          Nominate a film
-        </Button>
-        <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
-        </div>
+          <div>
+            <Button endIcon={<LocalMoviesIcon />} onClick={toggle} variant='contained' sx={{ width: 200, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }} id='nomination-btn'>
+              Nominate a film
+            </Button>
+            <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
+          </div>
           <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} />
         </Grid2>
       </Grid2>
-    </div>
+    </Box>
   );
 }

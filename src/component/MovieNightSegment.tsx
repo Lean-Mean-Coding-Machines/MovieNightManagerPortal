@@ -10,24 +10,27 @@ interface MovieNightSegmentProps {
 }
 
 export default function MovieNightSegment(props: MovieNightSegmentProps) {
-  
-  const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(null);
+  const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
   useEffect(() => {
     MovieNightSegmentService.getCurrentSegment()
       .then(
-        (res) => {setSegment(res.data.data); 
+        (res) => {
+          if (res.data.status.success && res.data.data != null) {
+            setSegment(res.data.data);
+          }
           props.handleAppLoadingChange(false);
         },
-        (err) => console.log(err)).catch((err) => console.log(err.message));
+        (err) => console.log(err))
+      .catch((err) => console.log(err.message));
   }, [props]);
 
-  if (segment != null) {
+  if (segment.nominationStartDate != null) {
     return (
       <Grid2 container>
         <Grid2 xs={12}>
           <h2>
-            {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)} -{' '}
-            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-','/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0,4)}
+            {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
+            {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
           </h2>
         </Grid2>
         <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>

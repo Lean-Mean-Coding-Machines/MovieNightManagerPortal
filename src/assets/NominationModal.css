@@ -14,8 +14,8 @@
     z-index: 1;
     display: block;
     background: white;
-    width: 45%;
-    height: 45%;
+    width: 35%;
+    height: 35%;
     padding: 1rem;
     border-radius: 1rem;
   }
@@ -28,8 +28,16 @@
   }
 
   .new-nomitnation-btn {
-    bottom: 30%;
+    bottom: 35%;
     position: absolute;
-    right: 30%;
+    right: 35%;
   }
 
+.nomination-inputs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  width: auto;
+}
