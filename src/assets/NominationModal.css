@@ -15,20 +15,19 @@
     display: block;
     background: white;
     width: 35%;
-    height: 35%;
+    height: 40%;
     padding: 1rem;
     border-radius: 1rem;
   }
 
 
 .nomination-name {
-    /* position: absolute; */
     left: 32%;
     top: 37%;
   }
 
   .new-nomination-btn {
-    bottom: 35%;
+    bottom: 30%;
     position: absolute;
     right: 35%;
   }

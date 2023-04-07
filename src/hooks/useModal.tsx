@@ -7,7 +7,6 @@ export default function useModal() {
   // Toggles Modals on and off
   const toggle = (modal?: any) => {
     modalName = modal;
-     console.log(modal, 'myname')
      selectedModal(modal);
     setisOpen(!isOpen); 
   };
