@@ -1,11 +1,10 @@
 import { Button, FormControl, IconButton, Input, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode } from "react";
+import React from "react";
 import '../assets/ResetModal.css';
 
 
 interface ModalType {
-  children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
 }
@@ -24,7 +23,6 @@ export default function ResetModal(props: ModalType) {
            <div>
           <div className="password-reset-desc">Forgot Your Password?</div>
           <div style={{width: 425}}>Provide your account email address to receive an email to reset your password.</div>
-            {props.children}
           
           <div className="reset-pw-email">
           <FormControl variant='standard'>

@@ -1,74 +1,116 @@
-import { Button, FormControl, IconButton, Input, InputLabel, NativeSelect, Stack, TextField } from "@mui/material";
+import { Button, FormControl, IconButton, Input, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode } from "react";
+import React, { FormEvent, useState } from "react";
 import '../assets/NominationModal.css';
 import DateSelector from "../component/DatePicker";
-
-
+import dayjs from "dayjs";
+import TimeSelector from "../component/TimePicker";
+import WatchTypeDDLSelector from "../component/WatchTypeDropdown";
 
 interface ModalType {
-  children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
 }
 
 export default function NewNomintationModal(props: ModalType) {
+  
+  const todaysDate = dayjs();
+
+  const intitialNominationState = ({
+     segmentId: '',
+     movieTitle: '', 
+     watchDate: todaysDate,
+     watchTime: '',
+     watchType: 'Any',
+     userId: '',
+   });
+
+  const [nominationFormState, setNominationState] = useState(intitialNominationState);
+
+  function resetNominationState() {
+    setNominationState(intitialNominationState);
+   }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // Prevent the browser from reloading the page
+    event.preventDefault();
+    // Need to add in API call right here
+    console.log(nominationFormState, 'nominationForm');
+    props.toggle();
+    resetNominationState();
+  }
+
+  function updateNominationField (event: any) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setNominationState({
+      ...nominationFormState,
+      [name]: value,
+    });
+  }
+
+  const updateWatchDate = (selectedWatchDate: dayjs.Dayjs) => { setNominationState( {
+    ...nominationFormState, 
+    watchDate: selectedWatchDate
+  }); 
+}
+
+  const updateWatchType = (selectedWatchType: string) => { setNominationState( {
+    ...nominationFormState, 
+    watchType: selectedWatchType
+  }); 
+}
+
+  const updateWatchTime = (selectedWatchTime: string) => { setNominationState( {
+    ...nominationFormState, 
+    watchTime: selectedWatchTime
+  }); 
+}
 
   return (
     <>
       {props.isOpen && (
-        <div className="nomination-modal-overlay">
-          <div className="nomination-modal-box">
-          <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Film</span>
-            <div style={{float: 'right'}} onClick={props.toggle}>
-              <IconButton>
-               <CloseIcon/>
-              </IconButton>
-            </div>
-            {props.children}
+      <div className="nomination-modal-overlay">
+        <div className="nomination-modal-box">
+        <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Film</span>
+          <div style={{float: 'right'}} onClick={props.toggle}>
+            <IconButton>
+              <CloseIcon/>
+            </IconButton>
+          </div>
           
-          <div className="nomination-inputs-container">
-          
-          {/* Film Input */}
-          <div>
+      <form method="post" onSubmit={handleSubmit}>
+        <div className="nomination-inputs-container">
+          {/* Film Name Input */}
+        <div>
           <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-film-name'>
                 Film Name
               </InputLabel>
-              <Input sx={{ width: 300,}} id='nomination-name-input'/>
+              <Input name="movieTitle" sx={{ width: 300,}} id='nomination-name-input' value={nominationFormState.movieTitle} onChange={updateNominationField}/>
           </FormControl>
           </div>
-          <div>
-            <DateSelector />
-          </div>
 
+          <div>
           {/* Watch Date Picker */}
-          <div style={{marginTop: 20}}>
-          <Stack component="form" noValidate>
-          <TextField id="datetime-picker" label="Preferred Date" type="datetime-local" defaultValue="2022-01-01T10:30" sx={{ width: 250 }} InputLabelProps={{ shrink: true,}}/>
-          </Stack>
+            <DateSelector updateWatchDate={updateWatchDate} />
+          {/* Watch Time Picker */}
+            <TimeSelector updateWatchTime={updateWatchTime} />
           </div>
           
           {/* Watch Type Picker */}
           <div style={{marginTop: 15}}>
-          <FormControl >
-            <InputLabel variant="standard" htmlFor="watch-type"> Watch Type </InputLabel>
-            <NativeSelect defaultValue={'Pool'} inputProps={{name: 'watch-type', id: 'watch-type',}}>
-              <option value={'Outside'}>Outside</option>
-              <option value={'Inside'}>Inside</option>
-              <option value={'Fire'}>Firepit</option>
-              <option value={'Pool'}>Pool</option>
-            </NativeSelect>
-          </FormControl>
-          </div>
-          </div>
+          <WatchTypeDDLSelector updateWatchType={updateWatchType} />
 
-
-            <div className="new-nomination-btn">
-            <Button variant='contained' sx={{width: 100,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}} onClick={props.toggle}>Submit</Button>
-            </div>
           </div>
         </div>
+          {/* Submit Btn */}
+            <div className="new-nomination-btn">
+            <Button type="submit" variant='contained' sx={{width: 125,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>Submit</Button>
+            </div>
+      </form>
+        </div>
+      </div>
       )}
     </>
   );

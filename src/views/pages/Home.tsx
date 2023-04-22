@@ -11,6 +11,7 @@ import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 
 export function HomePage() {
+
   const [appLoading, setAppLoading] = useState(true);
 
   const handleAppLoadingChange = (newState: boolean) => { setAppLoading(newState) };
@@ -48,7 +49,7 @@ export function HomePage() {
             <Button endIcon={<LocalMoviesIcon />} onClick={toggle} variant='contained' sx={{ width: 200, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }} id='nomination-btn'>
               Nominate a film
             </Button>
-            <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
+            <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>            
           </div>
           {/* Movie Night Segment */}
           {!!segment ? (
