@@ -10,7 +10,9 @@ interface MovieNightSegmentProps {
 }
 
 export default function MovieNightSegment(props: MovieNightSegmentProps) {
+
   const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+  
   useEffect(() => {
     MovieNightSegmentService.getCurrentSegment()
       .then(
