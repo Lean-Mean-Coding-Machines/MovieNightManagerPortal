@@ -73,19 +73,19 @@ export default function NewNomintationModal(props: ModalType) {
 
   return (
     <>
-      {props.isOpen && (
-      <div className="nomination-modal-overlay">
-        <div className="nomination-modal-box">
-        <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Film</span>
-          <div style={{float: 'right'}} onClick={props.toggle}>
-            <IconButton>
-              <CloseIcon/>
-            </IconButton>
-          </div>
-          
-      <form method="post" onSubmit={handleSubmit}>
-        <div className="nomination-inputs-container">
-          {/* Film Name Input */}
+    {props.isOpen && (
+    <div className="nomination-modal-overlay">
+      <div className="nomination-modal-box">
+      <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Film</span>
+        <div style={{float: 'right'}} onClick={props.toggle}>
+          <IconButton>
+            <CloseIcon/>
+          </IconButton>
+        </div>
+        
+    <form method="post" onSubmit={handleSubmit}>
+      <div className="nomination-inputs-container">
+        {/* Film Name Input */}
         <div>
           <FormControl variant='standard'>
               <InputLabel htmlFor='standard-adornment-film-name'>
@@ -93,29 +93,29 @@ export default function NewNomintationModal(props: ModalType) {
               </InputLabel>
               <Input name="movieTitle" sx={{ width: 300,}} id='nomination-name-input' value={nominationFormState.movieTitle} onChange={updateNominationField}/>
           </FormControl>
-          </div>
-
-          <div>
-          {/* Watch Date Picker */}
-            <DateSelector updateWatchDate={updateWatchDate} />
-          {/* Watch Time Picker */}
-            <TimeSelector updateWatchTime={updateWatchTime} />
-          </div>
-          
-          {/* Watch Type Picker */}
-          <div style={{marginTop: 15}}>
-          <WatchTypeDDLSelector updateWatchType={updateWatchType} />
-
-          </div>
         </div>
-          {/* Submit Btn */}
-            <div className="new-nomination-btn">
-            <Button type="submit" variant='contained' sx={{width: 125,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>Submit</Button>
-            </div>
-      </form>
+
+        <div>
+        {/* Watch Date Picker */}
+          <DateSelector updateWatchDate={updateWatchDate} />
+        {/* Watch Time Picker */}
+          <TimeSelector updateWatchTime={updateWatchTime} />
+        </div>
+          
+        {/* Watch Type Picker */}
+        <div style={{marginTop: 15}}>
+          <WatchTypeDDLSelector updateWatchType={updateWatchType} />
         </div>
       </div>
-      )}
+      
+      {/* Submit Btn */}
+        <div className="new-nomination-btn">
+        <Button type="submit" variant='contained' sx={{width: 125,backgroundColor: '#1F1F1F',borderRadius: 22,':hover': {backgroundColor: '#1F1F1F',},}}>Submit</Button>
+        </div>
+    </form>
+      </div>
+    </div>
+    )}
     </>
   );
 }
