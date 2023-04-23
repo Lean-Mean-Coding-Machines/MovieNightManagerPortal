@@ -6,6 +6,8 @@ import DateSelector from "../component/DatePicker";
 import dayjs from "dayjs";
 import TimeSelector from "../component/TimePicker";
 import WatchTypeDDLSelector from "../component/WatchTypeDropdown";
+import { toast } from 'react-toastify'
+
 
 interface ModalType {
   isOpen: boolean;
@@ -38,6 +40,8 @@ export default function NewNomintationModal(props: ModalType) {
     console.log(nominationFormState, 'nominationForm');
     props.toggle();
     resetNominationState();
+    // #Todo, need to add in error/ success handling for put api call when it's ready
+    toast.success(`Created nomination for ${nominationFormState.movieTitle} on ${nominationFormState.watchDate} @ ${nominationFormState.watchTime}`);
   }
 
   function updateNominationField (event: any) {
