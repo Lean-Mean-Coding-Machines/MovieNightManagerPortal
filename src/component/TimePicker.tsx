@@ -26,6 +26,7 @@ function TimeSelector (props: timeSelectorProps) {
         <FormControl fullWidth>
           <InputLabel id="nomination-time-label">Time</InputLabel>
           <Select
+            required
             label="Time"
             value={time}
             onChange={(newValue) => handleTimeChange(newValue)}

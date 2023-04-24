@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import IMovieNightSegment from "../model/IMovieNightSegment";
-import MovieNightSegmentService from "../service/MovieNightSegmentService";
+import React, { useState } from "react";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -10,28 +8,15 @@ import dayjs, { Dayjs } from "dayjs";
 
 interface dateSelectorProps  {
   updateWatchDate: (input: dayjs.Dayjs) => void;
+  segment: any;
 }
 
 function DateSelector (props: dateSelectorProps) {
-  
-  // State for managing segment start date & end date
-  const [segment, setSegment] = useState<IMovieNightSegment | null | undefined>(null);
-  
-  const today = dayjs();
-  const startDay = dayjs(segment?.nominationLockDate);
-  const endDay = dayjs(segment?.segmentEndDate);
-  const [value, setDate] = useState<Dayjs | null>(today);
 
-  useEffect(() => {
-    MovieNightSegmentService.getCurrentSegment()
-    .then(
-      (res) => {
-        setSegment(res.data.data);
-      },
-      (err) => console.log(err)
-      ).catch(
-        (err) => console.log(err.message));
-      });
+  const today = dayjs();
+  const startDay = dayjs(props.segment?.nominationLockDate);
+  const endDay = dayjs(props.segment?.segmentEndDate);
+  const [value, setDate] = useState<Dayjs | null>(today);
       
   const handleDateChange = ( date: dayjs.Dayjs | null) => {
     if (date === null) {

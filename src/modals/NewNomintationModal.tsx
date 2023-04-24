@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 interface ModalType {
   isOpen: boolean;
   toggle: () => void;
+  segment: {};
 }
 
 export default function NewNomintationModal(props: ModalType) {
@@ -91,13 +92,13 @@ export default function NewNomintationModal(props: ModalType) {
               <InputLabel htmlFor='standard-adornment-film-name'>
                 Film Name
               </InputLabel>
-              <Input name="movieTitle" sx={{ width: 300,}} id='nomination-name-input' value={nominationFormState.movieTitle} onChange={updateNominationField}/>
+              <Input required name="movieTitle" sx={{ width: 300,}} id='nomination-name-input' value={nominationFormState.movieTitle} onChange={updateNominationField}/>
           </FormControl>
         </div>
 
         <div>
         {/* Watch Date Picker */}
-          <DateSelector updateWatchDate={updateWatchDate} />
+          <DateSelector updateWatchDate={updateWatchDate} segment={props.segment} />
         {/* Watch Time Picker */}
           <TimeSelector updateWatchTime={updateWatchTime} />
         </div>
