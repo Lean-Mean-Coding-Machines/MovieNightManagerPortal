@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl, InputLabel } from "@mui/material";
-import "../assets/NominationModal.css";
 
 interface timeSelectorProps  {
-    updateWatchTime: (input: string) => void;
+    handleChangeTime: (input: string) => void;
 }
 
 function TimeSelector (props: timeSelectorProps) {
@@ -18,7 +17,7 @@ function TimeSelector (props: timeSelectorProps) {
             return; 
         }
         // Update state from new nomination modal 
-        props.updateWatchTime(event.target.value);
+        props.handleChangeTime(event.target.value);
         setTime(event.target.value as string);
     };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import INomination from "../model/INomination";
+import INomination from "../../model/INomination";
 import {Box, Card, CardContent, Typography} from "@mui/material";
 
 interface NominationCardsProps {

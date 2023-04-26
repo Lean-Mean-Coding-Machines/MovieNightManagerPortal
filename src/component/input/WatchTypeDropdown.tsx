@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FormControl, InputLabel, NativeSelect } from "@mui/material";
-import "../assets/NominationModal.css";
 
 interface typeSelectorProps  {
     updateWatchType: (input: string) => void;
