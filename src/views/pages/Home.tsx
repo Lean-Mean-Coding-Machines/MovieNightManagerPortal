@@ -1,18 +1,36 @@
 import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import MovieNightSegment from '../../component/MovieNightSegment';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NewNomintationModal from '../../modals/NewNomintationModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
+import MovieNightSegment from '../../component/MovieNightSegment';
+import IMovieNightSegment from '../../model/IMovieNightSegment';
+import MovieNightSegmentService from '../../service/MovieNightSegmentService';
 
 export function HomePage() {
+
   const [appLoading, setAppLoading] = useState(true);
 
   const handleAppLoadingChange = (newState: boolean) => { setAppLoading(newState) };
 
   const { isOpen, toggle } = useModal();
+
+  const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+  
+  useEffect(() => {
+    MovieNightSegmentService.getCurrentSegment()
+      .then(
+        (res) => {
+          if (res.data.status.success && res.data.data != null) {
+            setSegment(res.data.data);
+          }
+          handleAppLoadingChange(false);
+        },
+        (err) => console.log(err))
+      .catch((err) => console.log(err.message));
+  }, []);
 
   return (
     <Box className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
@@ -33,9 +51,10 @@ export function HomePage() {
             <Button endIcon={<LocalMoviesIcon />} onClick={toggle} variant='contained' sx={{ width: 200, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }} id='nomination-btn'>
               Nominate a film
             </Button>
-            <NewNomintationModal isOpen={isOpen} toggle={toggle}></NewNomintationModal>
+            <NewNomintationModal isOpen={isOpen} toggle={toggle} segment={segment}></NewNomintationModal>            
           </div>
-          <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} />
+          {/* Movie Night Segment */}
+          <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} segment={segment}/>
         </Grid2>
       </Grid2>
     </Box>

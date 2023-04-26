@@ -9,12 +9,14 @@ interface ModalType {
   children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
+  modalName?: string;
 }
 
 export default function DeleteAccountModal(props: ModalType) {
+  if (props.modalName === 'deleteProfile') {
   return (
     <>
-      {props.isOpen && (
+      {props.isOpen &&  (
         <div className="delete-account-modal-overlay">
           <div className="delete-account-modal-box">
             <div style={{float: 'right'}} onClick={props.toggle}>
@@ -40,4 +42,7 @@ export default function DeleteAccountModal(props: ModalType) {
       )}
     </>
   );
-}
+} else {
+  return <>
+  </>
+}}

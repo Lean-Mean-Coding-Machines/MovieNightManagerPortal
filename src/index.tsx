@@ -4,6 +4,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -23,6 +25,7 @@ root.render(
     <BrowserRouter>
     <ThemeProvider theme={theme}>
       <App />
+      <ToastContainer />
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>

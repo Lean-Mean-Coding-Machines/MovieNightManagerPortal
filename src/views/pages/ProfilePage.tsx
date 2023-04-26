@@ -8,10 +8,11 @@ import Button from '@mui/material/Button';
 import Profile from '../../component/UserProfile/Profile';
 import Password from '../../component/UserProfile/Password';
 import Email from '../../component/UserProfile/Email';
-import { Avatar, Divider, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
+import EditProfilePicModal from '../../modals/EditProfilePicModal';
+import { useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -26,7 +27,7 @@ function TabPanel(props: TabPanelProps) {
     <div role="tabpanel" hidden={value !== index} id={`vertical-tabpanel-${index}`} aria-labelledby={`vertical-tab-${index}`} {...other}>
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component={'span'}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -41,32 +42,25 @@ function a11yProps(index: number) {
 }
 
 export function ProfilePage() {
-  const [value, setValue] = React.useState(0);
-
+  const [value, setValue] = useState(0);
   const navigate = useNavigate();
   const navigateHome = () => { navigate('/') };
-  const navigateToLogin = () => { navigate('/login') };
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
-  // Profile btn functionality
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // Toggles Delete Modal open and close
-  const { isOpen, toggle } = useModal();
+  // Toggles Delete Modal & Edit Modal open and close
+  const { isOpen, toggle, modalName } = useModal();
 
   return (
     <>
+    <nav>
+      <Button onClick={navigateHome}>MnM Logo</Button>
       <AccountDropdownNav />
+    </nav>
+      <span>
 
+        </span>
       <h1 style={{ marginLeft: 15 }}>Settings</h1>
       <h4 style={{ marginLeft: 15, marginBottom: 25 }}>Manage your account settings and preferences</h4>
       <hr style={{ color: '#000000', backgroundColor: '#000000', height: .1, borderColor: '#000000', width: 625, marginLeft: 15 }} />
@@ -77,7 +71,7 @@ export function ProfilePage() {
           <Tab label="Password" {...a11yProps(2)} />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <Profile toggle={toggle}></Profile>
+          <Profile toggle={toggle} modalName={modalName}></Profile>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Email></Email>
@@ -87,8 +81,10 @@ export function ProfilePage() {
         </TabPanel>
       </Box>
 
-      {/* Delete Account Modal */}
-      <DeleteAccountModal isOpen={isOpen} toggle={toggle} ></DeleteAccountModal>
+      {/* Modals */}
+      <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>
+      <EditProfilePicModal isOpen={isOpen} toggle={toggle} modalName={modalName} ></EditProfilePicModal>
+
     </>
   );
 }

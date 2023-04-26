@@ -1,5 +1,5 @@
 .nomination-modal-overlay {
-    z-index: 999;
+    z-index: 1;
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -11,16 +11,23 @@
   }
   
   .nomination-modal-box {
+    z-index: 1;
     display: block;
     background: white;
     width: 35%;
-    height: 35%;
+    height: 40%;
     padding: 1rem;
     border-radius: 1rem;
   }
 
-  .new-nomitnation-btn {
-    bottom: 35%;
+
+.nomination-name {
+    left: 32%;
+    top: 37%;
+  }
+
+  .new-nomination-btn {
+    bottom: 30%;
     position: absolute;
     right: 35%;
   }

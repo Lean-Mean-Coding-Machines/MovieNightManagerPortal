@@ -2,13 +2,18 @@ import { useState } from "react";
 
 export default function useModal() {
   const [isOpen, setisOpen] = useState(false);
+  let [modalName, selectedModal] = useState();
 
-  const toggle = () => {
-    setisOpen(!isOpen);
+  // Toggles Modals on and off
+  const toggle = (modal?: any) => {
+    modalName = modal;
+     selectedModal(modal);
+    setisOpen(!isOpen); 
   };
 
   return {
     isOpen,
-    toggle
+    modalName,
+    toggle,
   };
 }

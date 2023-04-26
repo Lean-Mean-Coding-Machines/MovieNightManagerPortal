@@ -23,7 +23,14 @@ export function LoginPage() {
 
   // Shows/Hides Login & Create Profile Divs
   const [loginActive, setLoginActive] = useState(true);
-  const loginHandler = () => { setLoginActive(!loginActive) };
+  const loginHandler = () => {setLoginActive(!loginActive)};
+
+//Shows/Hides Password Input for Login Page
+//  const [showPassword, setShowPassword] = useState(false);
+//  const handleClickShowPassword = () => setShowPassword((show) => !show);
+//  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+//    event.preventDefault();
+//   };
 
   const { isOpen, toggle } = useModal();
 
