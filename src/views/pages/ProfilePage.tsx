@@ -61,7 +61,7 @@ export function ProfilePage() {
       <span>
 
         </span>
-      <h1 style={{ marginLeft: 15 }}>Settings</h1>
+      <h1 style={{ marginLeft: 15 }}>Your Profile</h1>
       <h4 style={{ marginLeft: 15, marginBottom: 25 }}>Manage your account settings and preferences</h4>
       <hr style={{ color: '#000000', backgroundColor: '#000000', height: .1, borderColor: '#000000', width: 625, marginLeft: 15 }} />
       <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}>

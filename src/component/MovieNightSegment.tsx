@@ -22,8 +22,7 @@ export default function MovieNightSegment(props: MovieNightSegmentProps) {
         </Grid2>
         <Grid2 style={{ justifyContent: 'center', alignItems: 'center' }}>
           <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>
-            {props.segment.nominations.map((nom: INomination) => (<NominationCard nomination={nom} />
-            ))}
+            {props.segment.nominations.map((nom: INomination) => (<NominationCard nomination={nom} />))}
           </Stack>
         </Grid2>
       </Grid2>
