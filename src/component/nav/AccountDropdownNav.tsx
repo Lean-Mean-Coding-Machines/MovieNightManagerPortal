@@ -13,6 +13,7 @@ export default function AccountDropdownNav() {
   const handleLogOut = () => {
     UserService.expireUserAuth();
     UserStorageService.clearUserData();
+    setUsername("");
     navigateToHome();
   }
 
@@ -68,7 +69,7 @@ export default function AccountDropdownNav() {
             <MenuItem>{username}</MenuItem>
             <Divider />
             <MenuItem onClick={navigateToProfile}>View Profile</MenuItem>
-            <MenuItem onClick={navigateToHome}>Sign Out</MenuItem>
+            <MenuItem onClick={handleLogOut}>Sign Out</MenuItem>
           </Menu>
         </>
     );
