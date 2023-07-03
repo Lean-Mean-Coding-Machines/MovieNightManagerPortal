@@ -15,9 +15,6 @@ export default function NominationCard(props: NominationCardsProps) {
                         {props.nomination.movieTitle}
                     </Typography>
                     <Typography>
-                        {props.nomination.watchType}
-                    </Typography>
-                    <Typography>
                         {props.nomination.likes === undefined ? 0 : props.nomination.likes.length} Likes
                     </Typography>
                     <Typography>

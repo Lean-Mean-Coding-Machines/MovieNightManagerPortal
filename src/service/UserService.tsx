@@ -2,7 +2,7 @@ import http from "../http-common";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserCreateRequest from "../model/user/IUserCreateRequest";
 import IUserCreateResponse from "../model/user/IUserCreateResponse";
-import IUser from "../model/IUser";
+import IUser from "../model/user/IUser";
 import IUserAuthRequest from "../model/user/IUserAuthRequest";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 
@@ -45,11 +45,16 @@ const getAllUsers = () => {
     return http.get<IMnmApiResponse<IUser>>("/user/all");
 };
 
+const getUserDetails = (userId: number) => {
+    return http.get<IMnmApiResponse<IUser>>("/user/details/" + userId);
+};
+
 const UserService = {
     authUser,
     createNewUser,
     getAllUsers,
-    expireUserAuth
+    expireUserAuth,
+    getUserDetails
 };
 
 export default UserService;
