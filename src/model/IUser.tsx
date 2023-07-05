@@ -1,7 +1,7 @@
 import INomination from "./INomination";
 import INominationLike from "./INominationLike";
 
-export default interface IUsers{
+export default interface IUser {
     id: number,
     userRole: string,
     firstName: string,
