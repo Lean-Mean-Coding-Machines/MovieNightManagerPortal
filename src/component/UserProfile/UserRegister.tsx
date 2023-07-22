@@ -1,9 +1,11 @@
 import {Box, Button, TextField} from "@mui/material";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import IUserCreateRequest from "../../model/user/IUserCreateRequest";
-import UserService from "../../service/UserService";
-import UserStorageService from "../../service/UserStorageService";
 import IUserAuthRequest from "../../model/user/IUserAuthRequest";
+import {UserContext} from "../../context/UserContext";
+import useAxios from "../../hooks/useAxios";
+import IMnmApiResponse from "../../model/IMnmApiResponse";
+import IUserCreateResponse from "../../model/user/IUserCreateResponse";
 
 interface formValidationReset {
     "firstName": () => void,
@@ -20,6 +22,8 @@ interface userRegisterProps {
 
 export function UserRegister(props: userRegisterProps) {
 
+    const api = useAxios();
+
     const defaultValues: IUserCreateRequest = {
         firstName: "",
         lastName: "",
@@ -27,6 +31,8 @@ export function UserRegister(props: userRegisterProps) {
         password: "",
         email: ""
     };
+
+    const {loginUser} = useContext(UserContext);
 
     const [formValues, setFormValues] = useState(defaultValues);
     const [submitErrorTxt, setSubmitErrorTxt] = useState("");
@@ -51,21 +57,14 @@ export function UserRegister(props: userRegisterProps) {
 
 
         if (isFirstNameValid && isLastNameValid && isUsernameValid && isEmailValid && isPasswordNameValid) {
-            UserService.createNewUser(formValues).then(
+            api.post<IMnmApiResponse<IUserCreateResponse>>("/user/create", formValues).then(
                 (res) => {
                     if (res.data.status.success && res.data.data != null) {
                         const authRequest: IUserAuthRequest = {
                             username: formValues.username,
                             password: formValues.password
                         };
-                        UserService.authUser(authRequest).then(
-                            (authResp) => {
-                                if (authResp) {
-                                    UserStorageService.setUserData(authResp);
-                                    props.handleHomeNav();
-                                }
-                            }
-                        );
+                        loginUser(authRequest)
                         props.handleHomeNav();
                     } else {
                         setSubmitErrorTxt(res.data.status.message);

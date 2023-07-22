@@ -1,21 +1,14 @@
 import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { useNavigate } from "react-router";
-import UserStorageService from "../../service/UserStorageService";
-import UserService from "../../service/UserService";
+import {UserContext} from "../../context/UserContext";
 
 export default function AccountDropdownNav() {
+  const {username, logoutUser} = useContext(UserContext);
   const navigate = useNavigate();
   const navigateToLogin = () => { navigate('/login') };
   const navigateToProfile = () => { navigate('/profile') };
   const navigateToHome = () => { navigate('/') };
-
-  const handleLogOut = () => {
-    UserService.expireUserAuth();
-    UserStorageService.clearUserData();
-    setUsername("");
-    navigateToHome();
-  }
 
   // Profile btn functionality
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -26,8 +19,6 @@ export default function AccountDropdownNav() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const [username, setUsername] = useState(UserStorageService.getUsername);
 
   const getUserLoggedInMenu = () => {
     return (
@@ -69,7 +60,7 @@ export default function AccountDropdownNav() {
             <MenuItem>{username}</MenuItem>
             <Divider />
             <MenuItem onClick={navigateToProfile}>View Profile</MenuItem>
-            <MenuItem onClick={handleLogOut}>Sign Out</MenuItem>
+            <MenuItem onClick={logoutUser}>Sign Out</MenuItem>
           </Menu>
         </>
     );

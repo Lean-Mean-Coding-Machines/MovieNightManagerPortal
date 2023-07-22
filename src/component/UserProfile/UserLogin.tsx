@@ -9,13 +9,12 @@ import {
     InputLabel
 } from "@mui/material";
 import ResetModal from "../../modals/ResetModal";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import useModal from "../../hooks/useModal";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IUserAuthRequest from "../../model/user/IUserAuthRequest";
-import UserService from "../../service/UserService";
-import UserStorageService from "../../service/UserStorageService";
+import {UserContext} from "../../context/UserContext";
 
 interface userRegisterProps {
     handleHomeNav: () => void,
@@ -24,6 +23,8 @@ interface userRegisterProps {
 }
 
 export function UserLogin(props: userRegisterProps) {
+
+    const {loginUser} = useContext(UserContext);
 
     const {isOpen, toggle} = useModal();
 
@@ -53,15 +54,7 @@ export function UserLogin(props: userRegisterProps) {
     const handleLogin = (event: React.SyntheticEvent) => {
         event.preventDefault();
 
-        UserService.authUser(formValues)
-            .then(
-                (res) => {
-                    if (res) {
-                        UserStorageService.setUserData(res);
-                        props.handleHomeNav();
-                    }
-                }
-            );
+        loginUser(formValues);
     }
 
     return (
