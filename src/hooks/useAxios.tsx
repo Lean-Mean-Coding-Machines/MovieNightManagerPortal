@@ -18,7 +18,7 @@ const useAxios = () => {
     axiosInstance.interceptors.request.use(async req => {
 
         if (authToken !== "") {
-            axiosInstance.defaults.headers['Authorization'] = `Bearer ${authToken}`;
+            req.headers.Authorization = `Bearer ${authToken}`;
 
             const user = jwt_decode<JwtPayload>(authToken);
             const isExpired = dayjs.unix(user.exp!).diff(dayjs()) < 1; // TODO :: Change these parameters
@@ -39,7 +39,7 @@ const useAxios = () => {
                 logoutUser();
             }
         } else {
-            axiosInstance.defaults.headers['Authorization'] = '';
+            req.headers.Authorization = '';
         }
 
         return req;
