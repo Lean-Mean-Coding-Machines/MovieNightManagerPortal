@@ -1,23 +1,20 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
 import Button from '@mui/material/Button';
-import Profile from '../../component/UserProfile/Profile';
-import Password from '../../component/UserProfile/Password';
-import Email from '../../component/UserProfile/Email';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 import EditProfilePicModal from '../../modals/EditProfilePicModal';
-import {useEffect, useState} from 'react';
-import {TextField} from "@mui/material";
-import MovieNightSegmentService from "../../service/MovieNightSegmentService";
-import UserService from "../../service/UserService";
-import UserStorageService from "../../service/UserStorageService";
+import {useContext, useEffect, useState} from 'react';
+import {Stack, TextField} from "@mui/material";
+import {UserContext} from "../../context/UserContext";
+import useAxios from "../../hooks/useAxios";
+import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
+import INomination from "../../model/INomination";
+import NominationCard from "../../component/nomination/NominationCard";
+import INominationLike from "../../model/INominationLike";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -33,9 +30,11 @@ const emptyUser: IUser = {
     email: "",
     nominations: [],
     nominationLikes: []
-}
+};
 
 export function ProfilePage() {
+    const {userId} = useContext(UserContext);
+
     const [value, setValue] = useState(0);
     const navigate = useNavigate();
     const navigateHome = () => {
@@ -51,10 +50,11 @@ export function ProfilePage() {
     const [userLoading, setUserLoading] = useState(true);
     const [user, setUser] = useState(emptyUser);
 
+    const api = useAxios();
+
     useEffect(() => {
-        const userId = UserStorageService.getUserId();
         if (userId) {
-            UserService.getUserDetails(userId)
+            api.get<IMnmApiResponse<IUser>>("/user/details/" + userId)
                 .then(
                     (res) => {
                         if (res.data.status.success && res.data.data != null) {
@@ -65,9 +65,9 @@ export function ProfilePage() {
                     (err) => console.log(err))
                 .catch((err) => console.log(err.message));
         } else {
-            navigateHome();
+            navigate('/');
         }
-    }, []);
+    }, [userId]);
 
     return (
         <>
@@ -125,7 +125,21 @@ export function ProfilePage() {
                 marginLeft: 15
             }}/>
 
+            <h3 style={{marginLeft: 15, marginBottom: 15, alignSelf: 'left'}}>Your Nominations</h3>
 
+            <Stack direction='row' spacing={2}>
+                {user.nominations.map((nom: INomination) => (<NominationCard nomination={nom}/>))}
+            </Stack>
+
+
+            <hr style={{
+                color: '#000000',
+                backgroundColor: '#000000',
+                height: .1,
+                borderColor: '#000000',
+                width: 625,
+                marginLeft: 15
+            }}/>
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>

@@ -27,13 +27,24 @@ const clearUserData = () => {
     setUserId(0);
 }
 
+const setAuthToken = function (res: IUserAuthResponse) {
+    localStorage.setItem("authToken", res.token);
+};
+
+const getAuthToken = function () {
+    return localStorage.getItem("authToken") === null ? "" : localStorage.getItem("authToken")!.toString();
+};
+
+
 const UserStorageService = {
     setUserData,
     getUsername,
     setUsername,
     getUserId,
     setUserId,
-    clearUserData
+    clearUserData,
+    setAuthToken,
+    getAuthToken
 };
 
 export default UserStorageService;

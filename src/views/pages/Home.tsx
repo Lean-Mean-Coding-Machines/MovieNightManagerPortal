@@ -7,7 +7,8 @@ import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 import MovieNightSegment from '../../component/MovieNightSegment';
 import IMovieNightSegment from '../../model/IMovieNightSegment';
-import MovieNightSegmentService from '../../service/MovieNightSegmentService';
+import useAxios from "../../hooks/useAxios";
+import IMnmApiResponse from "../../model/IMnmApiResponse";
 
 export function HomePage() {
 
@@ -18,9 +19,11 @@ export function HomePage() {
   const { isOpen, toggle } = useModal();
 
   const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+
+  const api = useAxios();
   
   useEffect(() => {
-    MovieNightSegmentService.getCurrentSegment()
+    api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
       .then(
         (res) => {
           if (res.data.status.success && res.data.data != null) {
@@ -33,7 +36,7 @@ export function HomePage() {
   }, []);
 
   return (
-    <Box className='App' style={{ backgroundColor: 'ghostwhite', height: '100vh' }}>
+    <>
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
@@ -57,6 +60,6 @@ export function HomePage() {
           <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} segment={segment}/>
         </Grid2>
       </Grid2>
-    </Box>
+    </>
   );
 }
