@@ -2,7 +2,7 @@ import React from 'react';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import NominationCard from './nomination/NominationCard';
 import { Stack } from '@mui/material';
-import INomination from '../model/INomination';
+import INomination from '../model/nomination/INomination';
 
 interface MovieNightSegmentProps {
   handleAppLoadingChange: (newState: boolean) => void;

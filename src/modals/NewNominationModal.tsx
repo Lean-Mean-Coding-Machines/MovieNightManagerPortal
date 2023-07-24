@@ -1,4 +1,4 @@
-import {Box, Button, FormControl, IconButton, Input, InputLabel} from "@mui/material";
+import {Box, Button, FormControl, IconButton, Input, InputLabel, List, ListItem, Divider, ListItemText, ListItemAvatar, Avatar, Typography} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React, {FormEvent, useContext, useEffect, useState} from "react";
 import '../assets/NominationModal.css';
@@ -11,6 +11,8 @@ import IMovieNightSegment from "../model/IMovieNightSegment";
 import useAxios from "../hooks/useAxios";
 import {UserContext} from "../context/UserContext";
 import IMnmApiResponse from "../model/IMnmApiResponse";
+import ITmdbResult from "../model/ITmdbResult";
+import IMovieSearchResult from "../model/IMovieSearchResult";
 
 interface NewNominationProps {
     isOpen: boolean,
@@ -25,6 +27,7 @@ interface nominationForm {
     watchDate?: string,
     watchTime?: string,
     watchType?: string,
+    posterPath?: string,
     userId: number,
 }
 
@@ -34,8 +37,20 @@ const defaultNominationForm: nominationForm = ({
     watchDate: undefined,
     watchTime: undefined,
     watchType: 'ANY',
+    posterPath: undefined,
     userId: 0,
 });
+
+const listStyle = {
+    position: 'fixed',
+    zIndex: 1000,
+    bottom: '50px',
+    maxHeight: 300,
+    overflowY: 'scroll',
+    width: '100%',
+    maxWidth: 360,
+    bgcolor: 'background.paper'
+}
 
 export default function NewNominationModal(props: NewNominationProps) {
 
@@ -50,6 +65,9 @@ export default function NewNominationModal(props: NewNominationProps) {
 
     function resetNominationState() {
         setNominationState(defaultNominationForm);
+        setMovieOptions([]);
+        setSelectedMovie(null);
+        setSearchTitle("");
     }
 
     const handleSubmit = (event: React.SyntheticEvent) => {
@@ -77,13 +95,24 @@ export default function NewNominationModal(props: NewNominationProps) {
             );
     }
 
-    function updateNominationField(event: any) {
+    const [selectedMovie, setSelectedMovie] = useState<IMovieSearchResult | null>(null);
+    const [searchTitle, setSearchTitle] = useState("");
+    const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const handleMovieSearch = (event: any) => {
         event.preventDefault();
-        const {name, value} = event.target;
-        setNominationState({
-            ...nominationForm,
-            [name]: value,
-        });
+        setIsSearching(true);
+        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>("/tmdb/movie/search", { params: { title: searchTitle}})
+            .then(
+                (res) => {
+                    if (res.data.data && res.data.status.success) {
+                        setMovieOptions(res.data.data.results);
+                    }
+                },
+                (err) => console.log(err)
+            )
+            .catch((err) => console.log(err.message))
+            .finally(() => setIsSearching(false));
     }
 
     const startDay = dayjs(props.segment.nominationLockDate);
@@ -92,6 +121,15 @@ export default function NewNominationModal(props: NewNominationProps) {
         setNominationState({
             ...nominationForm,
             watchDate: selectedWatchDate.format("YYYY-MM-DDT00:00:00.000")
+        });
+    }
+
+    const updateMovieSelection = (movie: IMovieSearchResult | null) => {
+        setSelectedMovie(movie);
+        setNominationState({
+            ...nominationForm,
+            movieTitle: movie ? movie.title : undefined,
+            posterPath: movie ? movie.posterPath : undefined
         });
     }
 
@@ -114,7 +152,7 @@ export default function NewNominationModal(props: NewNominationProps) {
             {props.isOpen && (
                 <div className="nomination-modal-overlay">
                     <div className="nomination-modal-box">
-                        <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Film</span>
+                        <span style={{fontWeight: 'bold', fontSize: 40, fontFamily: 'SoraBold'}}>Nominate a Movie</span>
                         <div style={{float: 'right'}} onClick={props.toggle}>
                             <IconButton>
                                 <CloseIcon/>
@@ -134,28 +172,94 @@ export default function NewNominationModal(props: NewNominationProps) {
                         >
                             <div className="nomination-inputs-container">
                                 {/* Film Name Input */}
-                                <div>
-                                    <FormControl variant='standard'>
-                                        <InputLabel htmlFor='standard-adornment-film-name'>
-                                            Film Name
-                                        </InputLabel>
-                                        <Input required name="movieTitle" sx={{width: 300,}} id='nomination-name-input'
-                                               value={nominationForm.movieTitle} onChange={updateNominationField}/>
-                                    </FormControl>
-                                </div>
+                                <FormControl variant='standard'>
+                                    <InputLabel htmlFor='standard-adornment-film-name'>
+                                        Movie Name
+                                    </InputLabel>
+                                    <Input required name="titleSearch" sx={{width: 300}} id='nomination-name-input'
+                                           value={searchTitle} onChange={(event: any) => setSearchTitle(event.target.value)}/>
+                                </FormControl>
 
-                                <div>
-                                    {/* Watch Date Picker */}
-                                    <DateSelector handleChangeDate={updateWatchDate} startDay={startDay}
-                                                  endDay={endDay}/>
-                                    {/* Watch Time Picker */}
-                                    <TimeSelector handleChangeTime={updateWatchTime}/>
-                                </div>
+                                <Button disabled={searchTitle === '' || isSearching} onClick={handleMovieSearch}>
+                                    {isSearching ? "Searching" : "Search"}
+                                </Button>
+
+                                <Box hidden={selectedMovie === null}>
+                                    <h3>Chosen Movie</h3>
+                                    <List sx={{maxHeight: 300, width: '100%', maxWidth: 360}}>
+                                        <ListItem alignItems="flex-start">
+                                            <ListItemAvatar>
+                                                {
+                                                    selectedMovie ?
+                                                        <Avatar alt="Movie Poster" src={`https://image.tmdb.org/t/p/w500${selectedMovie.posterPath}`} /> :
+                                                        <></>
+                                                }
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={selectedMovie ? selectedMovie.title : ""}
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            sx={{ display: 'inline' }}
+                                                            component="span"
+                                                            variant="body2"
+                                                            color="text.primary"
+                                                        >
+                                                            Release Date:
+                                                        </Typography>
+                                                        {selectedMovie ? selectedMovie.releaseDate : ""}
+                                                    </React.Fragment>
+                                                }
+                                            />
+                                        </ListItem>
+                                    </List>
+                                </Box>
+
+                                <Button onClick={() => { setMovieOptions([]); updateMovieSelection(null); }}>
+                                    Clear
+                                </Button>
+
+                                <List hidden={movieOptions.length === 0} sx={listStyle}>
+                                    {
+                                        movieOptions.map(option => (
+                                        <>
+                                            <ListItem alignItems="flex-start" onClick={() => { updateMovieSelection(option); setMovieOptions([]); }} sx={{'&:hover': { background: "rgba(0,0,0,0.5)", cursor: 'pointer'}}}>
+                                                <ListItemAvatar>
+                                                    <Avatar alt="Movie Poster" src={`https://image.tmdb.org/t/p/w500${option.posterPath}`} />
+                                                </ListItemAvatar>
+                                                <ListItemText
+                                                    primary={option.title}
+                                                    secondary={
+                                                        <React.Fragment>
+                                                            <Typography
+                                                                sx={{ display: 'inline' }}
+                                                                component="span"
+                                                                variant="body2"
+                                                                color="text.primary"
+                                                            >
+                                                                Release Date:
+                                                            </Typography>
+                                                            {option.releaseDate}
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                            </ListItem>
+                                            <Divider variant="inset" component="li" />
+                                        </>
+                                    ))
+                                    }
+                                </List>
+
+                                {/* Watch Date Picker */}
+                                <DateSelector handleChangeDate={updateWatchDate} startDay={startDay}
+                                              endDay={endDay}/>
+                                {/* Watch Time Picker */}
+                                <TimeSelector handleChangeTime={updateWatchTime}/>
 
                                 {/* Watch Type Picker */}
-                                <div style={{marginTop: 15}}>
+                                <span style={{marginTop: 15}}>
                                     <WatchTypeDDLSelector updateWatchType={updateWatchType}/>
-                                </div>
+                                </span>
                             </div>
 
                             {/* Submit Btn */}

@@ -37,7 +37,7 @@ export function HomePage() {
   
   useEffect(() => {
       getMovieNightSegment();
-  });
+  }, []);
 
   return (
     <>
