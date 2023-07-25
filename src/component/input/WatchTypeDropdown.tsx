@@ -23,11 +23,11 @@ function WatchTypeDDLSelector (props: typeSelectorProps) {
     <FormControl fullWidth>
     <InputLabel variant="standard" htmlFor="watchType"> Watch Type </InputLabel>
     <NativeSelect inputProps={{name: 'watchType', id: 'watchType',}} value={type} onChange={(newValue) => handleTypeChange(newValue)} >
-      <option value={'Any'}>Any</option>
-      <option value={'Outside'}>Outside</option>
-      <option value={'Inside'}>Inside</option>
-      <option value={'Fire'}>Firepit</option>
-      <option value={'Pool'}>Pool</option>
+      <option value={'ANY'}>Any</option>
+      <option value={'OUTSIDE'}>Outside</option>
+      <option value={'INSIDE'}>Inside</option>
+      <option value={'FIRE'}>Firepit</option>
+      <option value={'POOL'}>Pool</option>
     </NativeSelect>
     </FormControl>
   );

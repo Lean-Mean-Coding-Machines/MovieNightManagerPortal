@@ -2,7 +2,7 @@ import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import React, { useEffect, useState } from 'react';
-import NewNomintationModal from '../../modals/NewNomintationModal';
+import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
 import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 import MovieNightSegment from '../../component/MovieNightSegment';
@@ -21,18 +21,22 @@ export function HomePage() {
   const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
 
   const api = useAxios();
+
+  const getMovieNightSegment = () => {
+      api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
+          .then(
+              (res) => {
+                  if (res.data.status.success && res.data.data != null) {
+                      setSegment(res.data.data);
+                  }
+                  handleAppLoadingChange(false);
+              },
+              (err) => console.log(err))
+          .catch((err) => console.log(err.message));
+  }
   
   useEffect(() => {
-    api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
-      .then(
-        (res) => {
-          if (res.data.status.success && res.data.data != null) {
-            setSegment(res.data.data);
-          }
-          handleAppLoadingChange(false);
-        },
-        (err) => console.log(err))
-      .catch((err) => console.log(err.message));
+      getMovieNightSegment();
   }, []);
 
   return (
@@ -54,7 +58,7 @@ export function HomePage() {
             <Button endIcon={<LocalMoviesIcon />} onClick={toggle} variant='contained' sx={{ width: 200, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }} id='nomination-btn'>
               Nominate a film
             </Button>
-            <NewNomintationModal isOpen={isOpen} toggle={toggle} segment={segment}></NewNomintationModal>            
+            <NewNominationModal isOpen={isOpen} toggle={toggle} segment={segment} segmentRefresh={getMovieNightSegment}></NewNominationModal>
           </div>
           {/* Movie Night Segment */}
           <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} segment={segment}/>

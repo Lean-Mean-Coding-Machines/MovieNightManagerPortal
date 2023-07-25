@@ -1,5 +1,5 @@
-import INomination from "../INomination";
-import INominationLike from "../INominationLike";
+import INomination from "../nomination/INomination";
+import INominationLike from "../nomination/INominationLike";
 
 export default interface IUser {
     id: number,

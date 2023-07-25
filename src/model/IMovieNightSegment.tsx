@@ -1,4 +1,4 @@
-import INomination from "./INomination";
+import INomination from "./nomination/INomination";
 
 export default interface IMovieNightSegment {
     id: number,

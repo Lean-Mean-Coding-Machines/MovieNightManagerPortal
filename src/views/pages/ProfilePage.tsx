@@ -12,9 +12,9 @@ import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
-import INomination from "../../model/INomination";
+import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
-import INominationLike from "../../model/INominationLike";
+import INominationLike from "../../model/nomination/INominationLike";
 
 interface TabPanelProps {
     children?: React.ReactNode;
