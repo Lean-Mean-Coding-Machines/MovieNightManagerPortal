@@ -75,6 +75,7 @@ export const UserProvider = ({children}: UserProviderProps) => {
     let logoutUser = () => {
         setAuthToken("");
         setUserId(0);
+        setUsername("");
         localStorage.removeItem('authToken');
         UserStorageService.clearUserData();
         navigate('/login');

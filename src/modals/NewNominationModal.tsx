@@ -23,23 +23,13 @@ interface NewNominationProps {
 
 interface nominationForm {
     segmentId: number,
-    movieTitle?: string,
-    watchDate?: string,
-    watchTime?: string,
-    watchType?: string,
-    posterPath?: string,
+    movieTitle: string,
+    watchDate: string,
+    watchTime: string,
+    watchType: string,
+    posterPath: string,
     userId: number,
 }
-
-const defaultNominationForm: nominationForm = ({
-    segmentId: 0,
-    movieTitle: undefined,
-    watchDate: undefined,
-    watchTime: undefined,
-    watchType: 'ANY',
-    posterPath: undefined,
-    userId: 0,
-});
 
 const listStyle = {
     position: 'fixed',
@@ -57,11 +47,21 @@ export default function NewNominationModal(props: NewNominationProps) {
     const api = useAxios();
     const {userId} = useContext(UserContext);
 
-    const [nominationForm, setNominationState] = useState(defaultNominationForm);
-
     useEffect(() => {
         setNominationState((p) => ({...p, segmentId: props.segment.id, userId: userId}));
     }, [props.segment.id, userId]);
+
+    const defaultNominationForm: nominationForm = ({
+        segmentId: props.segment.id,
+        movieTitle: '',
+        watchDate: '',
+        watchTime: '',
+        watchType: 'ANY',
+        posterPath: '',
+        userId: userId,
+    });
+
+    const [nominationForm, setNominationState] = useState(defaultNominationForm);
 
     function resetNominationState() {
         setNominationState(defaultNominationForm);
@@ -128,8 +128,8 @@ export default function NewNominationModal(props: NewNominationProps) {
         setSelectedMovie(movie);
         setNominationState({
             ...nominationForm,
-            movieTitle: movie ? movie.title : undefined,
-            posterPath: movie ? movie.posterPath : undefined
+            movieTitle: movie ? movie.title : "",
+            posterPath: movie ? movie.posterPath : ""
         });
     }
 
