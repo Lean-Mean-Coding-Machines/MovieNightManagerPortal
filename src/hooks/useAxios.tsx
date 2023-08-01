@@ -1,10 +1,8 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
-import {useNavigate} from "react-router";
 import {useContext} from "react";
 import {UserContext} from "../context/UserContext";
 import jwt_decode, {JwtPayload} from "jwt-decode";
 import dayjs from "dayjs";
-import http from "../http-common";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 
@@ -17,7 +15,7 @@ const useAxios = () => {
 
     axiosInstance.interceptors.request.use(async req => {
 
-        if (authToken !== "") {
+        if (authToken !== '') {
             req.headers.Authorization = `Bearer ${authToken}`;
 
             const user = jwt_decode<JwtPayload>(authToken);
@@ -35,7 +33,7 @@ const useAxios = () => {
                 setUserAuthData(response.data.data);
                 req.headers.Authorization = `Bearer ${response.data.data.token}`;
             } else {
-                console.log("Error refreshing token");
+                console.log('Error refreshing token');
                 logoutUser();
             }
         } else {
@@ -49,7 +47,7 @@ const useAxios = () => {
     axiosInstance.interceptors.response.use((res: AxiosResponse<IMnmApiResponse<any>>) => {
         switch (res.data.status.code) {
             case 401: // TODO :: toaster error?
-                console.log("User not authorized");
+                console.log('User not authorized');
                 break;
         }
 
@@ -60,7 +58,7 @@ const useAxios = () => {
                 logoutUser();
                 break;
             case 401: // TODO :: toaster error?
-                console.log("User not authorized");
+                console.log('User not authorized');
                 break;
         }
     });
