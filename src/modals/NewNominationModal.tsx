@@ -67,7 +67,7 @@ export default function NewNominationModal(props: NewNominationProps) {
         setNominationState(defaultNominationForm);
         setMovieOptions([]);
         setSelectedMovie(null);
-        setSearchTitle("");
+        setSearchTitle('');
     }
 
     const handleSubmit = (event: React.SyntheticEvent) => {
@@ -96,13 +96,13 @@ export default function NewNominationModal(props: NewNominationProps) {
     }
 
     const [selectedMovie, setSelectedMovie] = useState<IMovieSearchResult | null>(null);
-    const [searchTitle, setSearchTitle] = useState("");
+    const [searchTitle, setSearchTitle] = useState('');
     const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const handleMovieSearch = (event: any) => {
         event.preventDefault();
         setIsSearching(true);
-        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>("/tmdb/movie/search", { params: { title: searchTitle}})
+        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>('/tmdb/movie/search', { params: { title: searchTitle}})
             .then(
                 (res) => {
                     if (res.data.data && res.data.status.success) {
@@ -120,7 +120,7 @@ export default function NewNominationModal(props: NewNominationProps) {
     const updateWatchDate = (selectedWatchDate: dayjs.Dayjs) => {
         setNominationState({
             ...nominationForm,
-            watchDate: selectedWatchDate.format("YYYY-MM-DDT00:00:00.000")
+            watchDate: selectedWatchDate.format('YYYY-MM-DDT00:00:00.000')
         });
     }
 
@@ -128,8 +128,8 @@ export default function NewNominationModal(props: NewNominationProps) {
         setSelectedMovie(movie);
         setNominationState({
             ...nominationForm,
-            movieTitle: movie ? movie.title : "",
-            posterPath: movie ? movie.posterPath : ""
+            movieTitle: movie ? movie.title : '',
+            posterPath: movie ? movie.posterPath : ''
         });
     }
 
