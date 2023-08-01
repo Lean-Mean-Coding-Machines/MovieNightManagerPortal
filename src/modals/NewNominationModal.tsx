@@ -23,23 +23,13 @@ interface NewNominationProps {
 
 interface nominationForm {
     segmentId: number,
-    movieTitle?: string,
-    watchDate?: string,
-    watchTime?: string,
-    watchType?: string,
-    posterPath?: string,
+    movieTitle: string,
+    watchDate: string,
+    watchTime: string,
+    watchType: string,
+    posterPath: string,
     userId: number,
 }
-
-const defaultNominationForm: nominationForm = ({
-    segmentId: 0,
-    movieTitle: undefined,
-    watchDate: undefined,
-    watchTime: undefined,
-    watchType: 'ANY',
-    posterPath: undefined,
-    userId: 0,
-});
 
 const listStyle = {
     position: 'fixed',
@@ -57,17 +47,27 @@ export default function NewNominationModal(props: NewNominationProps) {
     const api = useAxios();
     const {userId} = useContext(UserContext);
 
-    const [nominationForm, setNominationState] = useState(defaultNominationForm);
-
     useEffect(() => {
         setNominationState((p) => ({...p, segmentId: props.segment.id, userId: userId}));
     }, [props.segment.id, userId]);
+
+    const defaultNominationForm: nominationForm = ({
+        segmentId: props.segment.id,
+        movieTitle: '',
+        watchDate: '',
+        watchTime: '',
+        watchType: 'ANY',
+        posterPath: '',
+        userId: userId,
+    });
+
+    const [nominationForm, setNominationState] = useState(defaultNominationForm);
 
     function resetNominationState() {
         setNominationState(defaultNominationForm);
         setMovieOptions([]);
         setSelectedMovie(null);
-        setSearchTitle("");
+        setSearchTitle('');
     }
 
     const handleSubmit = (event: React.SyntheticEvent) => {
@@ -96,13 +96,13 @@ export default function NewNominationModal(props: NewNominationProps) {
     }
 
     const [selectedMovie, setSelectedMovie] = useState<IMovieSearchResult | null>(null);
-    const [searchTitle, setSearchTitle] = useState("");
+    const [searchTitle, setSearchTitle] = useState('');
     const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
     const handleMovieSearch = (event: any) => {
         event.preventDefault();
         setIsSearching(true);
-        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>("/tmdb/movie/search", { params: { title: searchTitle}})
+        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>('/tmdb/movie/search', { params: { title: searchTitle}})
             .then(
                 (res) => {
                     if (res.data.data && res.data.status.success) {
@@ -120,7 +120,7 @@ export default function NewNominationModal(props: NewNominationProps) {
     const updateWatchDate = (selectedWatchDate: dayjs.Dayjs) => {
         setNominationState({
             ...nominationForm,
-            watchDate: selectedWatchDate.format("YYYY-MM-DDT00:00:00.000")
+            watchDate: selectedWatchDate.format('YYYY-MM-DDT00:00:00.000')
         });
     }
 
@@ -128,8 +128,8 @@ export default function NewNominationModal(props: NewNominationProps) {
         setSelectedMovie(movie);
         setNominationState({
             ...nominationForm,
-            movieTitle: movie ? movie.title : undefined,
-            posterPath: movie ? movie.posterPath : undefined
+            movieTitle: movie ? movie.title : '',
+            posterPath: movie ? movie.posterPath : ''
         });
     }
 

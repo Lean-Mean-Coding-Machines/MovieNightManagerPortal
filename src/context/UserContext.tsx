@@ -21,8 +21,8 @@ interface UserProviderProps {
 
 const defaultState: UserContextInterface = {
     userId: 0,
-    username: "",
-    authToken: "",
+    username: '',
+    authToken: '',
     setUserAuthData: (data: IUserAuthResponse) => {},
     loginUser: (userRequest: IUserAuthRequest) => {},
     logoutUser: () => {}
@@ -54,7 +54,7 @@ export const UserProvider = ({children}: UserProviderProps) => {
 
                         navigate('/');
                     } else {
-                        console.log("Could not authenticate user");
+                        console.log('Could not authenticate user');
                     }
 
                     return res.data.data;
@@ -73,8 +73,9 @@ export const UserProvider = ({children}: UserProviderProps) => {
     }
 
     let logoutUser = () => {
-        setAuthToken("");
+        setAuthToken('');
         setUserId(0);
+        setUsername('');
         localStorage.removeItem('authToken');
         UserStorageService.clearUserData();
         navigate('/login');
