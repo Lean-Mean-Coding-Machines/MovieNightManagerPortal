@@ -71,13 +71,6 @@ export function ProfilePage() {
 
     return (
         <>
-            <nav>
-                <Button onClick={navigateHome}>MnM Logo</Button>
-                <AccountDropdownNav/>
-            </nav>
-            <span>
-
-        </span>
             <h1 style={{marginLeft: 15}}>Your Profile</h1>
 
             <hr style={{

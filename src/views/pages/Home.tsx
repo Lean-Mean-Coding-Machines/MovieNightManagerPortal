@@ -1,69 +1,82 @@
-import { Backdrop, Box, Button, CircularProgress } from '@mui/material';
-import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
-import Grid2 from '@mui/material/Unstable_Grid2';
-import React, { useEffect, useState } from 'react';
+import {Backdrop, Box, CircularProgress, Fab, Stack, Tooltip} from '@mui/material';
+import React, {useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
-import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
-import MovieNightSegment from '../../component/MovieNightSegment';
 import IMovieNightSegment from '../../model/IMovieNightSegment';
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
+import AddIcon from '@mui/icons-material/Add';
+import INomination from "../../model/nomination/INomination";
+import NominationCard from "../../component/nomination/NominationCard";
 
 export function HomePage() {
 
-  const [appLoading, setAppLoading] = useState(true);
+    const [appLoading, setAppLoading] = useState(true);
 
-  const handleAppLoadingChange = (newState: boolean) => { setAppLoading(newState) };
+    const handleAppLoadingChange = (newState: boolean) => {
+        setAppLoading(newState)
+    };
 
-  const { isOpen, toggle } = useModal();
+    const {isOpen, toggle} = useModal();
 
-  const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+    const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
 
-  const api = useAxios();
+    const api = useAxios();
 
-  const getMovieNightSegment = () => {
-      api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
-          .then(
-              (res) => {
-                  if (res.data.status.success && res.data.data != null) {
-                      setSegment(res.data.data);
-                  }
-                  handleAppLoadingChange(false);
-              },
-              (err) => console.log(err))
-          .catch((err) => console.log(err.message));
-  }
-  
-  useEffect(() => {
-      getMovieNightSegment();
-  }, []);
+    const getMovieNightSegment = () => {
+        api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
+            .then(
+                (res) => {
+                    if (res.data.status.success && res.data.data != null) {
+                        setSegment(res.data.data);
+                    }
+                    handleAppLoadingChange(false);
+                },
+                (err) => console.log(err))
+            .catch((err) => console.log(err.message));
+    }
 
-  return (
-    <>
-      <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={appLoading}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
+    useEffect(() => {
+        getMovieNightSegment();
+    }, []);
 
-      <AccountDropdownNav />
+    if (segment.nominationStartDate) {
+        return (
+            <>
+                <Backdrop sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}} open={appLoading}>
+                    <CircularProgress color='inherit'/>
+                </Backdrop>
 
-      <Grid2 container>
-        <Grid2 xs={12}>
-          <Box component='h1'>
-            Movie Night Manager
-          </Box>
-        </Grid2>
-        <Grid2 xs={12}>
-          <div>
-            <Button endIcon={<LocalMoviesIcon />} onClick={toggle} variant='contained' sx={{ width: 200, backgroundColor: '#1F1F1F', borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }} id='nomination-btn'>
-              Nominate a film
-            </Button>
-            <NewNominationModal isOpen={isOpen} toggle={toggle} segment={segment} segmentRefresh={getMovieNightSegment}></NewNominationModal>
-          </div>
-          {/* Movie Night Segment */}
-          <MovieNightSegment handleAppLoadingChange={handleAppLoadingChange} segment={segment}/>
-        </Grid2>
-      </Grid2>
-    </>
-  );
+                <Box sx={{display: 'flex', flexDirection: 'column' }}>
+                    <h2>
+                        {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
+                        {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
+                    </h2>
+                    <Stack direction='row' justifyContent={{ xs: 'center', sm: 'space-between' }} spacing={2} useFlexGap flexWrap="wrap">
+                        {segment.nominations.map((nom: INomination) => (<NominationCard nomination={nom} />))}
+                    </Stack>
+                </Box>
+
+
+                <Tooltip title="Nominate a Movie">
+                    <Fab onClick={toggle} sx={{
+                        visibility: isOpen ? 'hidden' : 'visible',
+                        backgroundColor: '#F8E924',
+                        position: 'absolute',
+                        bottom: 64,
+                        right: 64,
+                        ':hover': {backgroundColor: '#38CD2C'}
+                    }}
+                         aria-label="add">
+                        <AddIcon/>
+                    </Fab>
+                </Tooltip>
+
+                <NewNominationModal isOpen={isOpen} toggle={toggle} segment={segment}
+                                    segmentRefresh={getMovieNightSegment}/>
+            </>
+        );
+    } else {
+        return (<></>);
+    }
 }
