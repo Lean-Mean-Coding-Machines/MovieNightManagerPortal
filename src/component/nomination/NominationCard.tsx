@@ -59,7 +59,7 @@ export default function NominationCard(props: NominationCardsProps) {
 
     return (
         <Box key={props.nomination.id}>
-            <Card variant="outlined" sx={{display: 'flex', borderRadius: '10px'}}>
+            <Card variant="outlined" sx={{display: 'flex', borderRadius: '10px', width: '100%'}}>
 
                 <CardMedia
                     component="img"

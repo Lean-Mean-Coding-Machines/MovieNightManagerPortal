@@ -1,4 +1,4 @@
-import {Backdrop, Box, CircularProgress, Fab, Stack, Tooltip} from '@mui/material';
+import {Backdrop, Box, CircularProgress, Fab, Grid, Stack, Tooltip} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -47,16 +47,19 @@ export function HomePage() {
                     <CircularProgress color='inherit'/>
                 </Backdrop>
 
-                <Box sx={{display: 'flex', flexDirection: 'column' }}>
-                    <h2>
+                <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                    <h2 style={{textAlign: 'center'}}>
                         {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
-                    <Stack direction='row' justifyContent={{ xs: 'center', sm: 'space-between' }} spacing={2} useFlexGap flexWrap="wrap">
-                        {segment.nominations.map((nom: INomination) => (<NominationCard nomination={nom} />))}
-                    </Stack>
+                    <Grid container rowSpacing={2} columnSpacing={2}>
+                        {segment.nominations.map((nom: INomination) => (
+                            <Grid item xs={12} md={6} lg={4}>
+                                <NominationCard nomination={nom}/>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </Box>
-
 
                 <Tooltip title="Nominate a Movie">
                     <Fab onClick={toggle} sx={{
