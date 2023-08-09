@@ -1,5 +1,10 @@
 /* Global Application styles go here */
 
+#root {
+  height: 100vh;
+  background-color: ghostwhite;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -61,4 +66,14 @@ code {
 .profile-dropdown {
   float: right;
   margin: 1rem 2rem 0 0;
+}
+
+.purple-btn {
+  border-color: #54276F;
+  color: #54276F;
+}
+
+.purple-btn:hover {
+  color: #D1439E;
+  border-color: #D1439E;
 }

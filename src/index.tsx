@@ -26,9 +26,7 @@ root.render(
         <BrowserRouter>
             <ThemeProvider theme={theme}>
                 <UserProvider>
-                    <Box className='App' style={{backgroundColor: 'ghostwhite', height: '100vh'}}>
-                        <App/>
-                    </Box>
+                    <App/>
                     <ToastContainer/>
                 </UserProvider>
             </ThemeProvider>

@@ -59,9 +59,6 @@ export function UserLogin(props: userRegisterProps) {
 
     return (
         <>
-            <nav>
-                <Button onClick={props.handleHomeNav}>MnM Logo</Button>
-            </nav>
             <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
 
             <div className='user-login-container'>

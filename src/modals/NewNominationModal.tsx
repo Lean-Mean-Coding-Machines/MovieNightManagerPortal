@@ -12,7 +12,8 @@ import {
     ListItemAvatar,
     Avatar,
     Typography,
-    Container
+    Container,
+    Modal
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, {FormEvent, useContext, useEffect, useState} from 'react';
@@ -58,7 +59,10 @@ const listStyle = {
 }
 
 const modalStyle = {
-    zIndex: 1,
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
     display: 'block',
     background: 'white',
     width: {xs: '90%', lg: '35%'},
@@ -183,95 +187,137 @@ export default function NewNominationModal(props: NewNominationProps) {
     }
 
     return (
-        <>
-            {props.isOpen && (
-                <Box className='modal-overlay'>
-                    <Box sx={modalStyle}>
-                        <Box sx={{textAlign: 'center'}}>
-                            <Box
-                                component='span'
+        <Modal
+            open={props.isOpen}
+            onClose={props.toggle}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={modalStyle}>
+                <Box sx={{textAlign: 'center'}}>
+                    <Box
+                        component='span'
+                        sx={{
+                            fontWeight: 'bold',
+                            fontSize: {xs: 20, sm: 25, md: 30, lg: 35, xl: 40},
+                            fontFamily: 'SoraBold'
+                        }}>
+                        Nominate a Movie
+                    </Box>
+                    <div style={{float: 'right'}} onClick={props.toggle}>
+                        <IconButton>
+                            <CloseIcon/>
+                        </IconButton>
+                    </div>
+                </Box>
+
+                <Container>
+                    <Box
+                        component='form'
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            rowGap: '32px',
+                            mt: 2
+                        }}
+                        noValidate
+                        autoComplete='on'
+                        onSubmit={handleSubmit}
+                    >
+                        {/* Film Name Input */}
+                        <FormControl variant='standard'>
+                            <InputLabel htmlFor='standard-adornment-film-name'>
+                                Movie Name
+                            </InputLabel>
+                            <Input required name='titleSearch' sx={{width: {xs: '100%', lg: '50%'}}}
+                                   id='nomination-name-input'
+                                   value={searchTitle}
+                                   onChange={(event: any) => setSearchTitle(event.target.value)}/>
+                        </FormControl>
+
+                        <Box>
+                            <Button
                                 sx={{
-                                    fontWeight: 'bold',
-                                    fontSize: {xs: 20, sm: 25, md: 30, lg: 35, xl: 40},
-                                    fontFamily: 'SoraBold'
-                                }}>Nominate a Movie</Box>
-                            <div style={{float: 'right'}} onClick={props.toggle}>
-                                <IconButton>
-                                    <CloseIcon/>
-                                </IconButton>
-                            </div>
+                                    mr: 2,
+                                    borderColor: '#54276F',
+                                    color: '#54276F',
+                                    ':hover': {
+                                        color: '#D1439E',
+                                        borderColor: '#D1439E'
+                                    }
+                                }}
+                                variant='outlined'
+                                disabled={searchTitle === '' || isSearching}
+                                onClick={handleMovieSearch}>
+                                {isSearching ? 'Searching' : 'Search'}
+                            </Button>
+                            <Button
+                                sx={{
+                                    borderColor: '#54276F',
+                                    color: '#54276F',
+                                    ':hover': {
+                                        color: '#D1439E',
+                                        borderColor: '#D1439E'
+                                    }
+                                }}
+                                variant='outlined'
+                                onClick={() => {
+                                    setMovieOptions([]);
+                                    updateMovieSelection(null);
+                                    setSearchTitle('');
+                                }}>
+                                Clear
+                            </Button>
                         </Box>
 
-                        <Container>
-                            <Box
-                                component='form'
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    rowGap: '32px',
-                                    mt: 2
-                                }}
-                                noValidate
-                                autoComplete='on'
-                                onSubmit={handleSubmit}
-                            >
-                                {/* Film Name Input */}
-                                <FormControl variant='standard'>
-                                    <InputLabel htmlFor='standard-adornment-film-name'>
-                                        Movie Name
-                                    </InputLabel>
-                                    <Input required name='titleSearch' sx={{width: {xs: '100%', lg: '50%'}}}
-                                           id='nomination-name-input'
-                                           value={searchTitle}
-                                           onChange={(event: any) => setSearchTitle(event.target.value)}/>
-                                </FormControl>
+                        <Box hidden={selectedMovie === null}>
+                            <h3 style={{margin: 0, textAlign: 'center'}}>Chosen Movie</h3>
+                            <List sx={{maxHeight: 300, width: '100%', maxWidth: 360}}>
+                                <ListItem alignItems='flex-start' sx={{pb: 0}}>
+                                    <Avatar
+                                        sx={{height: '100px', width: '70px', mr: 2}}
+                                        variant='rounded'
+                                        alt='Movie Poster'
+                                        src={`https://image.tmdb.org/t/p/w500${selectedMovie ? selectedMovie.posterPath : ''}`}/>
+                                    <ListItemText
+                                        primary={selectedMovie ? selectedMovie.title : ''}
+                                        secondary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{display: 'inline'}}
+                                                    component='span'
+                                                    variant='body2'
+                                                    color='text.primary'
+                                                >
+                                                    Release Date:
+                                                </Typography>
+                                                {selectedMovie ? selectedMovie.releaseDate : ''}
+                                            </React.Fragment>
+                                        }
+                                    />
+                                </ListItem>
+                            </List>
+                        </Box>
 
-                                <Box>
-                                    <Button
-                                        sx={{
-                                            mr: 2,
-                                            borderColor: '#54276F',
-                                            color: '#54276F',
-                                            ':hover': {
-                                                color: '#D1439E',
-                                                borderColor: '#D1439E'
-                                            }
-                                        }}
-                                        variant='outlined'
-                                        disabled={searchTitle === '' || isSearching}
-                                        onClick={handleMovieSearch}>
-                                        {isSearching ? 'Searching' : 'Search'}
-                                    </Button>
-                                    <Button
-                                        sx={{
-                                            borderColor: '#54276F',
-                                            color: '#54276F',
-                                            ':hover': {
-                                                color: '#D1439E',
-                                                borderColor: '#D1439E'
-                                            }
-                                        }}
-                                        variant='outlined'
-                                        onClick={() => {
+                        <List hidden={movieOptions.length === 0} sx={listStyle}>
+                            {
+                                movieOptions.map(option => (
+                                    <>
+                                        <ListItem alignItems='flex-start' onClick={() => {
+                                            updateMovieSelection(option);
                                             setMovieOptions([]);
-                                            updateMovieSelection(null);
-                                            setSearchTitle('');
+                                        }} sx={{
+                                            '&:hover': {
+                                                background: 'rgba(0,0,0,0.5)',
+                                                cursor: 'pointer'
+                                            }
                                         }}>
-                                        Clear
-                                    </Button>
-                                </Box>
-
-                                <Box hidden={selectedMovie === null}>
-                                    <h3 style={{margin: 0, textAlign: 'center'}}>Chosen Movie</h3>
-                                    <List sx={{maxHeight: 300, width: '100%', maxWidth: 360}}>
-                                        <ListItem alignItems='flex-start' sx={{pb: 0}}>
-                                            <Avatar
-                                                sx={{height: '100px', width: '70px', mr: 2}}
-                                                variant='rounded'
-                                                alt='Movie Poster'
-                                                src={`https://image.tmdb.org/t/p/w500${selectedMovie ? selectedMovie.posterPath : ''}`}/>
+                                            <ListItemAvatar>
+                                                <Avatar alt='Movie Poster'
+                                                        src={`https://image.tmdb.org/t/p/w500${option.posterPath}`}/>
+                                            </ListItemAvatar>
                                             <ListItemText
-                                                primary={selectedMovie ? selectedMovie.title : ''}
+                                                primary={option.title}
                                                 secondary={
                                                     <React.Fragment>
                                                         <Typography
@@ -282,99 +328,60 @@ export default function NewNominationModal(props: NewNominationProps) {
                                                         >
                                                             Release Date:
                                                         </Typography>
-                                                        {selectedMovie ? selectedMovie.releaseDate : ''}
+                                                        {option.releaseDate}
                                                     </React.Fragment>
                                                 }
                                             />
                                         </ListItem>
-                                    </List>
-                                </Box>
+                                        <Divider variant='inset' component='li'/>
+                                    </>
+                                ))
+                            }
+                        </List>
 
-                                <List hidden={movieOptions.length === 0} sx={listStyle}>
-                                    {
-                                        movieOptions.map(option => (
-                                            <>
-                                                <ListItem alignItems='flex-start' onClick={() => {
-                                                    updateMovieSelection(option);
-                                                    setMovieOptions([]);
-                                                }} sx={{
-                                                    '&:hover': {
-                                                        background: 'rgba(0,0,0,0.5)',
-                                                        cursor: 'pointer'
-                                                    }
-                                                }}>
-                                                    <ListItemAvatar>
-                                                        <Avatar alt='Movie Poster'
-                                                                src={`https://image.tmdb.org/t/p/w500${option.posterPath}`}/>
-                                                    </ListItemAvatar>
-                                                    <ListItemText
-                                                        primary={option.title}
-                                                        secondary={
-                                                            <React.Fragment>
-                                                                <Typography
-                                                                    sx={{display: 'inline'}}
-                                                                    component='span'
-                                                                    variant='body2'
-                                                                    color='text.primary'
-                                                                >
-                                                                    Release Date:
-                                                                </Typography>
-                                                                {option.releaseDate}
-                                                            </React.Fragment>
-                                                        }
-                                                    />
-                                                </ListItem>
-                                                <Divider variant='inset' component='li'/>
-                                            </>
-                                        ))
-                                    }
-                                </List>
-
-                                <Box sx={{display: 'flex', flexDirection: {xs: 'column', lg: 'row'}}}>
-                                    <Box
-                                        sx={{
-                                            pr: {xs: 0, lg: 1},
-                                            pb: {xs: 1, lg: 0},
-                                            width: {xs: '100%', lg: '50%'},
-                                            flexGrow: 1
-                                        }}>
-                                        <DateSelector sx={{width: '100%', pr: {xs: 0, lg: 1}, flexGrow: 1}}
-                                                      handleChangeDate={updateWatchDate} startDay={startDay}
-                                                      endDay={endDay}/>
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            pl: {xs: 0, lg: 1},
-                                            pt: {xs: 1, lg: 0},
-                                            width: {xs: '100%', lg: '50%'},
-                                            flexGrow: 1
-                                        }}>
-                                        <TimeSelector sx={{width: '100%'}}
-                                                      handleChangeTime={updateWatchTime}/>
-                                    </Box>
-                                </Box>
-
-                                <WatchTypeDDLSelector sx={{width: {xs: '100%', lg: '50%'}}}
-                                                      updateWatchType={updateWatchType}/>
-
-
-                                <Button
-                                    type='submit'
-                                    variant='contained'
-                                    sx={{
-                                        width: 125,
-                                        color: 'black',
-                                        backgroundColor: '#F8E924',
-                                        borderRadius: 22,
-                                        ':hover': {backgroundColor: '#38CD2C'}
-                                    }}>
-                                    Submit
-                                </Button>
+                        <Box sx={{display: 'flex', flexDirection: {xs: 'column', lg: 'row'}}}>
+                            <Box
+                                sx={{
+                                    pr: {xs: 0, lg: 1},
+                                    pb: {xs: 1, lg: 0},
+                                    width: {xs: '100%', lg: '50%'},
+                                    flexGrow: 1
+                                }}>
+                                <DateSelector sx={{width: '100%', pr: {xs: 0, lg: 1}, flexGrow: 1}}
+                                              handleChangeDate={updateWatchDate} startDay={startDay}
+                                              endDay={endDay}/>
                             </Box>
-                        </Container>
+                            <Box
+                                sx={{
+                                    pl: {xs: 0, lg: 1},
+                                    pt: {xs: 1, lg: 0},
+                                    width: {xs: '100%', lg: '50%'},
+                                    flexGrow: 1
+                                }}>
+                                <TimeSelector sx={{width: '100%'}}
+                                              handleChangeTime={updateWatchTime}/>
+                            </Box>
+                        </Box>
+
+                        <WatchTypeDDLSelector sx={{width: {xs: '100%', lg: '50%'}}}
+                                              updateWatchType={updateWatchType}/>
+
+
+                        <Button
+                            type='submit'
+                            variant='contained'
+                            sx={{
+                                width: 125,
+                                color: 'black',
+                                backgroundColor: '#F8E924',
+                                borderRadius: 22,
+                                ':hover': {backgroundColor: '#38CD2C'}
+                            }}>
+                            Submit
+                        </Button>
                     </Box>
-                </Box>
-            )}
-        </>
+                </Container>
+            </Box>
+        </Modal>
     );
 }

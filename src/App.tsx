@@ -18,8 +18,8 @@ export function App() {
             <Route element={<WithNavLayout/>}>
                 <Route path='/' element={<HomePage/>}/>
                 <Route path='/profile' element={<ProfilePage/>}/>
+                <Route path='/login' element={<LoginPage/>}/>
             </Route>
-            <Route path='/login' element={<LoginPage/>}/>
         </Routes>
     );
 }

@@ -37,8 +37,10 @@ export function UserRegister(props: userRegisterProps) {
     const [formValues, setFormValues] = useState(defaultValues);
     const [submitErrorTxt, setSubmitErrorTxt] = useState("");
 
+    const navHeight = document.getElementById('header') != null ? document.getElementById('header')!.offsetHeight : 64;
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
+        const {name, value} = e.target;
         setFormValues({
             ...formValues,
             [name]: value,
@@ -188,113 +190,143 @@ export function UserRegister(props: userRegisterProps) {
     }
 
     return (
-        <>
-            <nav>
-                <Button onClick={props.handleHomeNav}>MnM Logo</Button>
-            </nav>
-
-            <div className='user-login-container'>
-                <h1>Create an account</h1>
-
-                <Box
-                    component="form"
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        '& .MuiTextField-root': { m: 1, width: '40ch' },
-                    }}
-                    noValidate
-                    autoComplete="on"
-                    onSubmit={handleSubmit}
-                >
-                    <TextField
-                        required
-                        label="First Name"
-                        name="firstName"
-                        id="create-user-firstname"
-                        error={!firstNameValid}
-                        value={formValues.firstName}
-                        onChange={handleInputChange}
-                        onBlur={validateFirstNameField}
-                        onFocus={() => { setFirstNameValid(true); setFirstNameErrorTxt(""); }}
-                        helperText={firstNameErrorTxt}
-                    />
-
-                    <TextField
-                        required
-                        label="Last Name"
-                        name="lastName"
-                        id="create-user-lastname"
-                        error={!lastNameValid}
-                        value={formValues.lastName}
-                        onChange={handleInputChange}
-                        onBlur={validateLastNameField}
-                        onFocus={() => { setLastNameValid(true); setLastNameErrorTxt(""); }}
-                        helperText={lastNameErrorTxt}
-                    />
-
-                    <TextField
-                        required
-                        label="Username"
-                        name="username"
-                        id="create-user-username"
-                        error={!usernameValid}
-                        value={formValues.username}
-                        onChange={handleInputChange}
-                        onBlur={validateUsernameField}
-                        onFocus={() => { setUsernameValid(true); setUsernameErrorTxt(""); }}
-                        helperText={usernameErrorTxt}
-                    />
-
-                    <TextField
-                        required
-                        label="Email"
-                        name="email"
-                        id="create-user-email"
-                        error={!emailValid}
-                        value={formValues.email}
-                        onChange={handleInputChange}
-                        onBlur={validateEmailField}
-                        onFocus={() => { setEmailValid(true); setEmailErrorTxt(""); }}
-                        helperText={emailErrorTxt}
-                    />
-
-                    <TextField
-                        required
-                        label="Password"
-                        name="password"
-                        id="create-user-password"
-                        type="password"
-                        autoComplete="current-password"
-                        error={!passwordValid}
-                        value={formValues.password}
-                        onChange={handleInputChange}
-                        onBlur={validatePasswordField}
-                        onFocus={() => { setPasswordValid(true); setPasswordErrorTxt(""); }}
-                        helperText={passwordErrorTxt}
-                    />
-
-                    <Box component="span" sx={{ m: 1, color: 'red' }} hidden={submitErrorTxt === ""}>
-                        {submitErrorTxt}
-                    </Box>
-
-                    <Button
-                        sx={{ m: 1, width: '30ch' }}
-                        type="submit"
-                        variant="outlined"
-                        size="large"
-                        disabled={!firstNameValid || !lastNameValid || !usernameValid || !emailValid || !passwordValid}>
-                        Create
-                    </Button>
+            <Box
+                component="form"
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    justifySelf: 'center',
+                    rowGap: 2,
+                    width: {xs: '95%', lg: '25%'},
+                    ml: 'auto',
+                    mr: 'auto'
+                }}
+                noValidate
+                autoComplete="on"
+                onSubmit={handleSubmit}
+            >
+                <Box component='span' sx={{alignSelf: 'center'}}>
+                    <h1>Create an account</h1>
                 </Box>
 
-                <div className='account-text'>
+                <TextField
+                    required
+                    sx={{width: '100%'}}
+                    label="First Name"
+                    name="firstName"
+                    id="create-user-firstname"
+                    error={!firstNameValid}
+                    value={formValues.firstName}
+                    onChange={handleInputChange}
+                    onBlur={validateFirstNameField}
+                    onFocus={() => {
+                        setFirstNameValid(true);
+                        setFirstNameErrorTxt("");
+                    }}
+                    helperText={firstNameErrorTxt}
+                />
+
+                <TextField
+                    required
+                    sx={{width: '100%'}}
+                    label="Last Name"
+                    name="lastName"
+                    id="create-user-lastname"
+                    error={!lastNameValid}
+                    value={formValues.lastName}
+                    onChange={handleInputChange}
+                    onBlur={validateLastNameField}
+                    onFocus={() => {
+                        setLastNameValid(true);
+                        setLastNameErrorTxt("");
+                    }}
+                    helperText={lastNameErrorTxt}
+                />
+
+                <TextField
+                    required
+                    sx={{width: '100%'}}
+                    label="Username"
+                    name="username"
+                    id="create-user-username"
+                    error={!usernameValid}
+                    value={formValues.username}
+                    onChange={handleInputChange}
+                    onBlur={validateUsernameField}
+                    onFocus={() => {
+                        setUsernameValid(true);
+                        setUsernameErrorTxt("");
+                    }}
+                    helperText={usernameErrorTxt}
+                />
+
+                <TextField
+                    required
+                    sx={{width: '100%'}}
+                    label="Email"
+                    name="email"
+                    id="create-user-email"
+                    error={!emailValid}
+                    value={formValues.email}
+                    onChange={handleInputChange}
+                    onBlur={validateEmailField}
+                    onFocus={() => {
+                        setEmailValid(true);
+                        setEmailErrorTxt("");
+                    }}
+                    helperText={emailErrorTxt}
+                />
+
+                <TextField
+                    required
+                    sx={{width: '100%'}}
+                    label="Password"
+                    name="password"
+                    id="create-user-password"
+                    type="password"
+                    autoComplete="current-password"
+                    error={!passwordValid}
+                    value={formValues.password}
+                    onChange={handleInputChange}
+                    onBlur={validatePasswordField}
+                    onFocus={() => {
+                        setPasswordValid(true);
+                        setPasswordErrorTxt("");
+                    }}
+                    helperText={passwordErrorTxt}
+                />
+
+                <Box component="span" sx={{m: 1, color: 'red'}} hidden={submitErrorTxt === ""}>
+                    {submitErrorTxt}
+                </Box>
+
+                <Button
+                    sx={{
+                        width: '100%',
+                        borderColor: '#54276F',
+                        color: '#54276F',
+                        ':hover': {
+                            color: '#D1439E',
+                            borderColor: '#D1439E'
+                        }
+                    }}
+                    type="submit"
+                    variant="outlined"
+                    size="large"
+                    disabled={!firstNameValid || !lastNameValid || !usernameValid || !emailValid || !passwordValid}>
+                    Create
+                </Button>
+
+                <Box>
                     Already have an account?
-                    <span style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={props.handleLoginNav}>
-              {` Log In`}
-            </span>
-                </div>
-            </div>
-        </>
+                    <Box component='span' className='purple-btn'
+                         sx={{fontWeight: 'bold', cursor: 'pointer', alignSelf: 'center'}}
+                         onClick={props.handleLoginNav}>
+                        {` Log In`}
+                    </Box>
+                </Box>
+            </Box>
     )
 }

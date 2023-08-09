@@ -48,7 +48,7 @@ function AppNav() {
 
     return (
         <AppBar position="static" sx={{ backgroundColor: '#03C4C7' }}>
-            <Container maxWidth='xl' sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
+            <Container sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
                 <Toolbar disableGutters sx={{display: 'flex'}}>
                     <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
                     <Typography
@@ -77,7 +77,7 @@ function AppNav() {
                             <Box sx={{flexGrow: 1}}>
                                 <Tooltip title="Open Profile">
                                     <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
-                                        <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"/>
+                                        <Avatar alt={username}/>
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
