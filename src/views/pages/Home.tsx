@@ -1,4 +1,4 @@
-import {Backdrop, Box, CircularProgress, Fab, Grid, Stack, Tooltip} from '@mui/material';
+import {Backdrop, Box, CircularProgress, Fab, Grid, Tooltip} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -65,9 +65,19 @@ export function HomePage() {
                     <Fab onClick={toggle} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         backgroundColor: '#F8E924',
-                        position: 'absolute',
-                        bottom: 64,
-                        right: 64,
+                        position: 'fixed',
+                        bottom: '64px',
+                        right: '10%',
+                        // Desktop
+                        '@media (max-width:960px)': {
+                            bottom: '64px',
+                            right: '10%',
+                            },
+                        // Mobile 
+                        '@media (max-width:599px)': {
+                            right: '5%',
+                            bottom:'3%',
+                          },
                         ':hover': {backgroundColor: '#38CD2C'}
                     }}
                          aria-label="add">
