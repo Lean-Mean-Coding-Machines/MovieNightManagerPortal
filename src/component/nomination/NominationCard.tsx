@@ -31,10 +31,10 @@ export default function NominationCard(props: NominationCardsProps) {
         if (userId && !likeRequestLoading) {
             setLikeRequestLoading(true);
             const likeRequest: INominationLikeRequest = {
-              nominationId: props.nomination.id,
-              userId: userId,
-              watchDate: "2023-01-14T18:30:00.000", // TODO :: un-hardcode these
-              watchType: "FIRE"
+                nominationId: props.nomination.id,
+                userId: userId,
+                watchDate: "2023-01-14T18:30:00.000", // TODO :: un-hardcode these
+                watchType: "FIRE"
             };
             api.post<IMnmApiResponse<INominationLike>>("/nominationlike/manage", likeRequest)
                 .then(
@@ -59,47 +59,44 @@ export default function NominationCard(props: NominationCardsProps) {
 
     return (
         <Box key={props.nomination.id}>
-            <Card variant="outlined">
-                <Grid container>
-                    <Grid item xs={4}>
-                        <CardMedia
-                            component="img"
-                            sx={{height: 140}}
-                            image={poster}
-                            title="green iguana"
-                        />
-                    </Grid>
-                    <Grid item xs={8}>
-                        <CardContent>
-                            <Typography>
-                                {props.nomination.movieTitle}
-                            </Typography>
-                            <Typography>
-                                Submitted By: {props.nomination.submittedBy}
-                            </Typography>
-                            {
-                                isFilledLikeIcon() ?
-                                    <Favorite
-                                        onClick={handleNominationLikeToggle}
-                                        onMouseEnter={() => setNominationLikeHover(true)}
-                                        onMouseLeave={() => setNominationLikeHover(false)}
-                                    /> :
-                                    <FavoriteBorder
-                                        onClick={handleNominationLikeToggle}
-                                        onMouseEnter={() => setNominationLikeHover(true)}
-                                        onMouseLeave={() => setNominationLikeHover(false)}
-                                    />
-                            }
-                            <Tooltip title={
-                                <>
-                                    {props.nomination.nominationLikes.map(like => (<Typography color="inherit">{like.username}</Typography>))}
-                                </>
-                            } arrow>
-                                <span>{likeCount} likes</span>
-                            </Tooltip>
-                        </CardContent>
-                    </Grid>
-                </Grid>
+            <Card variant="outlined" sx={{display: 'flex', borderRadius: '10px', width: '100%'}}>
+
+                <CardMedia
+                    component="img"
+                    sx={{height: '300px', width: '200px'}}
+                    image={poster}
+                    title="green iguana"
+                />
+
+                <CardContent>
+                    <Typography>
+                        {props.nomination.movieTitle}
+                    </Typography>
+                    <Typography>
+                        Submitted By: {props.nomination.submittedBy}
+                    </Typography>
+                    {
+                        isFilledLikeIcon() ?
+                            <Favorite
+                                onClick={handleNominationLikeToggle}
+                                onMouseEnter={() => setNominationLikeHover(true)}
+                                onMouseLeave={() => setNominationLikeHover(false)}
+                            /> :
+                            <FavoriteBorder
+                                onClick={handleNominationLikeToggle}
+                                onMouseEnter={() => setNominationLikeHover(true)}
+                                onMouseLeave={() => setNominationLikeHover(false)}
+                            />
+                    }
+                    <Tooltip title={
+                        <>
+                            {props.nomination.nominationLikes.map(like => (
+                                <Typography color="inherit">{like.username}</Typography>))}
+                        </>
+                    } arrow>
+                        <span>{likeCount} likes</span>
+                    </Tooltip>
+                </CardContent>
             </Card>
         </Box>
     )
