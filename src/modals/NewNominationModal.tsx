@@ -142,8 +142,7 @@ export default function NewNominationModal(props: NewNominationProps) {
     const [isSearching, setIsSearching] = useState(false);
     const handleMovieSearch = (event: any) => {
         event.preventDefault();
-        setIsSearching(true);
-        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>('/tmdb/movie/search', {params: { title: searchTitle}})
+        api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>('/tmdb/movie/search', { params: { title: searchTitle}})
             .then(
                 (res) => {
                     if (res.data.data && res.data.status.success) {
