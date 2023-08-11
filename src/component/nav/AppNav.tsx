@@ -95,6 +95,7 @@ function AppNav() {
                                     }}
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
+                                    onClick={handleCloseUserMenu}
                                 >
                                     {settings.map((setting) => (
                                         <MenuItem key={setting.setting} onClick={setting.action}>
