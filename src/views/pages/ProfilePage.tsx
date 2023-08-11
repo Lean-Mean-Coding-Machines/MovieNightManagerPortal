@@ -1,10 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
-import Button from '@mui/material/Button';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
-import AccountDropdownNav from '../../component/nav/AccountDropdownNav';
 import EditProfilePicModal from '../../modals/EditProfilePicModal';
 import {useContext, useEffect, useState} from 'react';
 import {Stack, TextField} from "@mui/material";
@@ -14,7 +12,6 @@ import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
-import INominationLike from "../../model/nomination/INominationLike";
 
 interface TabPanelProps {
     children?: React.ReactNode;
