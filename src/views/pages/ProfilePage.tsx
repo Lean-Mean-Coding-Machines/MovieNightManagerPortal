@@ -64,11 +64,11 @@ export function ProfilePage() {
         } else {
             navigate('/');
         }
-    }, [userId]);
+    }, [api, navigate, userId]);
 
     return (
         <>
-            <h1 style={{marginLeft: 15}}>Your Profile</h1>
+            <h1 style={{marginLeft: 15}}> Profile</h1>
 
             <hr style={{
                 color: '#000000',
@@ -79,7 +79,7 @@ export function ProfilePage() {
                 marginLeft: 15
             }}/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15}}>Your Info</h3>
+            <h3 style={{marginLeft: 15, marginBottom: 15}}>Info</h3>
             <Box
                 component="form"
                 sx={{
@@ -115,7 +115,7 @@ export function ProfilePage() {
                 marginLeft: 15
             }}/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15, alignSelf: 'left'}}>Your Nominations</h3>
+            <h3 style={{marginLeft: 15, marginBottom: 15, alignSelf: 'left'}}>Nominations</h3>
 
             <Stack direction='row' spacing={2}>
                 {user.nominations.map((nom: INomination) => (<NominationCard nomination={nom}/>))}

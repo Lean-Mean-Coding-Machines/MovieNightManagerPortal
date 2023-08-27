@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
-import {Box, Card, CardContent, CardMedia, Grid, Tooltip, Typography} from "@mui/material";
+import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
 import {FavoriteBorder, Favorite} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
@@ -65,7 +65,7 @@ export default function NominationCard(props: NominationCardsProps) {
                     component="img"
                     sx={{height: '300px', width: '200px'}}
                     image={poster}
-                    title="green iguana"
+                    title={props.nomination.movieTitle}
                 />
 
                 <CardContent>

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FormControl, InputLabel, NativeSelect, SxProps} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, NativeSelect, Select, SxProps} from "@mui/material";
 
 interface typeSelectorProps {
     updateWatchType: (input: string) => void;
@@ -19,18 +19,22 @@ function WatchTypeDDLSelector(props: typeSelectorProps) {
         props.updateWatchType(event.target.value);
         setWatchType(event.target.value);
     };
+      
 
     return (
         <FormControl fullWidth sx={props.sx}>
             <InputLabel variant="standard" htmlFor="watchType"> Watch Type </InputLabel>
-            <NativeSelect inputProps={{name: 'watchType', id: 'watchType',}} value={type}
-                          onChange={(newValue) => handleTypeChange(newValue)}>
-                <option value={'ANY'}>Any</option>
-                <option value={'OUTSIDE'}>Outside</option>
-                <option value={'INSIDE'}>Inside</option>
-                <option value={'FIRE'}>Firepit</option>
-                <option value={'POOL'}>Pool</option>
-            </NativeSelect>
+            <Select inputProps={{name: 'watchType', id: 'watchType',}} 
+                        value={type}
+                        onChange={(newValue) => handleTypeChange(newValue)}
+                      
+                          >
+                <MenuItem value={'ANY'}>Any</MenuItem>
+                <MenuItem value={'OUTSIDE'}>Outside</MenuItem>
+                <MenuItem value={'INSIDE'}>Inside</MenuItem>
+                <MenuItem value={'FIRE'}>Firepit</MenuItem>
+                <MenuItem value={'POOL'}>Pool</MenuItem>
+            </Select>
         </FormControl>
     );
 }
