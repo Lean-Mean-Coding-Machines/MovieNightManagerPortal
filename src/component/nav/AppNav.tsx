@@ -50,12 +50,11 @@ function AppNav() {
         <AppBar position="static" sx={{ backgroundColor: '#03C4C7' }}>
             <Container sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
                 <Toolbar disableGutters sx={{display: 'flex'}}>
-                    <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
                     <Typography
                         variant="h6"
-                        noWrap
                         component="a"
                         href="/"
+                        noWrap
                         sx={{
                             mr: 2,
                             fontFamily: 'monospace',
@@ -68,12 +67,20 @@ function AppNav() {
                             textDecoration: 'none',
                         }}
                     >
-                        <Box sx={{display: {xs: 'flex', sm: 'none'}}}>MNM</Box>
-                        <Box sx={{display: {xs: 'none', sm: 'flex'}}}>Movie Night Manager</Box>
+                    {/* Mobile */}
+                        <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
+                            MNM
+                        </Box>
+                    {/* Desktop */}
+                        <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
+                            Movie Night Manager
+                        </Box>
                     </Typography>
 
                     {
-                        username !== "" ?
+                        username !== ""  ?
                             <Box sx={{flexGrow: 1}}>
                                 <Tooltip title="Open Profile">
                                     <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
@@ -106,6 +113,7 @@ function AppNav() {
                             </Box> :
                             <Box sx={{flexGrow: 1}}>
                                 <Box sx={{float: 'right'}}>
+
                                     <Button sx={{
                                         color: 'white',
                                         borderColor: 'white',
@@ -113,7 +121,9 @@ function AppNav() {
                                             color: '#54276F',
                                             borderColor: '#54276F'
                                         }
-                                    }} variant="outlined" onClick={navigateToLogin}>Sign In</Button>
+                                    }} variant="outlined" 
+                                    onClick={navigateToLogin}>Sign In
+                                    </Button>
                                 </Box>
                             </Box>
                     }

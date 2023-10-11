@@ -6,5 +6,6 @@ export default interface INomination {
     chosen: boolean,
     submittedBy: string,
     posterPath: string,
+    movieOverview: string,
     nominationLikes: INominationLike[]
 }

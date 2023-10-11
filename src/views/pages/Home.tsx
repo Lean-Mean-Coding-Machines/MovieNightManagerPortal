@@ -1,5 +1,5 @@
 import {Backdrop, Box, CircularProgress, Fab, Grid, Tooltip} from '@mui/material';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
 import IMovieNightSegment from '../../model/IMovieNightSegment';
@@ -8,6 +8,8 @@ import IMnmApiResponse from "../../model/IMnmApiResponse";
 import AddIcon from '@mui/icons-material/Add';
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
+import { UserContext } from '../../context/UserContext';
+
 
 export function HomePage() {
 
@@ -20,6 +22,8 @@ export function HomePage() {
     const {isOpen, toggle} = useModal();
 
     const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+
+    const userContext = useContext(UserContext);
 
     const api = useAxios();
 
@@ -60,8 +64,8 @@ export function HomePage() {
                         ))}
                     </Grid>
                 </Box>
-
-                <Tooltip title="Nominate a Movie">
+                {/* Hides Nominate btn if user isn't logged in */}
+                {userContext.username && <Tooltip title="Nominate a Movie">
                     <Fab onClick={toggle} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         backgroundColor: '#F8E924',
@@ -83,7 +87,7 @@ export function HomePage() {
                          aria-label="add">
                         <AddIcon/>
                     </Fab>
-                </Tooltip>
+                </Tooltip>}
 
                 <NewNominationModal isOpen={isOpen} toggle={toggle} segment={segment}
                                     segmentRefresh={getMovieNightSegment}/>

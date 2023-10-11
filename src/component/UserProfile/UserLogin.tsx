@@ -122,8 +122,8 @@ export function UserLogin(props: userRegisterProps) {
 
                 <div className='account-text'>
                     Don't have an account?
-                    <span style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 5}} onClick={props.handleLoginNav}>
-                        Create
+                    <span style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 5, marginLeft: 5}} onClick={props.handleLoginNav}>
+                    Create
                     </span>
                 </div>
             </div>

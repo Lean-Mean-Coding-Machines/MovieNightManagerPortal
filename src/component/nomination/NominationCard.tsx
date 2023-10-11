@@ -21,9 +21,7 @@ export default function NominationCard(props: NominationCardsProps) {
     const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
 
     const [likeCount, setLikeCount] = useState(props.nomination.nominationLikes.length);
-    const [nominationLiked, setNominationLiked] = useState(
-        props.nomination.nominationLikes.map((like) => like.userId).indexOf(userId) !== -1
-    );
+    const [nominationLiked, setNominationLiked] = useState(props.nomination.nominationLikes.map((like) => like.userId).indexOf(userId) !== -1);
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
 
@@ -63,30 +61,32 @@ export default function NominationCard(props: NominationCardsProps) {
 
                 <CardMedia
                     component="img"
-                    sx={{height: '300px', width: '200px'}}
-                    image={poster}
+                    sx={{height: '300px', width: '200px', cursor:"pointer"}}
+                    // Need to add in failed poster option here when poster fails to load
+                    image={poster ? poster : ''}
                     title={props.nomination.movieTitle}
+                    onClick={handleNominationLikeToggle}
                 />
 
                 <CardContent>
-                    <Typography>
+                    <Typography fontWeight={'bold'} >
                         {props.nomination.movieTitle}
                     </Typography>
                     <Typography>
-                        Submitted By: {props.nomination.submittedBy}
+                        {props.nomination.movieOverview}
                     </Typography>
+                    {/* Removing for now */}
+                    {/* <Typography>
+                        Submitted By: {props.nomination.submittedBy}
+                    </Typography> */}
+                <button style={{display: 'flex', alignItems: 'center', userSelect: 'none',cursor: 'pointer', borderRadius: 12, border: 'none', padding: 9}} onClick={handleNominationLikeToggle}
+                    onMouseEnter={() => setNominationLikeHover(true)}
+                    onMouseLeave={() => setNominationLikeHover(false)}
+                >
                     {
                         isFilledLikeIcon() ?
-                            <Favorite
-                                onClick={handleNominationLikeToggle}
-                                onMouseEnter={() => setNominationLikeHover(true)}
-                                onMouseLeave={() => setNominationLikeHover(false)}
-                            /> :
-                            <FavoriteBorder
-                                onClick={handleNominationLikeToggle}
-                                onMouseEnter={() => setNominationLikeHover(true)}
-                                onMouseLeave={() => setNominationLikeHover(false)}
-                            />
+                            <Favorite/> :
+                            <FavoriteBorder/>
                     }
                     <Tooltip title={
                         <>
@@ -94,8 +94,10 @@ export default function NominationCard(props: NominationCardsProps) {
                                 <Typography color="inherit">{like.username}</Typography>))}
                         </>
                     } arrow>
-                        <span>{likeCount} likes</span>
+                        <span>{ `${likeCount} ${likeCount > 1 ? 'likes' : 'like'}`}</span>
                     </Tooltip>
+                </button>
+
                 </CardContent>
             </Card>
         </Box>

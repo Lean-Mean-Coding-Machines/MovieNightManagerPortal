@@ -32,14 +32,7 @@ const emptyUser: IUser = {
 export function ProfilePage() {
     const {userId} = useContext(UserContext);
 
-    const [value, setValue] = useState(0);
     const navigate = useNavigate();
-    const navigateHome = () => {
-        navigate('/')
-    };
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
 
     // Toggles Delete Modal & Edit Modal open and close
     const {isOpen, toggle, modalName} = useModal();

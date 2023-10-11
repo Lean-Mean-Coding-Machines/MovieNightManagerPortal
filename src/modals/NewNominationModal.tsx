@@ -45,17 +45,32 @@ interface nominationForm {
     watchType: string,
     posterPath: string,
     userId: number,
+    overview: string
 }
 
-const listStyle = {
-    position: 'fixed',
+const searchListStyle = {
+    position: 'absolute',
     zIndex: 1000,
-    bottom: '50px',
     maxHeight: 300,
     overflowY: 'scroll',
-    width: '100%',
     maxWidth: 360,
-    bgcolor: 'background.paper'
+    bgcolor: 'background.paper',
+    borderStyle: 'solid',
+    borderColor: '#eaeaea',
+    bottom: '-4rem',
+    top: '8rem',
+    // Desktop
+    '@media (max-width:960px)': {
+        width: '100%',
+        bottom: '-4rem',
+        top: '7rem',
+    },
+    // Mobile 
+    '@media (max-width:599px)': {
+        width: '87%',
+        bottom: '-4rem',
+        top: '7rem',
+    },
 }
 
 const modalStyle = {
@@ -65,9 +80,9 @@ const modalStyle = {
     transform: 'translate(-50%, -50%)',
     display: 'block',
     background: 'white',
-    width: {xs: '90%', lg: '35%'},
+    width: {xs: '85%', lg: '35%'},
     padding: '1rem',
-    borderRadius: '1rem'
+    borderRadius: '1rem',
 }
 
 export default function NewNominationModal(props: NewNominationProps) {
@@ -82,6 +97,7 @@ export default function NewNominationModal(props: NewNominationProps) {
         watchTime: '5',
         watchType: 'ANY',
         posterPath: '',
+        overview: '',
         userId: userId,
     });
 
@@ -119,7 +135,7 @@ export default function NewNominationModal(props: NewNominationProps) {
                     if (res.data.status.success && res.data.data != null) {
                         props.toggle();
                         resetNominationState();
-                        toast.success(`Created nomination for ${nominationForm.movieTitle} on ${nominationForm.watchDate} @ ${nominationForm.watchTime}`);
+                        toast.success(`Created nomination for ${nominationForm.movieTitle} on ${nominationForm.watchDate.split('T')[0].split('-').reverse().join('-')}`);
                         props.segmentRefresh();
                     } else {
                         toast.error('Could not create nomination');
@@ -137,6 +153,7 @@ export default function NewNominationModal(props: NewNominationProps) {
     }
 
     const [selectedMovie, setSelectedMovie] = useState<IMovieSearchResult | null>(null);
+    const [previewPosterPath, setPreviewPosterPath] = useState('');
     const [searchTitle, setSearchTitle] = useState('');
     const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -164,26 +181,30 @@ export default function NewNominationModal(props: NewNominationProps) {
 
     const updateMovieSelection = (movie: IMovieSearchResult | null) => {
         setSelectedMovie(movie);
+        if (movie?.posterPath) {
+            setPreviewPosterPath('https://image.tmdb.org/t/p/w500' + movie.posterPath);
+        }
         setNominationState({
             ...nominationForm,
             movieTitle: movie ? movie.title : '',
-            posterPath: movie ? movie.posterPath : ''
+            posterPath: movie ? movie.posterPath : '',
+            overview: movie ? movie.overview : ''
         });
     }
 
-    const updateWatchType = (selectedWatchType: string) => {
-        setNominationState({
-            ...nominationForm,
-            watchType: selectedWatchType
-        });
-    }
+    // const updateWatchType = (selectedWatchType: string) => {
+    //     setNominationState({
+    //         ...nominationForm,
+    //         watchType: selectedWatchType
+    //     });
+    // }
 
-    const updateWatchTime = (selectedWatchTime: string) => {
-        setNominationState({
-            ...nominationForm,
-            watchTime: selectedWatchTime
-        });
-    }
+    // const updateWatchTime = (selectedWatchTime: string) => {
+    //     setNominationState({
+    //         ...nominationForm,
+    //         watchTime: selectedWatchTime
+    //     });
+    // }
 
     return (
         <Modal
@@ -193,7 +214,7 @@ export default function NewNominationModal(props: NewNominationProps) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
-                <Box sx={{textAlign: 'center'}}>
+                <Box sx={{textAlign: 'center', marginTop: '10px'}}>
                     <Box
                         component='span'
                         sx={{
@@ -203,7 +224,7 @@ export default function NewNominationModal(props: NewNominationProps) {
                         }}>
                         Nominate a Movie
                     </Box>
-                    <div style={{float: 'right'}} onClick={props.toggle}>
+                    <div style={{float: 'right', marginTop: '-5px'}} onClick={props.toggle}>
                         <IconButton>
                             <CloseIcon/>
                         </IconButton>
@@ -223,10 +244,12 @@ export default function NewNominationModal(props: NewNominationProps) {
                         autoComplete='on'
                         onSubmit={handleSubmit}
                     >
-                        {/* Film Name Input */}
+                        {/* Movie Name Input */}
                         <FormControl variant='standard'>
                             <InputLabel htmlFor='standard-adornment-film-name'>
+                                <Typography sx={{fontSize: 18}}>
                                 Movie Name
+                                </Typography>
                             </InputLabel>
                             <Input required name='titleSearch' sx={{width: {xs: '100%', lg: '50%'}}}
                                    id='nomination-name-input'
@@ -268,16 +291,61 @@ export default function NewNominationModal(props: NewNominationProps) {
                                 Clear
                             </Button>
                         </Box>
+                        {/* Search Results */}
+                        <List hidden={movieOptions.length === 0} sx={searchListStyle}>
+                            {
+                                movieOptions.map(option => (
+                                    <>
+                                        <ListItem alignItems='flex-start' onClick={() => {
+                                            updateMovieSelection(option);
+                                            console.log(option, 'option');
+                                            console.log(movieOptions, 'pre');
+                                            setMovieOptions([]);
+                                            console.log(movieOptions, 'post')
+                                        }} sx={{
+                                            '&:hover': {
+                                                background: 'rgba(0,0,0,0.5)',
+                                                cursor: 'pointer'
+                                            }
+                                        }}>
+                                            <ListItemAvatar>
+                                                <Avatar alt='Movie Poster'
+                                                        src={`${option.posterPath ? 'https://image.tmdb.org/t/p/w500' + option.posterPath : ''}`}/>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                            primary={option.title}
+                                            secondary={
+                                                <React.Fragment>
+                                                        <Typography
+                                                            sx={{display: 'inline'}}
+                                                            component='span'
+                                                            variant='body2'
+                                                            color='text.primary'
+                                                            >
+                                                            Release Date:
+                                                        </Typography>
+                                                        {option.releaseDate}
+                                                    </React.Fragment>
+                                                }
+                                                />
+                                        </ListItem>
+                                        <Divider variant='inset' component='li'/>
+                                    </>
+                                ))
+                            }
+                        </List>
 
+                        {/* Chosen Movie */}
                         <Box hidden={selectedMovie === null}>
                             <h3 style={{margin: 0, textAlign: 'center'}}>Chosen Movie</h3>
-                            <List sx={{maxHeight: 300, width: '100%', maxWidth: 360}}>
+                            <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}}>
                                 <ListItem alignItems='flex-start' sx={{pb: 0}}>
                                     <Avatar
                                         sx={{height: '100px', width: '70px', mr: 2}}
                                         variant='rounded'
                                         alt='Movie Poster'
-                                        src={`https://image.tmdb.org/t/p/w500${selectedMovie ? selectedMovie.posterPath : ''}`}/>
+                                        // Img isn't populating correctly currently, need to fix use effect? or make it async? 
+                                        src={previewPosterPath}/>
                                     <ListItemText
                                         primary={selectedMovie ? selectedMovie.title : ''}
                                         secondary={
@@ -298,45 +366,6 @@ export default function NewNominationModal(props: NewNominationProps) {
                             </List>
                         </Box>
 
-                        <List hidden={movieOptions.length === 0} sx={listStyle}>
-                            {
-                                movieOptions.map(option => (
-                                    <>
-                                        <ListItem alignItems='flex-start' onClick={() => {
-                                            updateMovieSelection(option);
-                                            setMovieOptions([]);
-                                        }} sx={{
-                                            '&:hover': {
-                                                background: 'rgba(0,0,0,0.5)',
-                                                cursor: 'pointer'
-                                            }
-                                        }}>
-                                            <ListItemAvatar>
-                                                <Avatar alt='Movie Poster'
-                                                        src={`https://image.tmdb.org/t/p/w500${option.posterPath}`}/>
-                                            </ListItemAvatar>
-                                            <ListItemText
-                                                primary={option.title}
-                                                secondary={
-                                                    <React.Fragment>
-                                                        <Typography
-                                                            sx={{display: 'inline'}}
-                                                            component='span'
-                                                            variant='body2'
-                                                            color='text.primary'
-                                                        >
-                                                            Release Date:
-                                                        </Typography>
-                                                        {option.releaseDate}
-                                                    </React.Fragment>
-                                                }
-                                            />
-                                        </ListItem>
-                                        <Divider variant='inset' component='li'/>
-                                    </>
-                                ))
-                            }
-                        </List>
 
                         <Box sx={{display: 'flex', flexDirection: {xs: 'column', lg: 'row'}}}>
                             <Box
@@ -344,13 +373,13 @@ export default function NewNominationModal(props: NewNominationProps) {
                                     pr: {xs: 0, lg: 1},
                                     pb: {xs: 1, lg: 0},
                                     width: {xs: '100%', lg: '50%'},
-                                    flexGrow: 1
+                                    flexGrow: 1,
                                 }}>
-                                <DateSelector sx={{width: '100%', pr: {xs: 0, lg: 1}, flexGrow: 1}}
+                                <DateSelector sx={{width: '50%', pr: {xs: 0, lg: 1}, flexGrow: 1}}
                                               handleChangeDate={updateWatchDate} startDay={startDay}
                                               endDay={endDay}/>
                             </Box>
-                            <Box
+                            {/* <Box
                                 sx={{
                                     pl: {xs: 0, lg: 1},
                                     pt: {xs: 1, lg: 0},
@@ -359,11 +388,11 @@ export default function NewNominationModal(props: NewNominationProps) {
                                 }}>
                                 <TimeSelector sx={{width: '100%'}}
                                               handleChangeTime={updateWatchTime}/>
-                            </Box>
+                            </Box> */}
                         </Box>
 
-                        <WatchTypeDDLSelector sx={{width: {xs: '100%', lg: '50%'}}}
-                                              updateWatchType={updateWatchType}/>
+                        {/* <WatchTypeDDLSelector sx={{width: {xs: '100%', lg: '50%'}}}
+                                              updateWatchType={updateWatchType}/> */}
 
 
                         <Button

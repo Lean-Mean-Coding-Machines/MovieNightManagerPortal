@@ -4,11 +4,15 @@ import {useNavigate} from 'react-router-dom';
 import '../../assets/LoginPage.css';
 import {UserRegister} from "../../component/UserProfile/UserRegister";
 import {UserLogin} from "../../component/UserProfile/UserLogin";
+
 export function LoginPage() {
+
     const navigate = useNavigate();
+    
     const navigateHome = () => {
         navigate('/')
     };
+
     const navigateToProfile = () => {
         navigate('/profile')
     };
