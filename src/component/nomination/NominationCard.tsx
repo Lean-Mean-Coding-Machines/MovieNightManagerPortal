@@ -25,6 +25,8 @@ export default function NominationCard(props: NominationCardsProps) {
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
 
+    const [expandText, setExpandText] = useState(false);
+
     const handleNominationLikeToggle = () => {
         if (userId && !likeRequestLoading) {
             setLikeRequestLoading(true);
@@ -51,6 +53,10 @@ export default function NominationCard(props: NominationCardsProps) {
         }
     };
 
+    const expandHandler = () => {
+        setExpandText(!expandText);
+    }
+
     const isFilledLikeIcon = () => {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
@@ -72,10 +78,23 @@ export default function NominationCard(props: NominationCardsProps) {
                     <Typography fontWeight={'bold'} >
                         {props.nomination.movieTitle}
                     </Typography>
-                    <Typography>
+                    <div className={`${props.nomination.movieOverview.length > 250 && !expandText ? "card-paragraph-container" : "clear-css"}`}>
+                    <Typography className={`${props.nomination.movieOverview.length > 250 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}
                     </Typography>
-                    {/* Removing for now */}
+                    </div>
+                    { (props.nomination.movieOverview.length > 250 && !expandText) && 
+                    <button onClick={expandHandler}>
+                      More
+                    </button> 
+                    }
+                    { expandText && 
+                    <button onClick={expandHandler}>
+                      Less
+                    </button> 
+                    }
+
+                    {/* Removing for now */} 
                     {/* <Typography>
                         Submitted By: {props.nomination.submittedBy}
                     </Typography> */}
