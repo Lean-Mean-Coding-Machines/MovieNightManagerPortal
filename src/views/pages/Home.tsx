@@ -1,4 +1,4 @@
-import {Backdrop, Box, CircularProgress, Fab, Grid, Tooltip} from '@mui/material';
+import {Backdrop, Box, CircularProgress, Fab, Grid, Tooltip, useTheme} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -12,6 +12,8 @@ import { UserContext } from '../../context/UserContext';
 
 
 export function HomePage() {
+
+    const theme = useTheme();
 
     const [appLoading, setAppLoading] = useState(true);
 
@@ -73,12 +75,12 @@ export function HomePage() {
                         bottom: '64px',
                         right: '10%',
                         // Desktop
-                        '@media (max-width:960px)': {
+                        [theme.breakpoints.up('md')]: {
                             bottom: '64px',
                             right: '10%',
                             },
                         // Mobile 
-                        '@media (max-width:599px)': {
+                        [theme.breakpoints.down('sm')]: {
                             right: '5%',
                             bottom:'3%',
                           },
