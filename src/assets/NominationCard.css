@@ -1,0 +1,40 @@
+
+
+.card-container {
+    display: flex;
+    border-radius: 10px;
+    width: 100%;
+
+}
+
+.expand-btn {
+    cursor: pointer;
+    border: 1px solid #828282;
+    color: #828282;
+    text-align: center;
+    border-radius: 4px;
+    padding: 0.6875em 1em;
+    background: none;
+    font-weight: 700;
+}
+
+.expand-btn:hover {
+    background: #D1439E;
+    color: #fff;
+}
+
+.like-btn {
+    display: flex;
+     align-items: center;
+     user-select: none;
+     cursor: pointer;
+     border-radius: 12px;
+     border: none;
+     padding: 9px;
+}
+
+.card-actions-container {
+    position: absolute; 
+    right: 10px;
+    bottom: 0px;
+}

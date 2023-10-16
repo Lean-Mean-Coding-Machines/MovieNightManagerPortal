@@ -1,13 +1,15 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
-import {Box, Card, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
-import {FavoriteBorder, Favorite} from "@mui/icons-material";
+import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
+import {FavoriteBorder, Favorite, Person} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
 import {toast} from "react-toastify";
 import INominationLikeRequest from "../../model/nomination/INominationLikeRequest";
+import { Button } from "@mui/base";
+import '../../assets/NominationCard.css';
 
 interface NominationCardsProps {
     nomination: INomination
@@ -62,8 +64,8 @@ export default function NominationCard(props: NominationCardsProps) {
     };
 
     return (
-        <Box key={props.nomination.id}>
-            <Card variant="outlined" sx={{display: 'flex', borderRadius: '10px', width: '100%'}}>
+        <Box key={props.nomination.id} >
+            <Card variant="outlined" className="card-container">
 
                 <CardMedia
                     component="img"
@@ -74,49 +76,56 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}
                 />
 
-                <CardContent>
-                    <Typography fontWeight={'bold'} >
+                <CardContent sx={{position: 'relative'}}  >
+                    <Typography fontWeight={'bold'}>
                         {props.nomination.movieTitle}
                     </Typography>
-                    <div className={`${props.nomination.movieOverview.length > 250 && !expandText ? "card-paragraph-container" : "clear-css"}`}>
-                    <Typography className={`${props.nomination.movieOverview.length > 250 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
+
+                    <div className={`${props.nomination.movieOverview.length > 280 && !expandText ? "card-paragraph-container" : ""}`}>
+                    <Typography className={`${props.nomination.movieOverview.length > 280 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}
                     </Typography>
                     </div>
-                    { (props.nomination.movieOverview.length > 250 && !expandText) && 
-                    <button onClick={expandHandler}>
-                      More
-                    </button> 
+                    <div>
+                    { (props.nomination.movieOverview.length > 280 && !expandText) && 
+                    <Button className="expand-btn" onClick={expandHandler}>
+                      Read More
+                    </Button> 
                     }
                     { expandText && 
-                    <button onClick={expandHandler}>
-                      Less
-                    </button> 
+                    <Button className="expand-btn" onClick={expandHandler}>
+                      Read Less
+                    </Button> 
                     }
+                    </div>
 
-                    {/* Removing for now */} 
-                    {/* <Typography>
-                        Submitted By: {props.nomination.submittedBy}
-                    </Typography> */}
-                <button style={{display: 'flex', alignItems: 'center', userSelect: 'none',cursor: 'pointer', borderRadius: 12, border: 'none', padding: 9}} onClick={handleNominationLikeToggle}
-                    onMouseEnter={() => setNominationLikeHover(true)}
-                    onMouseLeave={() => setNominationLikeHover(false)}
-                >
-                    {
-                        isFilledLikeIcon() ?
-                            <Favorite/> :
-                            <FavoriteBorder/>
-                    }
-                    <Tooltip title={
-                        <>
-                            {props.nomination.nominationLikes.map(like => (
-                                <Typography color="inherit">{like.username}</Typography>))}
-                        </>
-                    } arrow>
-                        <span>{ `${likeCount} ${likeCount > 1 ? 'likes' : 'like'}`}</span>
-                    </Tooltip>
-                </button>
+                <CardActions className="card-actions-container">
+                    <div style={{display: 'flex', alignItems: 'center'}}>
 
+                        {/* Display liked by on the tooltip of likes */}
+                        <Button className="like-btn" onClick={handleNominationLikeToggle}
+                            onMouseEnter={() => setNominationLikeHover(true)}
+                            onMouseLeave={() => setNominationLikeHover(false)}
+                        >
+                            {
+                                isFilledLikeIcon() ?
+                                    <Favorite/> :
+                                    <FavoriteBorder/>
+                            }
+                            <Tooltip title={
+                                <>
+                                    {props.nomination.nominationLikes.map(like => (<Typography color="inherit">{like.username}</Typography>))}
+                                </>
+                            } arrow>
+                                <span>{ `${likeCount} ${likeCount > 1 ? 'likes' : 'like'}`}</span>
+                            </Tooltip>
+                        </Button>
+
+                        <Tooltip title={props.nomination.submittedBy}>
+                        <Person style={{marginLeft: '10px'}}></Person>
+                        </Tooltip>
+                    </div>
+                </CardActions>
                 </CardContent>
             </Card>
         </Box>
