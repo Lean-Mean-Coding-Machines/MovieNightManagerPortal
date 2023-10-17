@@ -1,10 +1,7 @@
     import {
         Box,
         Button,
-        FormControl,
         IconButton,
-        Input,
-        InputLabel,
         List,
         ListItem,
         Divider,
@@ -13,7 +10,8 @@
         Avatar,
         Typography,
         Container,
-        Modal
+        Modal,
+        TextField
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
     import React, {useContext, useEffect, useState} from 'react';
@@ -76,14 +74,14 @@
             // Desktop
             [theme.breakpoints.up('md')]: {
                 width: '100%',
-                bottom: '-4rem',
-                top: '7rem',
+                bottom: '-4.75rem',
+                top: '8.75rem',
             },
             // Mobile 
             [theme.breakpoints.down('sm')]: {
                 width: '87%',
-                bottom: '-4rem',
-                top: '7rem',
+                bottom: '-4.25rem',
+                top: '7.75rem',
             },
         }
 
@@ -233,17 +231,12 @@
                             onSubmit={handleSubmit}
                         >
                             {/* Movie Name Input */}
-                            <FormControl variant='standard'>
-                                <InputLabel htmlFor='standard-adornment-film-name'>
-                                    <Typography sx={{fontSize: 18}}>
-                                    Movie Name
-                                    </Typography>
-                                </InputLabel>
-                                <Input 
-                                    required 
+                                <TextField 
+                                    label="Movie Name"
                                     name='titleSearch' 
-                                    sx={{width: {xs: '100%', lg: '50%'}}}
                                     id='nomination-name-input'
+                                    required 
+                                    sx={{width: {xs: '100%', lg: '50%'}}}
                                     value={searchTitle}
                                     onChange={(event: any) => setSearchTitle(event.target.value)}
                                     onKeyDown={(e) => {
@@ -252,7 +245,6 @@
                                         }
                                     }}
                                 />
-                            </FormControl>
 
                             <Box>
                                 <Button
@@ -301,6 +293,9 @@
                                                 </ListItemAvatar>
                                                 <ListItemText
                                                 primary={option.title}
+                                                primaryTypographyProps={{
+                                                    fontWeight: 600
+                                                  }}
                                                 secondary={
                                                     <React.Fragment>
                                                             <Typography
@@ -311,7 +306,7 @@
                                                                 >
                                                                 Release Date:
                                                             </Typography>
-                                                            {option.releaseDate}
+                                                            {` ${option.releaseDate}`}
                                                         </React.Fragment>
                                                     }
                                                     />
@@ -325,7 +320,7 @@
                             {/* Chosen Movie */}
                             <Box hidden={selectedMovie === null}>
                                 <h3 style={{margin: 0, textAlign: 'center'}}>Chosen Movie</h3>
-                                <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}}>
+                                <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}} >
                                     <ListItem alignItems='flex-start' sx={{pb: 0}}>
                                         <Avatar
                                             sx={{height: '100px', width: '70px', mr: 2}}
@@ -335,6 +330,9 @@
                                             src={previewPosterPath}/>
                                         <ListItemText
                                             primary={selectedMovie ? selectedMovie.title : ''}
+                                            primaryTypographyProps={{
+                                                fontWeight: 600
+                                              }}
                                             secondary={
                                                 <React.Fragment>
                                                     <Typography
@@ -345,9 +343,10 @@
                                                     >
                                                         Release Date:
                                                     </Typography>
-                                                    {selectedMovie ? selectedMovie.releaseDate : ''}
+                                                    {` ${selectedMovie ? selectedMovie.releaseDate : ''}`}
                                                 </React.Fragment>
                                             }
+                                            
                                         />
                                     </ListItem>
                                 </List>
@@ -362,9 +361,16 @@
                                         width: {xs: '100%', lg: '50%'},
                                         flexGrow: 1,
                                     }}>
-                                    <DateSelector sx={{width: '50%', pr: {xs: 0, lg: 1}, flexGrow: 1}}
-                                                handleChangeDate={updateWatchDate} startDay={startDay}
-                                                endDay={endDay}/>
+                                    <DateSelector
+                                        sx={{
+                                        width: '50%', 
+                                        pr: {xs: 0, lg: 1}, 
+                                        flexGrow: 1
+                                        }}
+                                        handleChangeDate={updateWatchDate} 
+                                        startDay={startDay}
+                                        endDay={endDay}
+                                    />
                                 </Box>
                             </Box>
 

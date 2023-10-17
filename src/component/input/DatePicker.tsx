@@ -36,6 +36,11 @@ function DateSelector(props: dateSelectorProps) {
             minDate={props.startDay}
             maxDate={props.endDay}
             views={["year", "month", "day"]}
+            slotProps={{
+              textField: {
+                required: true,
+              },
+            }}
           />
     </LocalizationProvider>
   );
