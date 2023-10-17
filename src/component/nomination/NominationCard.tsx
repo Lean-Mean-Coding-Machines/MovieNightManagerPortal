@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
 import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
-import {FavoriteBorder, Favorite, Person} from "@mui/icons-material";
+import {FavoriteBorder, Favorite, Person, InfoOutlined} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
@@ -77,10 +77,11 @@ export default function NominationCard(props: NominationCardsProps) {
                 />
 
                 <CardContent sx={{position: 'relative'}}  >
-                    <Typography fontWeight={'bold'}>
+                    {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
+                    <Typography fontWeight={'bold'} sx={{width: '23rem'}}>
                         {props.nomination.movieTitle}
                     </Typography>
-
+                    <InfoOutlined className="info-icon"></InfoOutlined>
                     <div className={`${props.nomination.movieOverview.length > 280 && !expandText ? "card-paragraph-container" : ""}`}>
                     <Typography className={`${props.nomination.movieOverview.length > 280 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}

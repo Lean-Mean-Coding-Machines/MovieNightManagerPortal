@@ -163,12 +163,14 @@
                 .then(
                     (res) => {
                         if (res.data.data && res.data.status.success) {
-                            setMovieOptions(res.data.data.results);
+                            res.data.data.total_results > 0 ? setMovieOptions(res.data.data.results) : toast.error(`0 Results for ${searchTitle}, please try another Movie Title`) ;
                         }
                     },
-                    (err) => console.log(err)
                 )
-                .catch((err) => console.log(err.message))
+                .catch((err) => {
+                    console.log(err.message);
+                    return err.message;
+                })
                 .finally(() => setIsSearching(false));
         }
 
@@ -237,38 +239,40 @@
                                     Movie Name
                                     </Typography>
                                 </InputLabel>
-                                <Input required name='titleSearch' sx={{width: {xs: '100%', lg: '50%'}}}
+                                <Input 
+                                    required 
+                                    name='titleSearch' 
+                                    sx={{width: {xs: '100%', lg: '50%'}}}
                                     id='nomination-name-input'
                                     value={searchTitle}
-                                    onChange={(event: any) => setSearchTitle(event.target.value)}/>
+                                    onChange={(event: any) => setSearchTitle(event.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") {
+                                            handleMovieSearch(e);
+                                        }
+                                    }}
+                                />
                             </FormControl>
 
                             <Box>
                                 <Button
-                                    sx={{
-                                        mr: 2,
-                                        borderColor: '#54276F',
-                                        color: '#54276F',
-                                        ':hover': {
-                                            color: '#D1439E',
-                                            borderColor: '#D1439E'
-                                        }
-                                    }}
+                                    sx={{mr: 2}}
+                                    id='searchButton'
+                                    name='searchButton'
+                                    className='search-btn'
                                     variant='outlined'
                                     disabled={searchTitle === '' || isSearching}
                                     onClick={handleMovieSearch}>
                                     {isSearching ? 'Searching' : 'Search'}
+
                                 </Button>
+
                                 <Button
-                                    sx={{
-                                        borderColor: '#54276F',
-                                        color: '#54276F',
-                                        ':hover': {
-                                            color: '#D1439E',
-                                            borderColor: '#D1439E'
-                                        }
-                                    }}
+                                    id='clearButton'
+                                    name='clearButton'
+                                    className='clear-btn'
                                     variant='outlined'
+                                    disabled={searchTitle === ''}
                                     onClick={() => {
                                         setMovieOptions([]);
                                         updateMovieSelection(null);
@@ -367,13 +371,8 @@
                             <Button
                                 type='submit'
                                 variant='contained'
-                                sx={{
-                                    width: 125,
-                                    color: 'black',
-                                    backgroundColor: '#F8E924',
-                                    borderRadius: 22,
-                                    ':hover': {backgroundColor: '#38CD2C'}
-                                }}>
+                                className='submit-btn'
+                            >
                                 Submit
                             </Button>
                         </Box>

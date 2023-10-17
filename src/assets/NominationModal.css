@@ -41,3 +41,24 @@
     flex-wrap: wrap;
     width: auto;
 }
+
+.clear-btn, .search-btn {
+    border-color: #54276F;
+    color: #54276F;
+}
+
+.clear-btn:hover, .search-btn:hover {
+    color: #D1439E;
+    border-color: #D1439E;
+}
+
+.submit-btn {
+    width: 125px !important;
+    color: black !important;
+    background-color: #F8E924 !important;
+    border-radius: 22px !important;
+}
+
+.submit-btn:hover {
+    background-color: #38CD2C !important;
+}
