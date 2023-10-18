@@ -58,6 +58,7 @@
     }
 
     export default function NewNominationModal(props: NewNominationProps) {
+        
         const theme = useTheme();
 
         const searchListStyle = {
@@ -87,6 +88,7 @@
 
         const api = useAxios();
         const {userId} = useContext(UserContext);
+        const currentDate = new Date();
 
         const defaultNominationForm: nominationForm = ({
             segmentId: props.segment.id,
@@ -197,6 +199,12 @@
             });
         }
 
+        // Filters out movie dates that are further out than current date, we can change this in the future if we want to leverage all options
+        const filterMovieDates = movieOptions.filter((option) => {
+            const releaseDate = new Date(option.releaseDate);
+            return releaseDate <= currentDate;
+          });
+
         return (
             <Modal
                 open={props.isOpen}
@@ -281,9 +289,10 @@
                             {/* Search Results */}
                             <List hidden={movieOptions.length === 0} sx={searchListStyle}>
                                 {
-                                    movieOptions.map(option => (
-                                        <>
-                                            <ListItem alignItems='flex-start' onClick={() => {
+                                    filterMovieDates.map(option => (
+                                        // Implement the capability to tab through the list for WCAG compliance
+                                        <div key={option.id}>
+                                            <ListItem alignItems='flex-start'  onClick={() => {
                                                 updateMovieSelection(option);
                                                 setMovieOptions([]);
                                             }} sx={{
@@ -317,7 +326,7 @@
                                                     />
                                             </ListItem>
                                             <Divider variant='inset' component='li'/>
-                                        </>
+                                        </div>
                                     ))
                                 }
                             </List>
