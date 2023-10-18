@@ -7,6 +7,21 @@
 
 }
 
+.card-paragraph-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6; 
+    overflow: hidden;
+  }
+
+.long-overview-desc {
+    text-overflow: ellipsis;
+}
+
+.short-overview-desc {
+    text-overflow: none;
+}
+
 .expand-btn {
     cursor: pointer;
     border: 1px solid #828282;
@@ -39,10 +54,10 @@
     bottom: 0px;
 }
 
+/* Need to add in hover state */
 .info-icon {
     position: absolute;
     right: 20px;
     top: 15px;
     cursor: pointer;
 }
-/* Need to add in hover state */

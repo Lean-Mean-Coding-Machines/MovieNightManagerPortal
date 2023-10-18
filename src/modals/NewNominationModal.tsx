@@ -121,10 +121,15 @@
             setSearchTitle('');
         }
 
+        // Need to account for duplicate Movie selections here
         const handleSubmit = (event: React.SyntheticEvent) => {
             event.preventDefault();
             if (nominationForm.movieTitle === '') {
-                toast.error("Movie selection is required");
+                toast.error("Movie Selection Is Required");
+                return;
+            }
+            if (nominationForm.watchDate === 'Invalid Date') {
+                toast.error("Preferred Watch Date Required");
                 return;
             }
             api.post<IMnmApiResponse<any>>('/nomination/create', nominationForm)

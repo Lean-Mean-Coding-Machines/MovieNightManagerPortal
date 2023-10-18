@@ -78,17 +78,4 @@ code {
   border-color: #D1439E;
 }
 
-.card-paragraph-container {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6; 
-  overflow: hidden;
-}
 
-.long-overview-desc {
-  text-overflow: ellipsis;
-}
-
-.short-overview-desc {
-  text-overflow: none;
-}
