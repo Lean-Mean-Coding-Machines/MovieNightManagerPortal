@@ -12,6 +12,8 @@ import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
+import '../../assets/ProfilePage.css';
+
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -63,16 +65,9 @@ export function ProfilePage() {
         <>
             <h1 style={{marginLeft: 15}}> Profile</h1>
 
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <hr/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15}}>Info</h3>
+            <h3>Info</h3>
             <Box
                 component="form"
                 sx={{
@@ -99,30 +94,16 @@ export function ProfilePage() {
                 />
             </Box>
 
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <hr/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15, alignSelf: 'left'}}>Nominations</h3>
+            <h3>Nominations</h3>
 
             <Stack direction='row' spacing={2}>
                 {user.nominations.map((nom: INomination) => (<NominationCard nomination={nom}/>))}
             </Stack>
 
 
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <hr/>
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>
