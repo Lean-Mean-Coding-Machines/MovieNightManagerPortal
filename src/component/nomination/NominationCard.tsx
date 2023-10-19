@@ -78,7 +78,8 @@ export default function NominationCard(props: NominationCardsProps) {
 
                 <CardContent sx={{position: 'relative'}}  >
                     {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
-                    <Typography fontWeight={'bold'} sx={{width: '23rem'}}>
+                    {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
+                    <Typography fontWeight={'bold'} >
                         {props.nomination.movieTitle}
                     </Typography>
                     <InfoOutlined className="info-icon"></InfoOutlined>
@@ -108,17 +109,13 @@ export default function NominationCard(props: NominationCardsProps) {
                             onMouseEnter={() => setNominationLikeHover(true)}
                             onMouseLeave={() => setNominationLikeHover(false)}
                         >
-                            {
-                                isFilledLikeIcon() ?
-                                    <Favorite/> :
-                                    <FavoriteBorder/>
-                            }
+                            { isFilledLikeIcon() ? <Favorite/> : <FavoriteBorder/>}
                             <Tooltip title={
                                 <>
                                     {props.nomination.nominationLikes.map(like => (<Typography color="inherit">{like.username}</Typography>))}
                                 </>
                             } arrow>
-                                <span>{ `${likeCount} ${likeCount > 1 ? 'likes' : 'like'}`}</span>
+                                <span>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
                             </Tooltip>
                         </Button>
 

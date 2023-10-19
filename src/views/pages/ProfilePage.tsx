@@ -5,7 +5,7 @@ import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import EditProfilePicModal from '../../modals/EditProfilePicModal';
 import {useContext, useEffect, useState} from 'react';
-import {Stack, TextField} from "@mui/material";
+import { TextField} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
@@ -13,6 +13,9 @@ import IUser from "../../model/user/IUser";
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
 import '../../assets/ProfilePage.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 interface TabPanelProps {
@@ -43,6 +46,15 @@ export function ProfilePage() {
     const [user, setUser] = useState(emptyUser);
 
     const api = useAxios();
+    
+    let settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      arrows: true
+    };
 
     useEffect(() => {
         if (userId) {
@@ -73,7 +85,8 @@ export function ProfilePage() {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    '& .MuiTextField-root': {m: 1, width: '40ch'},
+                    alignItems: 'flex-start',
+                    '& .MuiTextField-root': {m: 1},
                 }}
                 noValidate
                 autoComplete="on"
@@ -97,13 +110,12 @@ export function ProfilePage() {
             <hr/>
 
             <h3>Nominations</h3>
-
-            <Stack direction='row' spacing={2}>
-                {user.nominations.map((nom: INomination) => (<NominationCard nomination={nom}/>))}
-            </Stack>
-
-
-            <hr/>
+            {/* Slider is actually a carousel */}
+            <Slider {...settings}>
+              {user.nominations.map((nom: INomination) => (
+              <NominationCard nomination={nom}/>))
+              }
+            </Slider>
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>
