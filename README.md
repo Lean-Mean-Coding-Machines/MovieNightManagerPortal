@@ -40,3 +40,8 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+
+## Coding standards
+
+1. Elements with an 'id' will follow this format with dashes in between each name. i.e. 'my-named-id'
+2. Elements with a 'name' will use normal CamelCase. i.e. 'myNameIs'

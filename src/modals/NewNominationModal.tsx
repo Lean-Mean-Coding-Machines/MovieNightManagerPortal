@@ -262,7 +262,7 @@
                             <Box>
                                 <Button
                                     sx={{mr: 2}}
-                                    id='searchButton'
+                                    id='search-button'
                                     name='searchButton'
                                     className='search-btn'
                                     variant='outlined'
@@ -273,7 +273,7 @@
                                 </Button>
 
                                 <Button
-                                    id='clearButton'
+                                    id='clear-button'
                                     name='clearButton'
                                     className='clear-btn'
                                     variant='outlined'
@@ -389,6 +389,8 @@
                             </Box>
 
                             <Button
+                                id='submit-btn'
+                                name='submitBtn'
                                 type='submit'
                                 variant='contained'
                                 className='submit-btn'

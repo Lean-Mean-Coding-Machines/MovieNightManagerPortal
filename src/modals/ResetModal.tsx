@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, IconButton, Input, InputLabel, Modal } from "@mui/material";
+import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
 
@@ -45,15 +45,18 @@ export default function ResetModal(props: ModalType) {
                     <div style={{ marginTop: 30}}>Please provide your account email address to receive an email to reset your password.</div>
       
               <div style={{ marginTop: '20px'}}>
-                <FormControl variant='standard'>
-                    <InputLabel htmlFor='standard-adornment-email-address'>
-                      Email 
-                    </InputLabel>
-                    <Input sx={{ width: '15rem'}} id='email-reset-input'/>
-                </FormControl>
+                    <TextField 
+                    label='Email'
+                    id='email-reset-input'
+                    name="emailResetInput"
+                    sx={{ width: '15rem'}} 
+                    />
               </div>
                 <div style={{ marginTop: '35px', marginRight: '15px'}}>
-                  <Button variant='contained' 
+                  <Button 
+                  variant='contained' 
+                  id="send-btn"
+                  name='sendBtn'
                   sx={{
                   width: 100,
                   backgroundColor: '#1F1F1F',
