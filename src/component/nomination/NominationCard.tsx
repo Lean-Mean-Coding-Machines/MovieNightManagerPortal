@@ -76,10 +76,10 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}
                 />
 
-                <CardContent sx={{position: 'relative'}}  >
+                <CardContent sx={{position: 'relative', width: '100%'}}  >
                     {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
                     {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
-                    <Typography fontWeight={'bold'} >
+                    <Typography fontWeight={'bold'}  >
                         {props.nomination.movieTitle}
                     </Typography>
                     <InfoOutlined className="info-icon"></InfoOutlined>
