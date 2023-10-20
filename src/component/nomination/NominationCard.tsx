@@ -112,7 +112,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             { isFilledLikeIcon() ? <Favorite/> : <FavoriteBorder/>}
                             <Tooltip title={
                                 <>
-                                    {props.nomination.nominationLikes.map(like => (<Typography color="inherit">{like.username}</Typography>))}
+                                    {props.nomination.nominationLikes.map(like => (<Typography key={like.username} color="inherit">{like.username}</Typography>))}
                                 </>
                             } arrow>
                                 <span>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
