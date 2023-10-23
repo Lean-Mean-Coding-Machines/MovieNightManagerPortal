@@ -70,8 +70,7 @@ export default function NominationCard(props: NominationCardsProps) {
                 <CardMedia
                     component="img"
                     sx={{height: '300px', width: '200px', cursor:"pointer"}}
-                    // Need to add in failed poster option here when poster fails to load
-                    image={poster ? poster : ''}
+                    image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
                     title={props.nomination.movieTitle}
                     onClick={handleNominationLikeToggle}
                 />
