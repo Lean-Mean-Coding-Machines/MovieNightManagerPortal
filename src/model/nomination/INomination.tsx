@@ -7,5 +7,6 @@ export default interface INomination {
     submittedBy: string,
     posterPath: string,
     movieOverview: string,
+    releaseDate: string,
     nominationLikes: INominationLike[]
 }

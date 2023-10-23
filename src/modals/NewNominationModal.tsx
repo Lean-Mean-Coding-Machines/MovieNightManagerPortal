@@ -41,6 +41,7 @@
         watchTime: string,
         watchType: string,
         posterPath: string,
+        releaseDate: string,
         userId: number,
         overview: string
     }
@@ -98,6 +99,7 @@
             watchType: 'ANY',
             posterPath: '',
             overview: '',
+            releaseDate: '',
             userId: userId,
         });
 
@@ -195,7 +197,8 @@
                 ...nominationForm,
                 movieTitle: movie ? movie.title : '',
                 posterPath: movie ? movie.posterPath : '',
-                overview: movie ? movie.overview : ''
+                overview: movie ? movie.overview : '',
+                releaseDate: movie ? movie.releaseDate: ''
             });
         }
 
