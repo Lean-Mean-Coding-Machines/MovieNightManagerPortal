@@ -5,7 +5,7 @@ import {Grid} from "@mui/material";
 
 export default function Layout(props: { children: ReactNode }) {
     return (
-        <Grid container>
+        <Grid container sx={{background: 'ghostwhite'}}>
             <Grid item id='header' xs={12}>
                 <AppBar/>
             </Grid>
