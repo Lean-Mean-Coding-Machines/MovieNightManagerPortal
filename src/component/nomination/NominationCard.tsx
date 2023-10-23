@@ -81,7 +81,9 @@ export default function NominationCard(props: NominationCardsProps) {
                     <Typography fontWeight={'bold'}  >
                         {props.nomination.movieTitle}
                     </Typography>
+                    <Tooltip title='More Info'>
                     <InfoOutlined className="info-icon"></InfoOutlined>
+                    </Tooltip>
                     <div className={`${props.nomination.movieOverview.length > 280 && !expandText ? "card-paragraph-container" : ""}`}>
                     <Typography className={`${props.nomination.movieOverview.length > 280 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}

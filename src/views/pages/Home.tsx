@@ -57,7 +57,7 @@ export function HomePage() {
                         {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
-                    <Grid container rowSpacing={2} columnSpacing={2} sx={{background: 'ghostwhite'}}>
+                    <Grid container rowSpacing={3} columnSpacing={3} sx={{background: 'ghostwhite', paddingBottom: '5rem'}}>
                         {segment.nominations.map((nom: INomination) => (
                             <Grid item xs={12} md={6} lg={4} key={nom.id}>
                                 <NominationCard nomination={nom}/>
