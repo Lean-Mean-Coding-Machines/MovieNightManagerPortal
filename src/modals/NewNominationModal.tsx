@@ -11,10 +11,11 @@
         Typography,
         Container,
         Modal,
-        TextField
+        TextField,
+        InputAdornment
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
-    import React, {useContext, useEffect, useState} from 'react';
+    import React, {useContext, useEffect, useRef, useState} from 'react';
     import '../assets/NominationModal.css';
     import DateSelector from '../component/input/DatePicker';
     import dayjs from 'dayjs';
@@ -26,6 +27,7 @@
     import IMnmApiResponse from '../model/IMnmApiResponse';
     import ITmdbResult from '../model/ITmdbResult';
     import IMovieSearchResult from '../model/IMovieSearchResult';
+    import { CancelRounded } from '@mui/icons-material';
 
     interface NewNominationProps {
         isOpen: boolean,
@@ -200,6 +202,23 @@
             });
         }
 
+        // Validates if the cancel btn is in focus when tabbing
+        const inputRef = useRef(null);
+
+        const handleClickClearMovieInput = () => {
+            setMovieOptions([]);
+            updateMovieSelection(null);
+            setSearchTitle('');
+        };
+
+        const clearMovieTitleInput = (event: any) => {
+            if (event.key === "Enter" && inputRef.current === document.activeElement) {
+                event.preventDefault();
+                handleClickClearMovieInput();
+                return;
+            }
+        };
+
         // Filters out movie dates that are further out than current date, we can change this in the future if we want to leverage all options
         const filterMovieDates = movieOptions.filter((option) => {
             const releaseDate = new Date(option.releaseDate);
@@ -245,7 +264,7 @@
                             onSubmit={handleSubmit}
                         >
                             {/* Movie Name Input */}
-                                <TextField 
+                                <TextField
                                     label="Movie Name"
                                     name='titleSearch' 
                                     id='nomination-name-input'
@@ -253,12 +272,27 @@
                                     sx={{width: {xs: '100%', lg: '50%'}}}
                                     value={searchTitle}
                                     onChange={(event: any) => setSearchTitle(event.target.value)}
+                                    InputProps={{endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton 
+                                                ref={inputRef}
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickClearMovieInput}
+                                                onMouseDown={clearMovieTitleInput}
+                                                onKeyDown={(e) => { clearMovieTitleInput(e)}}
+                                                >
+                                                {searchTitle ? <CancelRounded sx={{color: '#1F1F1F'}}/> : ''}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
                                     onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
+                                        if (e.key === "Enter" && (inputRef.current !== document.activeElement)) {
                                             handleMovieSearch(e);
                                         }
                                     }}
                                 />
+                                
 
                             <Box>
                                 <Button
@@ -279,11 +313,7 @@
                                     className='clear-btn'
                                     variant='outlined'
                                     disabled={searchTitle === ''}
-                                    onClick={() => {
-                                        setMovieOptions([]);
-                                        updateMovieSelection(null);
-                                        setSearchTitle('');
-                                    }}>
+                                    onClick={handleClickClearMovieInput}>
                                     Clear
                                 </Button>
                             </Box>
