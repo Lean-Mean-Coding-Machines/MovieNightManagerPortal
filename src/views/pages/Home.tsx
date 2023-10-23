@@ -10,7 +10,6 @@ import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
 import { UserContext } from '../../context/UserContext';
 
-
 export function HomePage() {
 
     const theme = useTheme();

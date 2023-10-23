@@ -190,9 +190,7 @@
 
         const updateMovieSelection = (movie: IMovieSearchResult | null) => {
             setSelectedMovie(movie);
-            if (movie?.posterPath) {
-                setPreviewPosterPath('https://image.tmdb.org/t/p/w500' + movie.posterPath);
-            }
+            movie?.posterPath ? setPreviewPosterPath('https://image.tmdb.org/t/p/w500' + movie.posterPath) : setPreviewPosterPath('/missingPoster.png');
             setNominationState({
                 ...nominationForm,
                 movieTitle: movie ? movie.title : '',
