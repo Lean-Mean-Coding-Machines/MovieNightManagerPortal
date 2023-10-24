@@ -136,7 +136,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             onMouseEnter={() => setNominationLikeHover(true)}
                             onMouseLeave={() => setNominationLikeHover(false)}
                         >
-                            { isFilledLikeIcon() ? <Favorite/> : <FavoriteBorder/>}
+                            { isFilledLikeIcon() ? <Favorite style={{color: '#f24d85'}}/> : <FavoriteBorder style={{color: '#f24d85'}} />}
                             <Tooltip title={
                                 <>
                                     {props.nomination.nominationLikes.map(like => (<Typography key={like.username} color="inherit">{like.username}</Typography>))}

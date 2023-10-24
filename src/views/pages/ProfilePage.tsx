@@ -54,8 +54,6 @@ export function ProfilePage() {
       slidesToShow: 3,
       slidesToScroll: 3,
       arrows: true,
-      prevArrow: <div className="slick-prev">Previous</div>,
-      nextArrow: <div className="slick-next">Next</div>,
     };
 
     useEffect(() => {
@@ -97,14 +95,12 @@ export function ProfilePage() {
                     disabled
                     id="outlined-disabled"
                     label="First Name"
-                    defaultValue=""
                     value={user.firstName}
                 />
                 <TextField
                     disabled
                     id="outlined-disabled"
                     label="Last Name"
-                    defaultValue=""
                     value={user.lastName}
                 />
             </Box>
@@ -114,8 +110,8 @@ export function ProfilePage() {
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
             <Slider {...settings}>
-              {user.nominations.map((nom: INomination) => (
-              <NominationCard nomination={nom}/>))
+              {user.nominations.map((nom: INomination, index) => (
+              <NominationCard key={index} nomination={nom}/>))
               }
             </Slider>
 
