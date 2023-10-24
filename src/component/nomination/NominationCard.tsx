@@ -91,12 +91,22 @@ export default function NominationCard(props: NominationCardsProps) {
                     </div>
                     <div>
                     { (props.nomination.movieOverview.length > 280 && !expandText) && 
-                    <Button className="expand-btn" onClick={expandHandler}>
+                    <Button 
+                        id="read-more-btn"
+                        name="readMoreBtn"
+                        className="expand-btn" 
+                        onClick={expandHandler}
+                    >
                       Read More
                     </Button> 
                     }
                     { expandText && 
-                    <Button className="expand-btn" onClick={expandHandler}>
+                    <Button 
+                        id="read-less-btn"
+                        name="readLessBtn"
+                        className="expand-btn" 
+                        onClick={expandHandler}
+                    >
                       Read Less
                     </Button> 
                     }
@@ -106,7 +116,11 @@ export default function NominationCard(props: NominationCardsProps) {
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
                         {/* Display liked by on the tooltip of likes */}
-                        <Button className="like-btn" onClick={handleNominationLikeToggle}
+                        <Button 
+                            id="like-btn"
+                            name="likeBtn"
+                            className="like-btn" 
+                            onClick={handleNominationLikeToggle}
                             onMouseEnter={() => setNominationLikeHover(true)}
                             onMouseLeave={() => setNominationLikeHover(false)}
                         >

@@ -1,5 +1,4 @@
-import React from 'react';
-import {useState} from 'react';
+import {createContext, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import '../../assets/LoginPage.css';
 import {UserRegister} from "../../component/UserProfile/UserRegister";
@@ -33,3 +32,5 @@ export function LoginPage() {
         </>
     );
 }
+
+// export const LoginPage = createContext(loginActive);

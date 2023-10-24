@@ -114,15 +114,18 @@ export function UserLogin(props: userRegisterProps) {
                 </div>
 
                 <div className='login-account-btn'>
-                    <Button type="submit" 
+                    <Button 
+                        id='login-btn'
+                        name='loginBtn'
+                        type="submit" 
                         onClick={handleLogin} 
                         variant='contained' 
-                    sx={{
-                        width: 225,
-                        backgroundColor: '#1F1F1F',
-                        borderRadius: 22,
-                        ':hover': {backgroundColor: '#1F1F1F',},
-                    }}>
+                        sx={{
+                            width: 225,
+                            backgroundColor: '#1F1F1F',
+                            borderRadius: 22,
+                            ':hover': {backgroundColor: '#1F1F1F',},
+                        }}>
                         Login
                     </Button>
                 </div>

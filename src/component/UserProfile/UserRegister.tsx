@@ -303,6 +303,8 @@ export function UserRegister(props: userRegisterProps) {
                 </Box>
 
                 <Button
+                    id='create-btn'
+                    name='createBtn'
                     sx={{
                         width: '100%',
                         borderColor: '#54276F',

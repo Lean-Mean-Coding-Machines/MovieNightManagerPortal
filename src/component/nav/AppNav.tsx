@@ -113,15 +113,18 @@ function AppNav() {
                             </Box> :
                             <Box sx={{flexGrow: 1}}>
                                 <Box sx={{float: 'right'}}>
-
-                                    <Button sx={{
-                                        color: 'white',
-                                        borderColor: 'white',
-                                        ':hover': {
-                                            color: '#54276F',
-                                            borderColor: '#54276F'
-                                        }
-                                    }} variant="outlined" 
+                                    <Button 
+                                        id='sign-in-btn'
+                                        name='signInBtn'
+                                        variant="outlined" 
+                                        sx={{
+                                            color: 'white',
+                                            borderColor: 'white',
+                                            ':hover': {
+                                                color: '#54276F',
+                                                borderColor: '#54276F'
+                                            }
+                                        }} 
                                     onClick={navigateToLogin}>Sign In
                                     </Button>
                                 </Box>
