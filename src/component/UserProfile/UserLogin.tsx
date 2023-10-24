@@ -51,9 +51,7 @@ export function UserLogin(props: userRegisterProps) {
 
     const handleLogin = (event: React.SyntheticEvent) => {
         event.preventDefault();
-        
         loginUser(formValues);
-
     }
 
     return (
@@ -98,14 +96,24 @@ export function UserLogin(props: userRegisterProps) {
                 <div style={{marginTop: 10}}>
                     <FormGroup>
                         <FormControlLabel control={
-                            <Checkbox defaultChecked 
-                            sx={{
-                                textAlign: 'center',
-                                color: '#1F1F1F',
-                                '&.Mui-checked': {color: '#1F1F1F',},
-                            }}/>
+                            <Checkbox 
+                                id="remember-me-checkbox"
+                                name="rememberMeCheckbox"
+                                defaultChecked 
+                                sx={{
+                                    textAlign: 'center',
+                                    color: '#1F1F1F',
+                                    "&, & + .MuiFormControlLabel-label": {
+                                        userSelect: "none"
+                                    },
+                                    '&.Mui-checked': {
+                                        color: '#1F1F1F',
+                                    },
+                                }}
+                            />
                         } 
-                        label="Remember Me"/>
+                        label="Remember Me"
+                        />
                     </FormGroup>
                 </div>
 
