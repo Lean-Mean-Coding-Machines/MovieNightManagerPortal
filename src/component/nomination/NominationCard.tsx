@@ -75,49 +75,61 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}
                 />
 
-                <CardContent sx={{position: 'relative', width: '100%'}}  >
                     {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
                     {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
-                    <Typography fontWeight={'bold'}  >
-                        {props.nomination.movieTitle}
-                    </Typography>
-                    <Tooltip title='More Info'>
-                    <InfoOutlined className="info-icon"></InfoOutlined>
-                    </Tooltip>
-                    <div className={`${props.nomination.movieOverview.length > 280 && !expandText ? "card-paragraph-container" : ""}`}>
-                    <Typography className={`${props.nomination.movieOverview.length > 280 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
+                <CardContent sx={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <div style={{ flex: 1, flexWrap: 'wrap' }}>
+                            <Typography fontWeight={'bold'}>
+                                {props.nomination.movieTitle}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
+                                ({props.nomination.releaseDate.split('-')[0]})
+                            </Typography>
+                            </div>
+                            <div className="info-icon">
+                            <Tooltip title="More Info">
+                                <InfoOutlined />
+                            </Tooltip>
+                            </div>
+                        </div>
+                    
+                    <div className={`${props.nomination.movieOverview.length > 150 && !expandText ? "card-paragraph-container" : ""}`}>
+                    <Typography className={`${props.nomination.movieOverview.length > 150 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}
                     </Typography>
                     </div>
+                    
                     <div>
-                    { (props.nomination.movieOverview.length > 280 && !expandText) && 
-                    <Button 
-                        id="read-more-btn"
-                        name="readMoreBtn"
-                        className="expand-btn" 
-                        onClick={expandHandler}
-                    >
-                      Read More
-                    </Button> 
-                    }
-                    { expandText && 
-                    <Button 
-                        id="read-less-btn"
-                        name="readLessBtn"
-                        className="expand-btn" 
-                        onClick={expandHandler}
-                    >
-                      Read Less
-                    </Button> 
-                    }
+                        { (props.nomination.movieOverview.length > 150 && !expandText) && 
+                            <Button 
+                                id={`read-more-btn ${props.nomination.id}`}
+                                name="readMoreBtn"
+                                className="expand-btn" 
+                                onClick={expandHandler}
+                            >
+                            Read More
+                            </Button> 
+                        }
+
+                        { expandText && 
+                            <Button 
+                                id={`read-less-btn ${props.nomination.id}`}
+                                name="readLessBtn"
+                                className="expand-btn" 
+                                onClick={expandHandler}
+                            >
+                            Read Less
+                            </Button> 
+                        }
                     </div>
 
                 <CardActions className="card-actions-container">
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
-                        {/* Display liked by on the tooltip of likes */}
+                        {/* To Do: Display liked by on the tooltip of likes */}
                         <Button 
-                            id="like-btn"
+                            id={`like-btn ${props.nomination.id}`}
                             name="likeBtn"
                             className="like-btn" 
                             onClick={handleNominationLikeToggle}

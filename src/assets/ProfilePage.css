@@ -10,3 +10,8 @@ hr {
 h3 {
     margin: 0 0 15px 15px;
 }
+
+/* Carousel Arrows */
+.slick-prev:before, .slick-next:before {
+    color: #000000 !important;
+}
