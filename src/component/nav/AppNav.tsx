@@ -14,6 +14,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router";
 import {useContext} from "react";
 import {UserContext} from "../../context/UserContext";
+import {Link} from 'react-router-dom';
 
 interface menuSettingAction {
     setting: string,
@@ -52,8 +53,8 @@ function AppNav() {
                 <Toolbar disableGutters sx={{display: 'flex'}}>
                     <Typography
                         variant="h6"
-                        component="a"
-                        href="/"
+                        component={Link}
+                        to="/"
                         noWrap
                         sx={{
                             mr: 2,

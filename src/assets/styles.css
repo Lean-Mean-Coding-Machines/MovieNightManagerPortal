@@ -19,11 +19,6 @@ body {
    url("../fonts/Sora/Sora-Bold.ttf") format("truetype");
   }
 
-.profile-dropdown {
-  float: right;
-  margin: 1rem 2rem 0 0;
-}
-
 .purple-btn {
   border-color: #54276F;
   color: #54276F;
