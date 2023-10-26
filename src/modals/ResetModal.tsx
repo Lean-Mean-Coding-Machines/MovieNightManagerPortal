@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import React from "react";
+import React, { useState } from "react";
 
 interface ModalType {
   isOpen: boolean;
@@ -20,13 +20,31 @@ const modalStyle = {
 }
 
 export default function ResetModal(props: ModalType) {
+
+  const [emailFormData, setFormData] = useState({email: ''});
+  
+  const handleChange = (e:any) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...emailFormData,
+      [name]: value,
+    });
+  };
+  
+  // Need to Expand upon this when Email Submission Post is created
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    props.toggle();
+  };
+
   return (
         <Modal
             open={props.isOpen}
             onClose={props.toggle}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-        >     
+        >  
+        <form onSubmit={handleSubmit}>
         <Box sx={modalStyle}>
             <Box sx={{textAlign: 'center', marginTop: '10px'}}>
                   <Box component='span'
@@ -46,15 +64,19 @@ export default function ResetModal(props: ModalType) {
       
               <div style={{ marginTop: '20px'}}>
                     <TextField 
+                    required
                     label='Email'
                     id='email-reset-input'
                     name="emailResetInput"
-                    sx={{ width: '15rem'}} 
+                    sx={{ width: '15rem'}}
+                    value={emailFormData.email}
+                    onChange={handleChange}
                     />
               </div>
                 <div style={{ marginTop: '35px', marginRight: '15px'}}>
                   <Button 
-                  variant='contained' 
+                  variant='contained'
+                  type="submit" 
                   id="send-btn"
                   name='sendBtn'
                   sx={{
@@ -63,11 +85,12 @@ export default function ResetModal(props: ModalType) {
                   borderRadius: 22,
                   ':hover': {backgroundColor: 'primary',},
                   }} 
-                  onClick={props.toggle}>Send
+                  >Send
                   </Button>
                 </div>
           </Box>    
       </Box> 
+          </form>   
     </Modal>
   );
 }
