@@ -54,7 +54,7 @@
         left: '50%',
         transform: 'translate(-50%, -50%)',
         display: 'block',
-        background: 'white',
+        background: '#f6f6f6',
         width: {xs: '85%', lg: '35%'},
         padding: '1rem',
         borderRadius: '1rem',
@@ -281,7 +281,7 @@
                                                 onMouseDown={clearMovieTitleInput}
                                                 onKeyDown={(e) => { clearMovieTitleInput(e)}}
                                                 >
-                                                {searchTitle ? <CancelRounded sx={{color: '#1F1F1F'}}/> : ''}
+                                                {searchTitle ? <CancelRounded sx={{color: theme.palette.primary.main}}/> : ''}
                                             </IconButton>
                                         </InputAdornment>
                                     )
@@ -391,7 +391,6 @@
                                                     {` ${selectedMovie ? selectedMovie.releaseDate : ''}`}
                                                 </React.Fragment>
                                             }
-                                            
                                         />
                                     </ListItem>
                                 </List>

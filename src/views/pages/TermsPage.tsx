@@ -5,7 +5,7 @@ function TermsPage() {
   
   
   return (
-<div>
+<div style={{color: '#fff'}}>
       <h1>Terms and Conditions</h1>
 
       <h2>1. Acceptance of Terms</h2>

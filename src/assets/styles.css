@@ -1,7 +1,7 @@
 /* Global Application styles go here */
 
 #root {
-  background-color: ghostwhite;
+  background-color: #14181c;
 }
 
 body {
@@ -17,6 +17,7 @@ body {
   font-family: "SoraBold";
   src: local("SoraBold"),
    url("../fonts/Sora/Sora-Bold.ttf") format("truetype");
+   font-display: swap;
   }
 
 .purple-btn {

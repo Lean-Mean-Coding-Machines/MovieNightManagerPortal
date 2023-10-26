@@ -190,6 +190,7 @@ export function UserRegister(props: userRegisterProps) {
     }
 
     return (
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh'}}>
             <Box
                 component="form"
                 sx={{
@@ -198,10 +199,13 @@ export function UserRegister(props: userRegisterProps) {
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifySelf: 'center',
+                    background: '#f6f6f6',
                     rowGap: 2,
                     width: {xs: '95%', lg: '25%'},
                     ml: 'auto',
-                    mr: 'auto'
+                    mr: 'auto',
+                    padding: '1em',
+                    borderRadius: '10px'
                 }}
                 noValidate
                 autoComplete="on"
@@ -326,9 +330,10 @@ export function UserRegister(props: userRegisterProps) {
                     <Box component='span' className='purple-btn'
                          sx={{fontWeight: 'bold', cursor: 'pointer', alignSelf: 'center'}}
                          onClick={props.handleLoginNav}>
-                        {` Log In`}
+                        {` Sign In`}
                     </Box>
                 </Box>
             </Box>
+        </div>
     )
 }

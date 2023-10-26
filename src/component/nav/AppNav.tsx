@@ -48,7 +48,7 @@ function AppNav() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#03C4C7' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#015f76' }}>
             <Container sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
                 <Toolbar disableGutters sx={{display: 'flex'}}>
                     <Typography
@@ -63,29 +63,35 @@ function AppNav() {
                             letterSpacing: '.2rem',
                             color: 'white',
                             ':hover': {
-                                color: '#54276F'
+                                color: '#f1f1f1'
                             },
                             textDecoration: 'none',
                         }}
                     >
                     {/* Mobile */}
                         <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
-                        <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
                             MNM
                         </Box>
                     {/* Desktop */}
                         <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
-                        <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
                             Movie Night Manager
                         </Box>
                     </Typography>
 
-                    {
-                        username !== ""  ?
+                    { username !== ""  ?
                             <Box sx={{flexGrow: 1}}>
                                 <Tooltip title="Open Profile">
                                     <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
-                                        <Avatar alt={username}/>
+                                        <Avatar 
+                                            alt={username} 
+                                            sx={{color:'#015f76', 
+                                            background: '#fff',
+                                            ':hover': {
+                                                background: '#f1f1f1',
+                                            }
+                                            }}/>
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
@@ -119,11 +125,11 @@ function AppNav() {
                                         name='signInBtn'
                                         variant="outlined" 
                                         sx={{
-                                            color: 'white',
-                                            borderColor: 'white',
+                                            color: '#fff',
+                                            borderColor: '#fff',
                                             ':hover': {
-                                                color: '#54276F',
-                                                borderColor: '#54276F'
+                                                color: '#f1f1f1',
+                                                borderColor: '#f1f1f1'
                                             }
                                         }} 
                                     onClick={navigateToLogin}>Sign In

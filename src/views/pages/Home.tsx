@@ -53,11 +53,12 @@ export function HomePage() {
                 </Backdrop>
 
                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                    <h2 style={{textAlign: 'center'}}>
+                    <h2 style={{textAlign: 'center', color: '#fff'}}>
+                        <div> Nomination Voting Period</div>
                         {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
-                    <Grid container rowSpacing={3} columnSpacing={3} sx={{background: 'ghostwhite', paddingBottom: '5rem'}}>
+                    <Grid container rowSpacing={4} columnSpacing={5} sx={{background: '#14181c', paddingBottom: '5rem', marginTop: '-18px'}}>
                         {segment.nominations.map((nom: INomination) => (
                             <Grid item xs={12} md={6} lg={4} key={nom.id}>
                                 <NominationCard nomination={nom}/>
@@ -69,7 +70,8 @@ export function HomePage() {
                 {userContext.username && <Tooltip title="Nominate a Movie">
                     <Fab onClick={toggle} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
-                        backgroundColor: '#F8E924',
+                        color: '#fff',
+                        backgroundColor: theme.palette.primary.main,
                         position: 'fixed',
                         bottom: '64px',
                         right: '10%',

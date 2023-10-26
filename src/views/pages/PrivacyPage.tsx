@@ -6,7 +6,7 @@ function PrivacyPage() {
 
 
   return (
-<div>
+<div style={{color:'#fff'}}>
       <h1>Privacy Policy</h1>
 
       <h2>1. Information We Collect</h2>

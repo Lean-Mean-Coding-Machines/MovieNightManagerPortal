@@ -4,7 +4,10 @@
   align-items: center;
   align-content: center;
   flex-wrap: wrap;
-  width: auto;
+  background-color: #f6f6f6;
+  padding: 4em;
+  border-radius: 10px;
+
 }  
   
   .login-account-btn {

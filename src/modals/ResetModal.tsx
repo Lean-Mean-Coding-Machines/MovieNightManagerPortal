@@ -13,7 +13,7 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   display: 'block',
-  background: 'white',
+  background: '#f6f6f6',
   width: {xs: '80%', lg: '30%'},
   padding: '1rem 1rem 2rem 3rem',
   borderRadius: '1rem',
@@ -59,9 +59,9 @@ export default function ResetModal(props: ModalType) {
                   name='sendBtn'
                   sx={{
                   width: 100,
-                  backgroundColor: '#1F1F1F',
+                  backgroundColor: 'primary',
                   borderRadius: 22,
-                  ':hover': {backgroundColor: '#1F1F1F',},
+                  ':hover': {backgroundColor: 'primary',},
                   }} 
                   onClick={props.toggle}>Send
                   </Button>

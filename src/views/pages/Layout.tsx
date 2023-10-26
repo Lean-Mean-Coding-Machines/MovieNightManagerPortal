@@ -7,11 +7,11 @@ import Footer from '../../component/nav/Footer';
 export default function Layout(props: { children: ReactNode }) {
 
   return (
-    <Grid container sx={{ background: 'ghostwhite' }}>
+    <Grid container sx={{ background: '#14181c' }}>
       <Grid item id="header" xs={12}>
         <AppBar/>
       </Grid>
-      <Grid item xs={12} style={{ flex: 1, background: 'ghostwhite', minHeight: '85vh' }}>
+      <Grid item xs={12} style={{ flex: 1, background: '#14181c', minHeight: '85vh' }}>
         <Container maxWidth="xl" style={{ flex: 1 }}>
           {props.children}
         </Container>

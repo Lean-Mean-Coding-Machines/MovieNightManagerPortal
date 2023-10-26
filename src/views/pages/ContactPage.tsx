@@ -1,14 +1,13 @@
 import React from 'react';
 import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 
-
 function ContactPage() {
     
 
 
   return (
 
-<Container maxWidth="sm" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '70vh'}}>
+<Container maxWidth="sm" style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', background: '#f6f6f6', marginTop: '5em', borderRadius: '10px'}}>
       <Typography variant="h4" gutterBottom>
         Contact Us
       </Typography>

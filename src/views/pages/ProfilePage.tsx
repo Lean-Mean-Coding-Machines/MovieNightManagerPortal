@@ -5,7 +5,7 @@ import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import EditProfilePicModal from '../../modals/EditProfilePicModal';
 import {useContext, useEffect, useState} from 'react';
-import { TextField} from "@mui/material";
+import {TextField} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
@@ -16,13 +16,6 @@ import '../../assets/ProfilePage.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
 
 const emptyUser: IUser = {
     id: 0,
@@ -75,11 +68,13 @@ export function ProfilePage() {
 
     return (
         <>
-            <h1 style={{marginLeft: 15}}> Profile</h1>
+            <h1 style={{marginLeft: 15, color:'#fff'}}> Profile</h1>
 
             <hr/>
 
             <h3>Info</h3>
+
+            <div style={{width: '16rem', marginLeft: '15px', padding:'2em', background: '#f6f6f6', borderRadius: '10px'}}>
             <Box
                 component="form"
                 sx={{
@@ -93,27 +88,32 @@ export function ProfilePage() {
             >
                 <TextField
                     disabled
-                    id="outlined-disabled"
+                    id="first-name-outlined-disabled"
+                    name='firstNameInputDisabled'
                     label="First Name"
                     value={user.firstName}
                 />
                 <TextField
                     disabled
-                    id="outlined-disabled"
+                    name='lastNameInputDisabled'
+                    id="last-name-outlined-disabled"
                     label="Last Name"
                     value={user.lastName}
                 />
             </Box>
+            </div>
 
             <hr/>
 
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
+            <div>
             <Slider {...settings}>
               {user.nominations.map((nom: INomination, index) => (
               <NominationCard key={index} nomination={nom}/>))
               }
             </Slider>
+            </div>
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>

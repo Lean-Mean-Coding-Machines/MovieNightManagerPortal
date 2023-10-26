@@ -2,9 +2,10 @@ import {
     Button,
     Checkbox,
     FormControlLabel,
-    FormGroup, IconButton,
+    FormGroup, 
+    IconButton,
     InputAdornment,
-    TextField
+    TextField,
 } from "@mui/material";
 import ResetModal from "../../modals/ResetModal";
 import React, {useContext, useState} from "react";
@@ -55,12 +56,12 @@ export function UserLogin(props: userRegisterProps) {
     }
 
     return (
-        <>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh'}}>
             <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
             <form>
 
             <div className='user-login-container'>
-                <h1>Login</h1>
+                <h1>Sign In</h1>
 
                 <div>
                     <TextField sx={{width: 220,}}
@@ -102,12 +103,12 @@ export function UserLogin(props: userRegisterProps) {
                                 defaultChecked 
                                 sx={{
                                     textAlign: 'center',
-                                    color: '#1F1F1F',
+                                    color: 'primary',
                                     "&, & + .MuiFormControlLabel-label": {
                                         userSelect: "none"
                                     },
                                     '&.Mui-checked': {
-                                        color: '#1F1F1F',
+                                        color: 'primary',
                                     },
                                 }}
                             />
@@ -130,11 +131,11 @@ export function UserLogin(props: userRegisterProps) {
                         variant='contained' 
                         sx={{
                             width: 225,
-                            backgroundColor: '#1F1F1F',
+                            backgroundColor: 'primary',
                             borderRadius: 22,
-                            ':hover': {backgroundColor: '#1F1F1F',},
+                            ':hover': {backgroundColor: 'primary',},
                         }}>
-                        Login
+                        Sign In
                     </Button>
                 </div>
 
@@ -146,6 +147,6 @@ export function UserLogin(props: userRegisterProps) {
                 </div>
             </div>
             </form>
-        </>
+        </div>
     );
 }

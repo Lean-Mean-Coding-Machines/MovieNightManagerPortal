@@ -1,17 +1,25 @@
 hr {
-    color: #000000;
-    background-color: #000000;
     height: .1px;
-    border-color: #000000;
+    border-color: #fff;
     width: 20rem;
     margin-left: 15px;
 }
 
 h3 {
+    color: #fff;
     margin: 0 0 15px 15px;
 }
 
 /* Carousel Arrows */
 .slick-prev:before, .slick-next:before {
-    color: #000000 !important;
+    color: #c12b5d !important;
+    font-size: 33px !important;
+}
+
+.slick-prev {
+    left: -50px !important;
+}
+
+.slick-next {
+    right: -40px !important;
 }

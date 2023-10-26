@@ -13,7 +13,16 @@ const root = ReactDOM.createRoot(
 );
 
 // Global configuration for Mui Btn style. We can add more variables here.
+// Temporary Primary Color Pallette
 const theme = createTheme({
+    palette: {
+        primary: {
+          main: '#c12b5d',
+        },
+        secondary: {
+          main: '#015f76',
+        },
+      },
     typography: {
         button: {
             fontFamily: "SoraBold"

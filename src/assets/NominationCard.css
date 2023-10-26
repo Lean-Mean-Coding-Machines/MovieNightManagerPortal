@@ -2,9 +2,10 @@
 
 .card-container {
     display: flex;
-    border-radius: 10px;
+    border-radius: 15px !important;
+    border: 1px solid #666d77 !important;
     width: 100%;
-
+    background-color: #f6f6f6 !important;
 }
 
 .card-paragraph-container {
@@ -12,6 +13,7 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5; 
     overflow: hidden;
+    color: #191919;
   }
 
 .long-overview-desc {
@@ -34,7 +36,7 @@
 }
 
 .expand-btn:hover {
-    background: #D1439E;
+    background: #c12b5d;
     color: #fff;
 }
 
