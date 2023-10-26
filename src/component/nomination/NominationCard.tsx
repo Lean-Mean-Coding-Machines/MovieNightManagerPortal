@@ -77,7 +77,7 @@ export default function NominationCard(props: NominationCardsProps) {
 
                     {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
                     {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
-                <CardContent sx={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardContent className="card-content-container ">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{ flex: 1, flexWrap: 'wrap' }}>
                             <Typography fontWeight={'bold'}>
@@ -142,7 +142,7 @@ export default function NominationCard(props: NominationCardsProps) {
                                     {props.nomination.nominationLikes.map(like => (<Typography key={like.username} color="inherit">{like.username}</Typography>))}
                                 </>
                             } arrow>
-                                <span>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
+                                <span style={{font:'Raleway'}}>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
                             </Tooltip>
                         </Button>
 

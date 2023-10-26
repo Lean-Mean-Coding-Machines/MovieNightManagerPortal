@@ -364,7 +364,7 @@
 
                             {/* Chosen Movie */}
                             <Box hidden={selectedMovie === null}>
-                                <h3 style={{margin: 0, textAlign: 'center'}}>Chosen Movie</h3>
+                                <h3 style={{margin: 0, textAlign: 'center', color: '#000'}}>Chosen Movie</h3>
                                 <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}} >
                                     <ListItem alignItems='flex-start' sx={{pb: 0}}>
                                         <Avatar

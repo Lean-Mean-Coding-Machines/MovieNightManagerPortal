@@ -8,6 +8,13 @@
     background-color: #f6f6f6 !important;
 }
 
+.card-content-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .card-paragraph-container {
     display: -webkit-box;
     -webkit-box-orient: vertical;

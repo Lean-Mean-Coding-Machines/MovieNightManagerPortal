@@ -74,7 +74,7 @@ export function ProfilePage() {
 
             <h3>Info</h3>
 
-            <div style={{width: '16rem', marginLeft: '15px', padding:'2em', background: '#f6f6f6', borderRadius: '10px'}}>
+            <div className='profile-info-container'>
             <Box
                 component="form"
                 sx={{

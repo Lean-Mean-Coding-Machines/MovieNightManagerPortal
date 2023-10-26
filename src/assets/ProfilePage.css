@@ -23,3 +23,11 @@ h3 {
 .slick-next {
     right: -40px !important;
 }
+
+.profile-info-container {
+    width: 16rem;
+    margin-left: 15px;
+    padding: 2em;
+    background: #f6f6f6;
+    border-radius: 10px;
+}
