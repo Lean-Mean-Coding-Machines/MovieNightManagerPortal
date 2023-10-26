@@ -204,6 +204,7 @@
 
         // Validates if the cancel btn is in focus when tabbing
         const inputRef = useRef(null);
+        const searchListInputRef = useRef(null);
 
         const handleClickClearMovieInput = () => {
             setMovieOptions([]);
@@ -293,7 +294,6 @@
                                     }}
                                 />
                                 
-
                             <Box>
                                 <Button
                                     sx={{mr: 2}}
@@ -317,21 +317,35 @@
                                     Clear
                                 </Button>
                             </Box>
+
                             {/* Search Results */}
-                            <List hidden={movieOptions.length === 0} sx={searchListStyle}>
-                                {
-                                    filterMovieDates.map(option => (
-                                        // Implement the capability to tab through the list for WCAG compliance
-                                        <div key={option.id}>
-                                            <ListItem alignItems='flex-start'  onClick={() => {
-                                                updateMovieSelection(option);
-                                                setMovieOptions([]);
-                                            }} sx={{
-                                                '&:hover': {
-                                                    background: 'rgba(0,0,0,0.5)',
+                            <List hidden={movieOptions.length === 0} sx={searchListStyle} >
+                            {filterMovieDates.map((option) => (
+                                        <div key={option.id} >
+                                            <ListItem 
+                                                tabIndex={0}
+                                                alignItems='flex-start'  
+                                                onKeyDown={(e) => { 
+                                                        if (e.key === "Enter") {
+                                                            updateMovieSelection(option);
+                                                            setMovieOptions([]);                                                    
+                                                        }
+                                                    }}
+                                                onClick={() => {
+                                                    updateMovieSelection(option);
+                                                    setMovieOptions([]);
+                                                }}          
+                                                sx={{
+                                                    '&:hover': {
+                                                    background: '#808080',
                                                     cursor: 'pointer'
-                                                }
-                                            }}>
+                                                    },
+                                                    '&:focus': {
+                                                        background: '#808080',
+                                                        outlineColor:'#808080'
+                                                    }
+                                                }}
+                                            >
                                                 <ListItemAvatar>
                                                     <Avatar alt='Movie Poster'
                                                             src={`${option.posterPath ? 'https://image.tmdb.org/t/p/w500' + option.posterPath : ''}`}/>
