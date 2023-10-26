@@ -58,7 +58,7 @@ export function UserLogin(props: userRegisterProps) {
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh'}}>
             <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
-            <form>
+            <form onSubmit={handleLogin}>
 
             <div className='user-login-container'>
                 <h1>Sign In</h1>
@@ -127,7 +127,6 @@ export function UserLogin(props: userRegisterProps) {
                         id='login-btn'
                         name='loginBtn'
                         type="submit" 
-                        onClick={handleLogin} 
                         variant='contained' 
                         sx={{
                             width: 225,
