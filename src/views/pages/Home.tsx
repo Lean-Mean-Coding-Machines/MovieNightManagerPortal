@@ -85,7 +85,7 @@ export function HomePage() {
                             right: '5%',
                             bottom:'3%',
                           },
-                        ':hover': {backgroundColor: '#38CD2C'}
+                        ':hover': {backgroundColor: '#D53069'}
                     }}
                          aria-label="add">
                         <AddIcon/>
