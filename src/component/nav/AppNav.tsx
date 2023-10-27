@@ -79,64 +79,65 @@ function AppNav() {
                             Movie Night Manager
                         </Box>
                     </Typography>
-
-                    { username !== ""  ?
-                            <Box sx={{flexGrow: 1}}>
-                                <Tooltip title="Open Profile">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
-                                        <Avatar 
-                                            alt={username} 
-                                            sx={{color:'#015f76', 
-                                            background: '#fff',
-                                            ':hover': {
-                                                background: '#f1f1f1',
-                                            }
-                                            }}/>
-                                    </IconButton>
-                                </Tooltip>
-                                <Menu
-                                    sx={{mt: '45px'}}
-                                    id="menu-appbar"
-                                    anchorEl={anchorElUser}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorElUser)}
-                                    onClose={handleCloseUserMenu}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    {settings.map((setting) => (
-                                        <MenuItem key={setting.setting} onClick={setting.action}>
-                                            <Typography textAlign="center">{setting.setting}</Typography>
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                            </Box> :
-                            <Box sx={{flexGrow: 1}}>
-                                <Box sx={{float: 'right'}}>
-                                    <Button 
-                                        id='sign-in-btn'
-                                        name='signInBtn'
-                                        variant="outlined" 
-                                        sx={{
-                                            color: '#fff',
-                                            borderColor: '#fff',
-                                            ':hover': {
-                                                color: '#f1f1f1',
-                                                borderColor: '#f1f1f1'
-                                            }
-                                        }} 
-                                    onClick={navigateToLogin}>Sign In
-                                    </Button>
-                                </Box>
-                            </Box>
-                    }
+                        { !window.location.pathname.includes('/login') && (
+                         username !== ""  ?
+                         <Box sx={{flexGrow: 1}}>
+                             <Tooltip title="Open Profile">
+                                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
+                                     <Avatar 
+                                         alt={username} 
+                                         sx={{color:'#015f76', 
+                                         background: '#fff',
+                                         ':hover': {
+                                             background: '#f1f1f1',
+                                         }
+                                         }}/>
+                                 </IconButton>
+                             </Tooltip>
+                             <Menu
+                                 sx={{mt: '45px'}}
+                                 id="menu-appbar"
+                                 anchorEl={anchorElUser}
+                                 anchorOrigin={{
+                                     vertical: 'top',
+                                     horizontal: 'right',
+                                 }}
+                                 keepMounted
+                                 transformOrigin={{
+                                     vertical: 'top',
+                                     horizontal: 'right',
+                                 }}
+                                 open={Boolean(anchorElUser)}
+                                 onClose={handleCloseUserMenu}
+                                 onClick={handleCloseUserMenu}
+                             >
+                                 {settings.map((setting) => (
+                                     <MenuItem key={setting.setting} onClick={setting.action}>
+                                         <Typography textAlign="center">{setting.setting}</Typography>
+                                     </MenuItem>
+                                 ))}
+                             </Menu>
+                         </Box> :
+                         <Box sx={{flexGrow: 1}}>
+                             <Box sx={{float: 'right'}}>
+                                 <Button 
+                                     id='sign-in-btn'
+                                     name='signInBtn'
+                                     variant="outlined" 
+                                     sx={{
+                                         color: '#fff',
+                                         borderColor: '#fff',
+                                         ':hover': {
+                                             color: '#f1f1f1',
+                                             borderColor: '#f1f1f1'
+                                         }
+                                     }} 
+                                     onClick={navigateToLogin}>
+                                     Sign In
+                                 </Button>
+                             </Box>
+                         </Box>   
+                        )}
                 </Toolbar>
             </Container>
         </AppBar>

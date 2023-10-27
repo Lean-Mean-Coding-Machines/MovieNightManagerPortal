@@ -5,7 +5,7 @@ import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import EditProfilePicModal from '../../modals/EditProfilePicModal';
 import {useContext, useEffect, useState} from 'react';
-import {TextField} from "@mui/material";
+import {Stack, TextField} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
@@ -107,12 +107,16 @@ export function ProfilePage() {
 
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
+            {/* To Do, display text if no Nominations */}
             <div>
-            <Slider {...settings}>
-              {user.nominations.map((nom: INomination, index) => (
-              <NominationCard key={index} nomination={nom}/>))
-              }
-            </Slider>
+                {user.nominations.length > 3 ? 
+                <Slider {...settings}>
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} />))}
+                </Slider> :             
+                <Stack direction='row' spacing={3}>
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom}/>))}
+                </Stack> 
+                }
             </div>
 
             {/* Modals */}
