@@ -309,17 +309,9 @@ export function UserRegister(props: userRegisterProps) {
                 <Button
                     id='create-btn'
                     name='createBtn'
-                    sx={{
-                        width: '100%',
-                        borderColor: '#54276F',
-                        color: '#54276F',
-                        ':hover': {
-                            color: '#D1439E',
-                            borderColor: '#D1439E'
-                        }
-                    }}
+                    sx={{ width: '100%'}}
                     type="submit"
-                    variant="outlined"
+                    variant="contained"
                     size="large"
                     disabled={!firstNameValid || !lastNameValid || !usernameValid || !emailValid || !passwordValid}>
                     Create
@@ -327,8 +319,13 @@ export function UserRegister(props: userRegisterProps) {
 
                 <Box>
                     Already have an account?
-                    <Box component='span' className='purple-btn'
-                         sx={{fontWeight: 'bold', cursor: 'pointer', alignSelf: 'center'}}
+                    <Box component='span'
+                         sx={{
+                            fontWeight: 'bold', 
+                            cursor: 'pointer', 
+                            alignSelf: 'center', 
+                            ':hover':{color:'#c12b5d'}
+                         }}
                          onClick={props.handleLoginNav}>
                         {` Sign In`}
                     </Box>

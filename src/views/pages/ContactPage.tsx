@@ -23,7 +23,18 @@ function ContactPage() {
   };
 
   return (
-    <Container maxWidth="sm" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', background: '#f6f6f6', marginTop: '5em', borderRadius: '10px' }}>
+    <Container 
+      maxWidth="sm" 
+      style={{ display: 'flex', 
+      flexDirection: 'column', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '60vh', 
+      background: '#f6f6f6', 
+      marginTop: '5em', 
+      borderRadius: '10px' 
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         Contact Us
       </Typography>

@@ -20,14 +20,5 @@ body {
    font-display: swap;
   }
 
-.purple-btn {
-  border-color: #54276F;
-  color: #54276F;
-}
-
-.purple-btn:hover {
-  color: #D1439E;
-  border-color: #D1439E;
-}
 
 
