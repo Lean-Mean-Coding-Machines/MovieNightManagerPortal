@@ -33,6 +33,7 @@ export function HomePage() {
             .then(
                 (res) => {
                     if (res.data.status.success && res.data.data != null) {
+                        console.log(res.data.data);
                         setSegment(res.data.data);
                     }
                     handleAppLoadingChange(false);
@@ -59,7 +60,9 @@ export function HomePage() {
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
                     <Grid container rowSpacing={4} columnSpacing={5} sx={{background: '#14181c', paddingBottom: '5rem', marginTop: '-18px'}}>
-                        {segment.nominations.map((nom: INomination) => (
+                        {segment.nominations
+                        .sort((a, b) => b.nominationLikes.length - a.nominationLikes.length)
+                        .map((nom: INomination) => (
                             <Grid item xs={12} md={6} lg={4} key={nom.id}>
                                 <NominationCard nomination={nom}/>
                             </Grid>

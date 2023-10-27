@@ -55,7 +55,7 @@
         transform: 'translate(-50%, -50%)',
         display: 'block',
         background: '#f6f6f6',
-        width: {xs: '85%', lg: '35%'},
+        width: {xs: '85%', lg: '30%'},
         padding: '1rem',
         borderRadius: '1rem',
     }
