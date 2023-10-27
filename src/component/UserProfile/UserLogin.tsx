@@ -56,11 +56,11 @@ export function UserLogin(props: userRegisterProps) {
     }
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '70vh'}}>
+        <div className="sign-in-modal">
             <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
             <form onSubmit={handleLogin}>
 
-            <div className='user-login-container'>
+            <div className='sign-in-container'>
                 <h1>Sign In</h1>
 
                 <div>
@@ -118,29 +118,25 @@ export function UserLogin(props: userRegisterProps) {
                     </FormGroup>
                 </div>
 
-                <div style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 10}} onClick={toggle}>
+                <div className="forgot-password-link" onClick={toggle}>
                     {` Forgot Password?`}
                 </div>
 
-                <div className='login-account-btn'>
+                <div className='sign-in-btn-container'>
                     <Button 
                         id='login-btn'
                         name='loginBtn'
                         type="submit" 
                         variant='contained' 
-                        sx={{
-                            width: 225,
-                            backgroundColor: 'primary',
-                            borderRadius: 22,
-                            ':hover': {backgroundColor: 'primary',},
-                        }}>
+                        className="sign-in-btn"
+                        >
                         Sign In
                     </Button>
                 </div>
 
                 <div className='account-text'>
                     Don't have an account?
-                    <span style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 5, marginLeft: 5}} onClick={props.handleLoginNav}>
+                    <span className="create-link" onClick={props.handleLoginNav}>
                     Create
                     </span>
                 </div>
