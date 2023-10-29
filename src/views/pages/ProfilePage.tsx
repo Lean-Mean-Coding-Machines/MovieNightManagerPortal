@@ -12,12 +12,10 @@ import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
+import '../../assets/ProfilePage.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const emptyUser: IUser = {
     id: 0,
@@ -32,14 +30,7 @@ const emptyUser: IUser = {
 export function ProfilePage() {
     const {userId} = useContext(UserContext);
 
-    const [value, setValue] = useState(0);
     const navigate = useNavigate();
-    const navigateHome = () => {
-        navigate('/')
-    };
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-    };
 
     // Toggles Delete Modal & Edit Modal open and close
     const {isOpen, toggle, modalName} = useModal();
@@ -48,6 +39,15 @@ export function ProfilePage() {
     const [user, setUser] = useState(emptyUser);
 
     const api = useAxios();
+    
+    let settings = {
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      arrows: true,
+    };
 
     useEffect(() => {
         if (userId) {
@@ -68,68 +68,56 @@ export function ProfilePage() {
 
     return (
         <>
-            <h1 style={{marginLeft: 15}}> Profile</h1>
+            <h1 style={{marginLeft: 15, color:'#fff'}}> Profile</h1>
 
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <hr/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15}}>Info</h3>
+            <h3>Info</h3>
+
+            <div className='profile-info-container'>
             <Box
                 component="form"
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    '& .MuiTextField-root': {m: 1, width: '40ch'},
+                    alignItems: 'flex-start',
+                    '& .MuiTextField-root': {m: 1},
                 }}
                 noValidate
                 autoComplete="on"
             >
                 <TextField
                     disabled
-                    id="outlined-disabled"
+                    id="first-name-outlined-disabled"
+                    name='firstNameInputDisabled'
                     label="First Name"
-                    defaultValue=""
                     value={user.firstName}
                 />
                 <TextField
                     disabled
-                    id="outlined-disabled"
+                    name='lastNameInputDisabled'
+                    id="last-name-outlined-disabled"
                     label="Last Name"
-                    defaultValue=""
                     value={user.lastName}
                 />
             </Box>
+            </div>
 
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <hr/>
 
-            <h3 style={{marginLeft: 15, marginBottom: 15, alignSelf: 'left'}}>Nominations</h3>
-
-            <Stack direction='row' spacing={2}>
-                {user.nominations.map((nom: INomination) => (<NominationCard nomination={nom}/>))}
-            </Stack>
-
-
-            <hr style={{
-                color: '#000000',
-                backgroundColor: '#000000',
-                height: .1,
-                borderColor: '#000000',
-                width: 625,
-                marginLeft: 15
-            }}/>
+            <h3>Nominations</h3>
+            {/* Slider is actually a carousel */}
+            {/* To Do, display text if no Nominations */}
+            <div>
+                {user.nominations.length > 3 ? 
+                <Slider {...settings}>
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} />))}
+                </Slider> :             
+                <Stack direction='row' spacing={3}>
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom}/>))}
+                </Stack> 
+                }
+            </div>
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>

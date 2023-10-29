@@ -5,6 +5,7 @@ import UserStorageService from "../service/UserStorageService";
 import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
+import { toast } from "react-toastify";
 
 interface UserContextInterface {
     userId: number,
@@ -66,6 +67,8 @@ export const UserProvider = ({children}: UserProviderProps) => {
             )
             .catch(
                 (err) => {
+                    // Error Handling needs to be improved for failed authentication
+                    toast.error(`Login Failed ${err.message} `);
                     console.log(err.message);
                     return null;
                 }

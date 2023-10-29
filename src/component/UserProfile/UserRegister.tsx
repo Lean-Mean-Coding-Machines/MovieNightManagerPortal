@@ -190,6 +190,7 @@ export function UserRegister(props: userRegisterProps) {
     }
 
     return (
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh'}}>
             <Box
                 component="form"
                 sx={{
@@ -198,10 +199,13 @@ export function UserRegister(props: userRegisterProps) {
                     alignItems: 'center',
                     flexDirection: 'column',
                     justifySelf: 'center',
+                    background: '#f6f6f6',
                     rowGap: 2,
                     width: {xs: '95%', lg: '25%'},
                     ml: 'auto',
-                    mr: 'auto'
+                    mr: 'auto',
+                    padding: '1em',
+                    borderRadius: '10px'
                 }}
                 noValidate
                 autoComplete="on"
@@ -303,17 +307,11 @@ export function UserRegister(props: userRegisterProps) {
                 </Box>
 
                 <Button
-                    sx={{
-                        width: '100%',
-                        borderColor: '#54276F',
-                        color: '#54276F',
-                        ':hover': {
-                            color: '#D1439E',
-                            borderColor: '#D1439E'
-                        }
-                    }}
+                    id='create-btn'
+                    name='createBtn'
+                    sx={{ width: '100%'}}
                     type="submit"
-                    variant="outlined"
+                    variant="contained"
                     size="large"
                     disabled={!firstNameValid || !lastNameValid || !usernameValid || !emailValid || !passwordValid}>
                     Create
@@ -321,12 +319,18 @@ export function UserRegister(props: userRegisterProps) {
 
                 <Box>
                     Already have an account?
-                    <Box component='span' className='purple-btn'
-                         sx={{fontWeight: 'bold', cursor: 'pointer', alignSelf: 'center'}}
+                    <Box component='span'
+                         sx={{
+                            fontWeight: 'bold', 
+                            cursor: 'pointer', 
+                            alignSelf: 'center', 
+                            ':hover':{color:'#c12b5d'}
+                         }}
                          onClick={props.handleLoginNav}>
-                        {` Log In`}
+                        {` Sign In`}
                     </Box>
                 </Box>
             </Box>
+        </div>
     )
 }

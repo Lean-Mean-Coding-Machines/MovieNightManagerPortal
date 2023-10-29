@@ -11,18 +11,6 @@
     align-items: center;
 }
 
-.nomination-modal-box {
-    z-index: 1;
-    display: block;
-    background: white;
-    width: 35%;
-    height: 40%;
-    min-height: 500px;
-    padding: 1rem;
-    border-radius: 1rem;
-}
-
-
 .nomination-name {
     left: 32%;
     top: 37%;
@@ -41,4 +29,24 @@
     align-content: center;
     flex-wrap: wrap;
     width: auto;
+}
+
+.clear-btn, .search-btn {
+    border-color: var(--primary-main);
+    color: var(--primary-main);
+}
+
+.clear-btn:hover, .search-btn:hover {
+    color: var(--primary-main);
+    border-color: var(--primary-main);
+}
+
+.submit-btn {
+    width: 125px;
+    background-color: var(--primary-main);
+    border-radius: 22px !important;
+}
+
+.submit-btn:hover {
+    background-color: #D53069 !important;
 }

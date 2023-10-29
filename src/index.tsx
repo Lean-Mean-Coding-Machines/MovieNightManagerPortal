@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
-import {Box, createTheme, ThemeProvider} from '@mui/material';
+import {createTheme, ThemeProvider} from '@mui/material';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {UserProvider} from "./context/UserContext";
@@ -13,12 +13,21 @@ const root = ReactDOM.createRoot(
 );
 
 // Global configuration for Mui Btn style. We can add more variables here.
+// Temporary Primary Color Pallette
 const theme = createTheme({
+    palette: {
+        primary: {
+          main: '#c12b5d',
+        },
+        secondary: {
+          main: '#015f76',
+        },
+      },
     typography: {
         button: {
             fontFamily: "SoraBold"
         }
-    }
+    },
 });
 
 root.render(

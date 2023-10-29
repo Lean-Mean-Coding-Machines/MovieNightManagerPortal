@@ -1,12 +1,11 @@
 import {
     Button,
     Checkbox,
-    FormControl,
     FormControlLabel,
-    FormGroup, IconButton,
-    Input,
+    FormGroup, 
+    IconButton,
     InputAdornment,
-    InputLabel
+    TextField,
 } from "@mui/material";
 import ResetModal from "../../modals/ResetModal";
 import React, {useContext, useState} from "react";
@@ -53,80 +52,96 @@ export function UserLogin(props: userRegisterProps) {
 
     const handleLogin = (event: React.SyntheticEvent) => {
         event.preventDefault();
-
         loginUser(formValues);
     }
 
     return (
-        <>
+        <div className="sign-in-modal">
             <ResetModal isOpen={isOpen} toggle={toggle}></ResetModal>
+            <form onSubmit={handleLogin}>
 
-            <div className='user-login-container'>
-                <h1>Login</h1>
+            <div className='sign-in-container'>
+                <h1>Sign In</h1>
 
                 <div>
-                    <FormControl variant='standard'>
-                        <InputLabel htmlFor='standard-adornment-username'>
-                            Username
-                        </InputLabel>
-                        <Input sx={{width: 220,}} name='username' id='login-username' onChange={handleInputChange}/>
-                    </FormControl>
+                    <TextField sx={{width: 220,}}
+                    label="Username"
+                    required 
+                    name='username' 
+                    id='login-username' 
+                    onChange={handleInputChange}/>
                 </div>
 
                 <div>
-                    <FormControl variant='standard'>
-                        <InputLabel htmlFor='standard-adornment'>Password</InputLabel>
-                        <Input sx={{width: 220,}} name='password' id='login-password'
-                               type={showPassword ? 'text' : 'password'}
-                               endAdornment={
-                                   <InputAdornment position="end">
-                                       <IconButton aria-label="toggle password visibility"
-                                                   onClick={handleClickShowPassword}
-                                                   onMouseDown={handleMouseDownPassword}>
-                                           {
-                                               showPassword ?
-                                                   <VisibilityOff sx={{color: '#1F1F1F'}}/> :
-                                                   <Visibility sx={{color: '#1F1F1F'}}/>
-                                           }
-                                       </IconButton>
-                                   </InputAdornment>
-                               }
-                               onChange={handleInputChange}
-                        />
-                    </FormControl>
+                    <TextField sx={{width: 220, marginTop: 1.5}} 
+                        name='password' 
+                        id='login-password'
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        label="Password"
+                        InputProps={{endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton 
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}>
+                                    { showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}}/> : <Visibility sx={{color: '#1F1F1F'}}/>}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                        }}
+                    onChange={handleInputChange}
+                    />
                 </div>
 
                 <div style={{marginTop: 10}}>
                     <FormGroup>
-                        <FormControlLabel control={<Checkbox defaultChecked sx={{
-                            color: '#1F1F1F',
-                            '&.Mui-checked': {color: '#1F1F1F',},
-                        }}/>} label="Remember Me"/>
+                        <FormControlLabel control={
+                            <Checkbox 
+                                id="remember-me-checkbox"
+                                name="rememberMeCheckbox"
+                                defaultChecked 
+                                sx={{
+                                    textAlign: 'center',
+                                    color: 'primary',
+                                    "&, & + .MuiFormControlLabel-label": {
+                                        userSelect: "none"
+                                    },
+                                    '&.Mui-checked': {
+                                        color: 'primary',
+                                    },
+                                }}
+                            />
+                        } 
+                        label="Remember Me"
+                        />
                     </FormGroup>
                 </div>
 
-                <div style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 10}} onClick={toggle}>
+                <div className="forgot-password-link" onClick={toggle}>
                     {` Forgot Password?`}
                 </div>
 
-                <div className='login-account-btn'>
-                    <Button onClick={handleLogin} variant='contained' sx={{
-                        width: 225,
-                        backgroundColor: '#1F1F1F',
-                        borderRadius: 22,
-                        ':hover': {backgroundColor: '#1F1F1F',},
-                    }}>
-                        Login
+                <div className='sign-in-btn-container'>
+                    <Button 
+                        id='login-btn'
+                        name='loginBtn'
+                        type="submit" 
+                        variant='contained' 
+                        className="sign-in-btn"
+                        >
+                        Sign In
                     </Button>
                 </div>
 
                 <div className='account-text'>
                     Don't have an account?
-                    <span style={{fontWeight: 'bold', cursor: 'pointer', marginTop: 5}} onClick={props.handleLoginNav}>
-                        Create
+                    <span className="create-link" onClick={props.handleLoginNav}>
+                    Create
                     </span>
                 </div>
             </div>
-        </>
+            </form>
+        </div>
     );
 }

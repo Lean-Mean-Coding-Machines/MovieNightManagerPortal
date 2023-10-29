@@ -14,6 +14,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router";
 import {useContext} from "react";
 import {UserContext} from "../../context/UserContext";
+import {Link} from 'react-router-dom';
 
 interface menuSettingAction {
     setting: string,
@@ -47,15 +48,14 @@ function AppNav() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#03C4C7' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#015f76' }}>
             <Container sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
                 <Toolbar disableGutters sx={{display: 'flex'}}>
-                    <AdbIcon sx={{mr: 3, ':hover': { color: '#54276F' }}}/>
                     <Typography
                         variant="h6"
+                        component={Link}
+                        to="/"
                         noWrap
-                        component="a"
-                        href="/"
                         sx={{
                             mr: 2,
                             fontFamily: 'monospace',
@@ -63,60 +63,81 @@ function AppNav() {
                             letterSpacing: '.2rem',
                             color: 'white',
                             ':hover': {
-                                color: '#54276F'
+                                color: '#f1f1f1'
                             },
                             textDecoration: 'none',
                         }}
                     >
-                        <Box sx={{display: {xs: 'flex', sm: 'none'}}}>MNM</Box>
-                        <Box sx={{display: {xs: 'none', sm: 'flex'}}}>Movie Night Manager</Box>
+                    {/* Mobile */}
+                        <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
+                            MNM
+                        </Box>
+                    {/* Desktop */}
+                        <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
+                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
+                            Movie Night Manager
+                        </Box>
                     </Typography>
-
-                    {
-                        username !== "" ?
-                            <Box sx={{flexGrow: 1}}>
-                                <Tooltip title="Open Profile">
-                                    <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
-                                        <Avatar alt={username}/>
-                                    </IconButton>
-                                </Tooltip>
-                                <Menu
-                                    sx={{mt: '45px'}}
-                                    id="menu-appbar"
-                                    anchorEl={anchorElUser}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    keepMounted
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={Boolean(anchorElUser)}
-                                    onClose={handleCloseUserMenu}
-                                    onClick={handleCloseUserMenu}
-                                >
-                                    {settings.map((setting) => (
-                                        <MenuItem key={setting.setting} onClick={setting.action}>
-                                            <Typography textAlign="center">{setting.setting}</Typography>
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                            </Box> :
-                            <Box sx={{flexGrow: 1}}>
-                                <Box sx={{float: 'right'}}>
-                                    <Button sx={{
-                                        color: 'white',
-                                        borderColor: 'white',
-                                        ':hover': {
-                                            color: '#54276F',
-                                            borderColor: '#54276F'
-                                        }
-                                    }} variant="outlined" onClick={navigateToLogin}>Sign In</Button>
-                                </Box>
-                            </Box>
-                    }
+                        { !window.location.pathname.includes('/login') && (
+                         username !== ""  ?
+                         <Box sx={{flexGrow: 1}}>
+                             <Tooltip title="Open Profile">
+                                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
+                                     <Avatar 
+                                         alt={username} 
+                                         sx={{color:'#015f76', 
+                                         background: '#fff',
+                                         ':hover': {
+                                             background: '#f1f1f1',
+                                         }
+                                         }}/>
+                                 </IconButton>
+                             </Tooltip>
+                             <Menu
+                                 sx={{mt: '45px'}}
+                                 id="menu-appbar"
+                                 anchorEl={anchorElUser}
+                                 anchorOrigin={{
+                                     vertical: 'top',
+                                     horizontal: 'right',
+                                 }}
+                                 keepMounted
+                                 transformOrigin={{
+                                     vertical: 'top',
+                                     horizontal: 'right',
+                                 }}
+                                 open={Boolean(anchorElUser)}
+                                 onClose={handleCloseUserMenu}
+                                 onClick={handleCloseUserMenu}
+                             >
+                                 {settings.map((setting) => (
+                                     <MenuItem key={setting.setting} onClick={setting.action}>
+                                         <Typography textAlign="center">{setting.setting}</Typography>
+                                     </MenuItem>
+                                 ))}
+                             </Menu>
+                         </Box> :
+                         <Box sx={{flexGrow: 1}}>
+                             <Box sx={{float: 'right'}}>
+                                 <Button 
+                                     id='sign-in-btn'
+                                     name='signInBtn'
+                                     variant="outlined" 
+                                     sx={{
+                                         color: '#fff',
+                                         borderColor: '#fff',
+                                         ':hover': {
+                                             color: '#f1f1f1',
+                                             borderColor: '#f1f1f1'
+                                         }
+                                     }} 
+                                     onClick={navigateToLogin}>
+                                     Sign In
+                                 </Button>
+                             </Box>
+                         </Box>   
+                        )}
                 </Toolbar>
             </Container>
         </AppBar>

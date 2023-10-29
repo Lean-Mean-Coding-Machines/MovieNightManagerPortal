@@ -1,4 +1,3 @@
-import IUserCreateResponse from "../model/user/IUserCreateResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 
 const getUsername = function (): string {

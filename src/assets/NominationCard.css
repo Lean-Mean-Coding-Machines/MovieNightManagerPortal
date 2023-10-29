@@ -1,0 +1,72 @@
+
+
+.card-container {
+    display: flex;
+    border-radius: 15px !important;
+    border: 1px solid #666d77 !important;
+    width: 100%;
+    background-color: #f6f6f6 !important;
+}
+
+.card-content-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-paragraph-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5; 
+    overflow: hidden;
+    color: #191919;
+  }
+
+.long-overview-desc {
+    text-overflow: ellipsis;
+}
+
+.short-overview-desc {
+    text-overflow: none;
+}
+
+.expand-btn {
+    cursor: pointer;
+    border: 1px solid #757575;
+    color: #757575;
+    text-align: center;
+    border-radius: 4px;
+    padding: 0.6875em 1em;
+    background: none;
+    font-weight: 700;
+}
+
+.expand-btn:hover {
+    background: #c12b5d;
+    color: #fff;
+}
+
+.like-btn {
+    display: flex;
+     align-items: center;
+     user-select: none;
+     cursor: pointer;
+     border-radius: 12px;
+     border: none;
+     padding: 9px;
+}
+
+.card-actions-container {
+    position: absolute; 
+    right: 10px;
+    bottom: 0px;
+}
+
+/* Need to add in hover state */
+.info-icon {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    cursor: pointer;
+}

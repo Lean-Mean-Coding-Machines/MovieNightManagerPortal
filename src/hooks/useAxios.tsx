@@ -1,10 +1,8 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
-import {useNavigate} from "react-router";
 import {useContext} from "react";
 import {UserContext} from "../context/UserContext";
 import jwt_decode, {JwtPayload} from "jwt-decode";
 import dayjs from "dayjs";
-import http from "../http-common";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 

@@ -1,8 +1,7 @@
 /* Global Application styles go here */
 
 #root {
-  height: 100vh;
-  background-color: ghostwhite;
+  background-color: #14181c;
 }
 
 body {
@@ -18,62 +17,8 @@ body {
   font-family: "SoraBold";
   src: local("SoraBold"),
    url("../fonts/Sora/Sora-Bold.ttf") format("truetype");
+   font-display: swap;
   }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
-.App {
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.profile-dropdown {
-  float: right;
-  margin: 1rem 2rem 0 0;
-}
-
-.purple-btn {
-  border-color: #54276F;
-  color: #54276F;
-}
-
-.purple-btn:hover {
-  color: #D1439E;
-  border-color: #D1439E;
-}
