@@ -134,6 +134,16 @@
                 toast.error("Movie Selection Is Required");
                 return;
             }
+
+            if (nominationForm.movieTitle) {
+                for (let i = 0; i < props.segment.nominations.length; i++) {
+                    if (nominationForm.movieTitle === props.segment.nominations[i].movieTitle && nominationForm.releaseDate === props.segment.nominations[i].releaseDate) {
+                        toast.error(`${nominationForm.movieTitle} Already Nominated`);
+                        return;
+                    }
+                }
+            }
+
             if (nominationForm.watchDate === 'Invalid Date') {
                 toast.error("Preferred Watch Date Required");
                 return;
