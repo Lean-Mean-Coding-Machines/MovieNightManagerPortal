@@ -12,7 +12,8 @@ import { Button } from "@mui/base";
 import '../../assets/NominationCard.css';
 
 interface NominationCardsProps {
-    nomination: INomination
+    nomination: INomination,
+    segmentRefresh: () => void
 }
 
 export default function NominationCard(props: NominationCardsProps) {
@@ -44,6 +45,7 @@ export default function NominationCard(props: NominationCardsProps) {
                         if (res.data.data && res.data.status.success) {
                             setNominationLiked(res.data.data.enabled);
                             setLikeCount((prevState) => res.data.data!.enabled ? prevState + 1 : prevState - 1);
+                            props.segmentRefresh();
                         }
                     },
                     (err) => console.log(err)
@@ -127,7 +129,6 @@ export default function NominationCard(props: NominationCardsProps) {
                 <CardActions className="card-actions-container">
                     <div style={{display: 'flex', alignItems: 'center'}}>
 
-                        {/* To Do: Display liked by on the tooltip of likes */}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
                             name="likeBtn"

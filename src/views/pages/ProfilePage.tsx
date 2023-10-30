@@ -27,7 +27,7 @@ const emptyUser: IUser = {
     nominationLikes: []
 };
 
-export function ProfilePage() {
+export function ProfilePage(props:any) {
     const {userId} = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -111,10 +111,10 @@ export function ProfilePage() {
             <div>
                 {user.nominations.length > 3 ? 
                 <Slider {...settings}>
-                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} />))}
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} segmentRefresh={props.segmentRefresh} />))}
                 </Slider> :             
                 <Stack direction='row' spacing={3}>
-                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom}/>))}
+                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} segmentRefresh={props.segmentRefresh}/>))}
                 </Stack> 
                 }
             </div>
