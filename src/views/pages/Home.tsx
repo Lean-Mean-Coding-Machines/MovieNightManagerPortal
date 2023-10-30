@@ -33,7 +33,6 @@ export function HomePage() {
             .then(
                 (res) => {
                     if (res.data.status.success && res.data.data != null) {
-                        console.log(res.data.data);
                         setSegment(res.data.data);
                     }
                     handleAppLoadingChange(false);

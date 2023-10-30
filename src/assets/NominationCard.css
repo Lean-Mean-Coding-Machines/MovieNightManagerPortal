@@ -70,3 +70,7 @@
     top: 15px;
     cursor: pointer;
 }
+
+.info-icon:hover { 
+    color: #c12b5d;
+}
