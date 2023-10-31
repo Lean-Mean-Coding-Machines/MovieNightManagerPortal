@@ -36,7 +36,7 @@ export default function NominationCard(props: NominationCardsProps) {
             const likeRequest: INominationLikeRequest = {
                 nominationId: props.nomination.id,
                 userId: userId,
-                watchDate: "2023-01-14T18:30:00.000", // TODO :: un-hardcode these
+                watchDate: "2023-01-14T18:30:00.000", // TODO: un-hardcode these
                 watchType: "FIRE"
             };
             api.post<IMnmApiResponse<INominationLike>>("/nominationlike/manage", likeRequest)

@@ -107,7 +107,7 @@ export function ProfilePage(props:any) {
 
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
-            {/* To Do, display text if no Nominations */}
+            {/* TODO:, display text if no Nominations */}
             <div>
                 {user.nominations.length > 3 ? 
                 <Slider {...settings}>

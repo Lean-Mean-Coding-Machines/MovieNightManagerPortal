@@ -19,7 +19,7 @@ const useAxios = () => {
             req.headers.Authorization = `Bearer ${authToken}`;
 
             const user = jwt_decode<JwtPayload>(authToken);
-            const isExpired = dayjs.unix(user.exp!).diff(dayjs()) < 1; // TODO :: Change these parameters
+            const isExpired = dayjs.unix(user.exp!).diff(dayjs()) < 1; // TODO: Change these parameters
 
             if (!isExpired) return req
 
@@ -43,10 +43,10 @@ const useAxios = () => {
         return req;
     });
 
-    // TODO :: Rethink how the api returns statuses (use response entity?)
+    // TODO: Rethink how the api returns statuses (use response entity?)
     axiosInstance.interceptors.response.use((res: AxiosResponse<IMnmApiResponse<any>>) => {
         switch (res.data.status.code) {
-            case 401: // TODO :: toaster error?
+            case 401: // TODO: toaster error?
                 console.log("User not authorized");
                 break;
         }
@@ -57,7 +57,7 @@ const useAxios = () => {
             case 403:
                 logoutUser();
                 break;
-            case 401: // TODO :: toaster error?
+            case 401: // TODO: toaster error?
                 console.log("User not authorized");
                 break;
         }
