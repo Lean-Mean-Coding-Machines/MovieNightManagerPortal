@@ -82,9 +82,13 @@ export default function NominationCard(props: NominationCardsProps) {
                 <CardContent className="card-content-container ">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{ flex: 1, flexWrap: 'wrap' }}>
+                            <div className="card-title-container">
+                            <Tooltip title={props.nomination.movieTitle} enterDelay={900}>
                             <Typography fontWeight={'bold'}>
                                 {props.nomination.movieTitle}
                             </Typography>
+                            </Tooltip>
+                            </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
                                 ({props.nomination.releaseDate.split('-')[0]})
                             </Typography>

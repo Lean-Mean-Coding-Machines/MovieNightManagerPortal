@@ -15,6 +15,15 @@
     flex-direction: column;
 }
 
+.card-title-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; 
+    overflow: hidden;
+    width: 13em;
+    cursor:default;
+  }
+
 .card-paragraph-container {
     display: -webkit-box;
     -webkit-box-orient: vertical;
