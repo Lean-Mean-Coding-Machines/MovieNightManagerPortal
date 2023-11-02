@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import {useNavigate} from 'react-router-dom';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
-import EditProfilePicModal from '../../modals/EditProfilePicModal';
 import {useContext, useEffect, useState} from 'react';
 import {Stack, TextField} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
@@ -121,7 +120,6 @@ export function ProfilePage(props:any) {
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>
-            <EditProfilePicModal isOpen={isOpen} toggle={toggle} modalName={modalName}></EditProfilePicModal>
 
         </>
     );
