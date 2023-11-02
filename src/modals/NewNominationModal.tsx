@@ -79,13 +79,13 @@
             [theme.breakpoints.up('md')]: {
                 width: '100%',
                 bottom: '-4.75rem',
-                top: '8.75rem',
+                top: '11.25rem',
             },
             // Mobile 
             [theme.breakpoints.down('sm')]: {
                 width: '87%',
                 bottom: '-4.25rem',
-                top: '7.75rem',
+                top: '10rem',
             },
         }
 
@@ -249,7 +249,7 @@
                             component='span'
                             sx={{
                                 fontWeight: 'bold',
-                                fontSize: {xs: 20, sm: 25, md: 30, lg: 35, xl: 40},
+                                fontSize: {xs: 25, sm: 25, md: 30, lg: 35, xl: 40},
                                 fontFamily: 'SoraBold'
                             }}>
                             Nominate a Movie
@@ -267,6 +267,7 @@
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
+                                alignItems:'center',
                                 rowGap: '32px',
                                 mt: 2
                             }}
@@ -280,7 +281,7 @@
                                     name='titleSearch' 
                                     id='nomination-name-input'
                                     required 
-                                    sx={{width: {xs: '100%', lg: '50%'}}}
+                                    sx={{width: {xs: '100%', lg: '50%'}, marginTop:'32px'}}
                                     value={searchTitle}
                                     onChange={(event: any) => setSearchTitle(event.target.value)}
                                     InputProps={{endAdornment: (
@@ -296,7 +297,7 @@
                                             </IconButton>
                                         </InputAdornment>
                                     )
-                                }}
+                                    }}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" && (inputRef.current !== document.activeElement)) {
                                             handleMovieSearch(e);
@@ -395,7 +396,6 @@
                                             sx={{height: '100px', width: '70px', mr: 2}}
                                             variant='rounded'
                                             alt='Movie Poster'
-                                            // Img isn't populating correctly currently, need to fix use effect? or make it async? 
                                             src={previewPosterPath}/>
                                         <ListItemText
                                             primary={selectedMovie ? selectedMovie.title : ''}
@@ -431,7 +431,7 @@
                                     }}>
                                     <DateSelector
                                         sx={{
-                                        width: {xs: '100%', lg: '50%'}, 
+                                        width: {xs: '100%', lg: '100%'}, 
                                         pr: {xs: 0, lg: 1}, 
                                         flexGrow: 1
                                         }}

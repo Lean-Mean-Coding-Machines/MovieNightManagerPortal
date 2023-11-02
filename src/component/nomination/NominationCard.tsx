@@ -10,6 +10,8 @@ import {toast} from "react-toastify";
 import INominationLikeRequest from "../../model/nomination/INominationLikeRequest";
 import { Button } from "@mui/base";
 import '../../assets/NominationCard.css';
+import useModal from "../../hooks/useModal";
+import MovieDetailsModal from "../../modals/MovieDetailsModal";
 
 interface NominationCardsProps {
     nomination: INomination,
@@ -65,7 +67,10 @@ export default function NominationCard(props: NominationCardsProps) {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
 
+    const {isOpen, toggle} = useModal();
+
     return (
+        <>  
         <Box key={props.nomination.id} >
             <Card variant="outlined" className="card-container">
 
@@ -95,7 +100,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             </div>
                             <div className="info-icon">
                             <Tooltip title="More Info">
-                                <InfoOutlined />
+                                <InfoOutlined onClick={toggle} />
                             </Tooltip>
                             </div>
                         </div>
@@ -159,5 +164,9 @@ export default function NominationCard(props: NominationCardsProps) {
                 </CardContent>
             </Card>
         </Box>
+        {/* Modals */}
+        <MovieDetailsModal isOpen={isOpen} toggle={toggle} nomination={props.nomination}/>
+        </>
+        
     )
 }

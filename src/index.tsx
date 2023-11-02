@@ -28,6 +28,15 @@ const theme = createTheme({
             fontFamily: "SoraBold"
         }
     },
+    breakpoints: {
+        values: {
+          xs: 0,
+          sm: 600,
+          md: 960, 
+          lg: 1280,
+          xl: 1520,
+        },
+    },
 });
 
 root.render(
