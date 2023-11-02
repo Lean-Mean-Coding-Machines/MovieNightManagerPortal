@@ -49,6 +49,7 @@
     padding: 0.6875em 1em;
     background: none;
     font-weight: 700;
+    margin-top: 5px;
 }
 
 .expand-btn:hover {
@@ -58,12 +59,19 @@
 
 .like-btn {
     display: flex;
-     align-items: center;
-     user-select: none;
-     cursor: pointer;
-     border-radius: 12px;
-     border: none;
-     padding: 9px;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    border-radius: 12px;
+    border: none;
+    padding: 10px;
+    background: none;
+    font-weight: 700;
+    color: #757575;
+}
+
+.like-btn:hover {
+    color: #000;
 }
 
 .card-actions-container {

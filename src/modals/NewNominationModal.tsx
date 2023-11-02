@@ -431,7 +431,7 @@
                                     }}>
                                     <DateSelector
                                         sx={{
-                                        width: '50%', 
+                                        width: {xs: '100%', lg: '50%'}, 
                                         pr: {xs: 0, lg: 1}, 
                                         flexGrow: 1
                                         }}
