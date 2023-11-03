@@ -1,4 +1,4 @@
-import { Box, Button, CardMedia, IconButton, Modal, Typography } from "@mui/material";
+import { Box, Button, CardMedia, IconButton, Modal } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import INomination from "../model/nomination/INomination";
 
@@ -7,6 +7,7 @@ interface ModalType {
     toggle: () => void,
     nomination: INomination,
     modalName?: string,
+    deleteNomination: () => void
   }
 
   const modalStyle = {
@@ -16,18 +17,18 @@ interface ModalType {
     transform: 'translate(-50%, -50%)',
     display: 'block',
     background: '#f6f6f6',
-    width: {xs: '80%', lg: '50%'},
+    width: {xs: '80%', lg: '30%'},
     padding: '1rem 2rem 2rem 2rem',
     borderRadius: '1rem',
   }
 
 // TODO: Configure styling for mobile/web, attach to api details call when created
 
-export default function MovieDetailsModal(props: ModalType) {
+export default function DeleteNominationModal(props: ModalType) {
 
-  const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
+    const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
 
-  if (props.modalName === 'movieDetails') {
+    if (props.modalName === 'deleteNomination') {
     return (
         <Modal
             open={props.isOpen}
@@ -36,28 +37,26 @@ export default function MovieDetailsModal(props: ModalType) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={modalStyle}>
-                <div style={{ float: 'right', 
-                              marginTop: '-5px'
-                            }} 
+            <Box sx={{textAlign:'center'}}>
+
+                <div style={{ float: 'right'}} 
                      onClick={props.toggle}
                  >
                     <IconButton>
                         <CloseIcon/>
                     </IconButton>
                 </div>
-            <Box sx={{textAlign: 'center', marginTop: '10px'}}>
                 <Box component='span'
                       sx={{
                           fontWeight: 'bold',
-                          fontSize: {xs: 20, sm: 25, md: 25, lg: 25, xl: 25},
+                          fontSize: {xs: 25, sm: 25, md: 30, lg: 30, xl: 30},
                           fontFamily: 'SoraBold',
                       }}>
-                    {props.nomination.movieTitle}
-                <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
-                                ({props.nomination.releaseDate.split('-')[0]})
-                            </Typography>
+                    Delete Nomination?
                 </Box>
-                
+            </Box>
+            <Box sx={{textAlign: 'center', marginTop: '10px'}}>
+
                 <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>
                     <CardMedia
                       component="img"
@@ -67,28 +66,45 @@ export default function MovieDetailsModal(props: ModalType) {
                     />
 
                 </Box>
-                    <div style={{marginTop:'10px'}}>{props.nomination.movieOverview}</div>
+               <div style={{marginTop:'35px'}}>  Are you sure you wish to delete <b>"{props.nomination.movieTitle}"</b>?</div>
       
                 <div style={{ marginTop: '35px', marginRight: '15px'}}>
+                  
                   <Button 
-                  variant='contained'
-                  id="close-btn"
-                  name='closeBtn'
-                  sx={{
-                  width: 100,
-                  backgroundColor: 'primary',
-                  borderRadius: 22,
-                  ':hover': {backgroundColor: 'primary'},
-                  }} 
-                  onClick={props.toggle}
-                  >Close
+                    variant='outlined'
+                    id="cancel-btn"
+                    name='cancelBtn'
+                    sx={{
+                    width: 100,
+                    backgroundColor: 'primary',
+                    borderRadius: 22,
+                    ':hover': {backgroundColor: 'primary'},
+                    }} 
+                    onClick={props.toggle}
+                  >Cancel
                   </Button>
+
+                  <Button 
+                    variant='contained'
+                    id="delete-btn"
+                    name='deleteBtn'
+                    sx={{
+                    width: 100,
+                    backgroundColor: 'primary',
+                    borderRadius: 22,
+                    marginLeft: '10px',
+                    ':hover': {backgroundColor: 'primary'},
+                  }} 
+                  onClick={()=>{props.toggle();props.deleteNomination()}}
+                  >Delete
+                  </Button>
+
                 </div>
           </Box>    
       </Box> 
         </Modal>
-    )
-  } else {
+    )} 
+    else {
     return <>
     </>
   }

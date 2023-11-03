@@ -214,7 +214,6 @@
 
         // Validates if the cancel btn is in focus when tabbing
         const inputRef = useRef(null);
-        const searchListInputRef = useRef(null);
 
         const handleClickClearMovieInput = () => {
             setMovieOptions([]);
@@ -245,6 +244,11 @@
             >
                 <Box sx={modalStyle}>
                     <Box sx={{textAlign: 'center', marginTop: '10px'}}>
+                            <div style={{float: 'right'}} onClick={props.toggle}>
+                                <IconButton>
+                                    <CloseIcon/>
+                                </IconButton>
+                            </div>
                         <Box
                             component='span'
                             sx={{
@@ -254,11 +258,6 @@
                             }}>
                             Nominate a Movie
                         </Box>
-                        <div style={{float: 'right', marginTop: '-5px'}} onClick={props.toggle}>
-                            <IconButton>
-                                <CloseIcon/>
-                            </IconButton>
-                        </div>
                     </Box>
 
                     <Container>

@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
 import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
-import {FavoriteBorder, Favorite, Person, InfoOutlined} from "@mui/icons-material";
+import {FavoriteBorder, Favorite, Person, InfoOutlined, Delete} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
@@ -12,6 +12,7 @@ import { Button } from "@mui/base";
 import '../../assets/NominationCard.css';
 import useModal from "../../hooks/useModal";
 import MovieDetailsModal from "../../modals/MovieDetailsModal";
+import DeleteNominationModal from "../../modals/DeleteNominationModal";
 
 interface NominationCardsProps {
     nomination: INomination,
@@ -21,7 +22,7 @@ interface NominationCardsProps {
 export default function NominationCard(props: NominationCardsProps) {
 
     const api = useAxios();
-    const {userId} = useContext(UserContext);
+    const {userId, username} = useContext(UserContext);
 
     const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
 
@@ -59,6 +60,18 @@ export default function NominationCard(props: NominationCardsProps) {
         }
     };
 
+    const deleteNomination = () => {
+        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}`)
+        .then(() => {
+                props.segmentRefresh();
+                toast.success(`${props.nomination.movieTitle} successfully deleted`);
+        })
+        .catch((err) => {
+            console.error("Error deleting nomination:", err);
+            toast.error(`${props.nomination.movieTitle} deletion failed`)
+        })
+    }
+
     const expandHandler = () => {
         setExpandText(!expandText);
     }
@@ -68,6 +81,8 @@ export default function NominationCard(props: NominationCardsProps) {
     };
 
     const {isOpen, toggle} = useModal();
+
+    const [modalName, setModalName] = useState('');
 
     return (
         <>  
@@ -100,7 +115,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             </div>
                             <div className="info-icon">
                             <Tooltip title="More Info">
-                                <InfoOutlined onClick={toggle} />
+                                <InfoOutlined onClick={()=>{toggle();setModalName('movieDetails');}} />
                             </Tooltip>
                             </div>
                         </div>
@@ -137,7 +152,10 @@ export default function NominationCard(props: NominationCardsProps) {
 
                 <CardActions className="card-actions-container">
                     <div style={{display: 'flex', alignItems: 'center'}}>
-
+                        {/*TODO: Temp location of deletion, will likely move  */}
+                    {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
+                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
+                            </Tooltip>}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
                             name="likeBtn"
@@ -165,7 +183,8 @@ export default function NominationCard(props: NominationCardsProps) {
             </Card>
         </Box>
         {/* Modals */}
-        <MovieDetailsModal isOpen={isOpen} toggle={toggle} nomination={props.nomination}/>
+        <MovieDetailsModal isOpen={isOpen} toggle={toggle} nomination={props.nomination} modalName={modalName}/>
+        <DeleteNominationModal isOpen={isOpen} toggle={toggle} nomination={props.nomination} modalName={modalName} deleteNomination={deleteNomination} />
         </>
         
     )
