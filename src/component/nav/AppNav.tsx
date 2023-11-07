@@ -35,7 +35,7 @@ function AppNav() {
     };
 
     const settings: menuSettingAction[] = [
-        {setting: 'My Profile', action: navigateToProfile},
+        {setting: 'Profile', action: navigateToProfile},
         {setting: 'Sign Out', action: logoutUser}
     ];
 
