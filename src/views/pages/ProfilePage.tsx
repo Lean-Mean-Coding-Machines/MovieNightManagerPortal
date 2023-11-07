@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import {useContext, useEffect, useState} from 'react';
-import {Stack, TextField} from "@mui/material";
+import {Button, Stack, TextField} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
@@ -15,6 +15,7 @@ import '../../assets/ProfilePage.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { toast } from 'react-toastify';
 
 const emptyUser: IUser = {
     id: 0,
@@ -32,10 +33,12 @@ export function ProfilePage(props:any) {
     const navigate = useNavigate();
 
     // Toggles Delete Modal & Edit Modal open and close
-    const {isOpen, toggle, modalName} = useModal();
+    const {isOpen, toggle} = useModal();
 
     const [userLoading, setUserLoading] = useState(true);
     const [user, setUser] = useState(emptyUser);
+
+    const {logoutUser} = useContext(UserContext);
 
     const api = useAxios();
     
@@ -50,20 +53,38 @@ export function ProfilePage(props:any) {
 
     useEffect(() => {
         if (userId) {
-            api.get<IMnmApiResponse<IUser>>("/user/details/" + userId)
-                .then(
-                    (res) => {
-                        if (res.data.status.success && res.data.data != null) {
-                            setUser(res.data.data);
-                        }
-                        setUserLoading(false);
-                    },
-                    (err) => console.log(err))
-                .catch((err) => console.log(err.message));
+            if (user.id === userId) {
+                setUserLoading(false);
+            } else {
+                api.get<IMnmApiResponse<IUser>>(`/user/details/${userId}`)
+                    .then(
+                        (res) => {
+                            if (res.data.status.success && res.data.data != null) {
+                                setUser(res.data.data);
+                            }
+                            setUserLoading(false);
+                        },
+                        (err) => console.log(err))
+                    .catch((err) => console.log(err.message));
+            }
         } else {
             navigate('/');
         }
-    }, [api, navigate, userId]);
+    }, [api, navigate, userId, user.id]);
+
+
+    const deleteUserAccount = () => {
+        api.delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
+        .then(() => {
+            logoutUser();
+            // navigate back to home page 
+        })
+        .catch((err) => {
+            console.error("Error deleting user account:", err);
+            toast.error(`Account deletion failed`)
+        })
+    }
+
 
     return (
         <>
@@ -85,6 +106,7 @@ export function ProfilePage(props:any) {
                 noValidate
                 autoComplete="on"
             >
+
                 <TextField
                     disabled
                     id="first-name-outlined-disabled"
@@ -99,6 +121,34 @@ export function ProfilePage(props:any) {
                     label="Last Name"
                     value={user.lastName}
                 />
+                <TextField
+                    disabled
+                    name='userNameInputDisabled'
+                    id="username-outlined-disabled"
+                    label="Username"
+                    value={user.username}
+                />
+                <TextField
+                    disabled
+                    id="email-outlined-disabled"
+                    name='emailInputDisabled'
+                    label="Email"
+                    value={user.email}
+                />
+
+                <Button 
+                    variant='contained'
+                    id="delete-btn"
+                    name='deleteBtn'
+                    sx={{
+                    width: '100%',
+                    backgroundColor: 'primary',
+                    borderRadius: 22,
+                    ':hover': {backgroundColor: 'primary'},
+                  }} 
+                  onClick={()=>{toggle()}}
+                  >Delete Account
+                </Button> 
             </Box>
             </div>
 
@@ -119,7 +169,7 @@ export function ProfilePage(props:any) {
             </div>
 
             {/* Modals */}
-            <DeleteAccountModal isOpen={isOpen} toggle={toggle} modalName={modalName}></DeleteAccountModal>
+            <DeleteAccountModal isOpen={isOpen} toggle={toggle} deleteUserAccount={deleteUserAccount}></DeleteAccountModal>
 
         </>
     );
