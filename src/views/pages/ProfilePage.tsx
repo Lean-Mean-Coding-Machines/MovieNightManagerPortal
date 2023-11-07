@@ -51,39 +51,37 @@ export function ProfilePage(props:any) {
       arrows: true,
     };
 
-    useEffect(() => {
-        if (userId) {
-            if (user.id === userId) {
-                setUserLoading(false);
-            } else {
-                api.get<IMnmApiResponse<IUser>>(`/user/details/${userId}`)
-                    .then(
-                        (res) => {
-                            if (res.data.status.success && res.data.data != null) {
-                                setUser(res.data.data);
-                            }
-                            setUserLoading(false);
-                        },
-                        (err) => console.log(err))
-                    .catch((err) => console.log(err.message));
-            }
-        } else {
-            navigate('/');
-        }
-    }, [api, navigate, userId, user.id]);
-
-
     const deleteUserAccount = () => {
         api.delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
         .then(() => {
             logoutUser();
-            // navigate back to home page 
         })
         .catch((err) => {
             console.error("Error deleting user account:", err);
             toast.error(`Account deletion failed`)
         })
     }
+    
+    const getUserDetails = () => {
+        api.get<IMnmApiResponse<IUser>>(`/user/details/${userId}`)
+            .then(
+                (res) => {
+                    if (res.data.status.success && res.data.data != null) {
+                        setUser(res.data.data);
+                    }
+                    setUserLoading(false);
+                },
+                (err) => console.log(err))
+            .catch((err) => console.log(err.message));
+    }
+    
+    useEffect(() => {
+        if (userId) {
+            getUserDetails();
+        } else {
+            navigate('/');
+        }
+    }, [userId]);
 
 
     return (
