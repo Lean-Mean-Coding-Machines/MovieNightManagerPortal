@@ -97,7 +97,7 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}
                 />
 
-                    {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
+                    {/* TODO: Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
                     {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
                 <CardContent className="card-content-container ">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>

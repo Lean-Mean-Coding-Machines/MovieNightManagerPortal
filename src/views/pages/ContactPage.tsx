@@ -16,7 +16,7 @@ function ContactPage() {
     });
   };
 
-  // Need to Expand upon this when Email Submission Post is created
+  // TODO: Need to Expand upon this when Email Submission Post is created
   const handleSubmit = (e:any) => {
     e.preventDefault();
     console.log(emailFormData);
