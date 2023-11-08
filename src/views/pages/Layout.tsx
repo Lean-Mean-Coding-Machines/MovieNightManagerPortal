@@ -11,7 +11,7 @@ export default function Layout(props: { children: ReactNode }) {
       <Grid item id="header" xs={12}>
         <AppBar/>
       </Grid>
-      <Grid item xs={12} style={{ flex: 1, background: '#14181c', minHeight: '85vh' }}>
+      <Grid item xs={12} style={{ flex: 1, background: '#14181c', minHeight: '100vh' }}>
         <Container maxWidth="xl" style={{ flex: 1 }}>
           {props.children}
         </Container>

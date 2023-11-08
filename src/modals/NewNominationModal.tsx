@@ -79,13 +79,13 @@
             [theme.breakpoints.up('md')]: {
                 width: '100%',
                 bottom: '-4.75rem',
-                top: '8.75rem',
+                top: '11.25rem',
             },
             // Mobile 
             [theme.breakpoints.down('sm')]: {
                 width: '87%',
                 bottom: '-4.25rem',
-                top: '7.75rem',
+                top: '10rem',
             },
         }
 
@@ -134,6 +134,16 @@
                 toast.error("Movie Selection Is Required");
                 return;
             }
+
+            if (nominationForm.movieTitle) {
+                for (let i = 0; i < props.segment.nominations.length; i++) {
+                    if (nominationForm.movieTitle === props.segment.nominations[i].movieTitle && nominationForm.releaseDate === props.segment.nominations[i].releaseDate) {
+                        toast.error(`${nominationForm.movieTitle} Already Nominated`);
+                        return;
+                    }
+                }
+            }
+
             if (nominationForm.watchDate === 'Invalid Date') {
                 toast.error("Preferred Watch Date Required");
                 return;
@@ -204,7 +214,6 @@
 
         // Validates if the cancel btn is in focus when tabbing
         const inputRef = useRef(null);
-        const searchListInputRef = useRef(null);
 
         const handleClickClearMovieInput = () => {
             setMovieOptions([]);
@@ -235,20 +244,20 @@
             >
                 <Box sx={modalStyle}>
                     <Box sx={{textAlign: 'center', marginTop: '10px'}}>
+                            <div style={{float: 'right'}} onClick={props.toggle}>
+                                <IconButton>
+                                    <CloseIcon/>
+                                </IconButton>
+                            </div>
                         <Box
                             component='span'
                             sx={{
                                 fontWeight: 'bold',
-                                fontSize: {xs: 20, sm: 25, md: 30, lg: 35, xl: 40},
+                                fontSize: {xs: 25, sm: 25, md: 30, lg: 35, xl: 40},
                                 fontFamily: 'SoraBold'
                             }}>
                             Nominate a Movie
                         </Box>
-                        <div style={{float: 'right', marginTop: '-5px'}} onClick={props.toggle}>
-                            <IconButton>
-                                <CloseIcon/>
-                            </IconButton>
-                        </div>
                     </Box>
 
                     <Container>
@@ -257,6 +266,7 @@
                             sx={{
                                 display: 'flex',
                                 flexDirection: 'column',
+                                alignItems:'center',
                                 rowGap: '32px',
                                 mt: 2
                             }}
@@ -270,7 +280,7 @@
                                     name='titleSearch' 
                                     id='nomination-name-input'
                                     required 
-                                    sx={{width: {xs: '100%', lg: '50%'}}}
+                                    sx={{width: {xs: '100%', lg: '50%'}, marginTop:'32px'}}
                                     value={searchTitle}
                                     onChange={(event: any) => setSearchTitle(event.target.value)}
                                     InputProps={{endAdornment: (
@@ -286,7 +296,7 @@
                                             </IconButton>
                                         </InputAdornment>
                                     )
-                                }}
+                                    }}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter" && (inputRef.current !== document.activeElement)) {
                                             handleMovieSearch(e);
@@ -385,7 +395,6 @@
                                             sx={{height: '100px', width: '70px', mr: 2}}
                                             variant='rounded'
                                             alt='Movie Poster'
-                                            // Img isn't populating correctly currently, need to fix use effect? or make it async? 
                                             src={previewPosterPath}/>
                                         <ListItemText
                                             primary={selectedMovie ? selectedMovie.title : ''}
@@ -421,7 +430,7 @@
                                     }}>
                                     <DateSelector
                                         sx={{
-                                        width: '50%', 
+                                        width: {xs: '100%', lg: '100%'}, 
                                         pr: {xs: 0, lg: 1}, 
                                         flexGrow: 1
                                         }}

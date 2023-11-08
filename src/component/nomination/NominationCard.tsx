@@ -1,7 +1,7 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
 import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
-import {FavoriteBorder, Favorite, Person, InfoOutlined} from "@mui/icons-material";
+import {FavoriteBorder, Favorite, Person, InfoOutlined, Delete} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
@@ -10,15 +10,19 @@ import {toast} from "react-toastify";
 import INominationLikeRequest from "../../model/nomination/INominationLikeRequest";
 import { Button } from "@mui/base";
 import '../../assets/NominationCard.css';
+import useModal from "../../hooks/useModal";
+import MovieDetailsModal from "../../modals/MovieDetailsModal";
+import DeleteNominationModal from "../../modals/DeleteNominationModal";
 
 interface NominationCardsProps {
-    nomination: INomination
+    nomination: INomination,
+    segmentRefresh: () => void
 }
 
 export default function NominationCard(props: NominationCardsProps) {
 
     const api = useAxios();
-    const {userId} = useContext(UserContext);
+    const {userId, username} = useContext(UserContext);
 
     const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
 
@@ -35,7 +39,7 @@ export default function NominationCard(props: NominationCardsProps) {
             const likeRequest: INominationLikeRequest = {
                 nominationId: props.nomination.id,
                 userId: userId,
-                watchDate: "2023-01-14T18:30:00.000", // TODO :: un-hardcode these
+                watchDate: "2023-01-14T18:30:00.000", // TODO: un-hardcode these
                 watchType: "FIRE"
             };
             api.post<IMnmApiResponse<INominationLike>>("/nominationlike/manage", likeRequest)
@@ -44,6 +48,7 @@ export default function NominationCard(props: NominationCardsProps) {
                         if (res.data.data && res.data.status.success) {
                             setNominationLiked(res.data.data.enabled);
                             setLikeCount((prevState) => res.data.data!.enabled ? prevState + 1 : prevState - 1);
+                            props.segmentRefresh();
                         }
                     },
                     (err) => console.log(err)
@@ -55,6 +60,18 @@ export default function NominationCard(props: NominationCardsProps) {
         }
     };
 
+    const deleteNomination = () => {
+        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}`)
+        .then(() => {
+                props.segmentRefresh();
+                toast.success(`${props.nomination.movieTitle} successfully deleted`);
+        })
+        .catch((err) => {
+            console.error("Error deleting nomination:", err);
+            toast.error(`${props.nomination.movieTitle} deletion failed`)
+        })
+    }
+
     const expandHandler = () => {
         setExpandText(!expandText);
     }
@@ -63,7 +80,12 @@ export default function NominationCard(props: NominationCardsProps) {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
 
+    const {isOpen, toggle} = useModal();
+
+    const [modalName, setModalName] = useState('');
+
     return (
+        <>  
         <Box key={props.nomination.id} >
             <Card variant="outlined" className="card-container">
 
@@ -75,21 +97,25 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}
                 />
 
-                    {/* Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
+                    {/* TODO: Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
                     {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
                 <CardContent className="card-content-container ">
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                             <div style={{ flex: 1, flexWrap: 'wrap' }}>
+                            <div className="card-title-container">
+                            <Tooltip title={props.nomination.movieTitle} enterDelay={900}>
                             <Typography fontWeight={'bold'}>
                                 {props.nomination.movieTitle}
                             </Typography>
+                            </Tooltip>
+                            </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
                                 ({props.nomination.releaseDate.split('-')[0]})
                             </Typography>
                             </div>
                             <div className="info-icon">
                             <Tooltip title="More Info">
-                                <InfoOutlined />
+                                <InfoOutlined onClick={()=>{toggle();setModalName('movieDetails');}} />
                             </Tooltip>
                             </div>
                         </div>
@@ -126,8 +152,10 @@ export default function NominationCard(props: NominationCardsProps) {
 
                 <CardActions className="card-actions-container">
                     <div style={{display: 'flex', alignItems: 'center'}}>
-
-                        {/* To Do: Display liked by on the tooltip of likes */}
+                        {/*TODO: Temp location of deletion, will likely move  */}
+                    {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
+                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
+                            </Tooltip>}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
                             name="likeBtn"
@@ -154,5 +182,10 @@ export default function NominationCard(props: NominationCardsProps) {
                 </CardContent>
             </Card>
         </Box>
+        {/* Modals */}
+        <MovieDetailsModal isOpen={isOpen} toggle={toggle} nomination={props.nomination} modalName={modalName}/>
+        <DeleteNominationModal isOpen={isOpen} toggle={toggle} nomination={props.nomination} modalName={modalName} deleteNomination={deleteNomination} />
+        </>
+        
     )
 }
