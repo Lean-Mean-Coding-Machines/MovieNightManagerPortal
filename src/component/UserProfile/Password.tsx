@@ -23,7 +23,7 @@ export default function Password() {
               <OutlinedInput sx={{ width: 400,}} placeholder="Enter current password"  id='current-password' type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}} /> : <Visibility sx={{color: '#1F1F1F'}} />}
                   </IconButton>
                 </InputAdornment>
@@ -37,7 +37,7 @@ export default function Password() {
               <OutlinedInput sx={{ width: 400,}} id='new-password' placeholder="Enter new password" type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}onMouseDown={handleMouseDownPassword}>
+                  <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword} onMouseDown={handleMouseDownPassword}>
                     {showPassword ? <VisibilityOff sx={{color: '#1F1F1F'}} /> : <Visibility sx={{color: '#1F1F1F'}} />}
                   </IconButton>
                 </InputAdornment>

@@ -16,7 +16,7 @@ import DeleteNominationModal from "../../modals/DeleteNominationModal";
 
 interface NominationCardsProps {
     nomination: INomination,
-    segmentRefresh: () => void
+    segmentRefresh: () => void,
 }
 
 export default function NominationCard(props: NominationCardsProps) {
@@ -115,7 +115,10 @@ export default function NominationCard(props: NominationCardsProps) {
                             </div>
                             <div className="info-icon">
                             <Tooltip title="More Info">
-                                <InfoOutlined onClick={()=>{toggle();setModalName('movieDetails');}} />
+                                <InfoOutlined onClick={()=>{
+                                    toggle();
+                                    setModalName('movieDetails');
+                                    }} />
                             </Tooltip>
                             </div>
                         </div>
