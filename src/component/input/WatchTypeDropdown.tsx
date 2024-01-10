@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FormControl, InputLabel, MenuItem, NativeSelect, Select, SxProps} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select, SxProps} from "@mui/material";
 
 interface typeSelectorProps {
     updateWatchType: (input: string) => void;

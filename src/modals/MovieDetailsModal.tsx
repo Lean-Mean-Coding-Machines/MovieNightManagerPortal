@@ -54,7 +54,7 @@ export default function MovieDetailsModal(props: ModalType) {
                       }}>
                     {props.nomination.movieTitle}
                 <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
-                                ({props.nomination.releaseDate.split('-')[0]})
+                                ({props.nomination.releaseDate?.split('-')[0]})
                             </Typography>
                 </Box>
                 

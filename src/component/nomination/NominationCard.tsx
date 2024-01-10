@@ -38,9 +38,7 @@ export default function NominationCard(props: NominationCardsProps) {
             setLikeRequestLoading(true);
             const likeRequest: INominationLikeRequest = {
                 nominationId: props.nomination.id,
-                userId: userId,
-                watchDate: "2023-01-14T18:30:00.000", // TODO: un-hardcode these
-                watchType: "FIRE"
+                userId: userId
             };
             api.post<IMnmApiResponse<INominationLike>>("/nominationlike/manage", likeRequest)
                 .then(
@@ -110,7 +108,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             </Tooltip>
                             </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
-                                ({props.nomination.releaseDate.split('-')[0]})
+                                ({props.nomination?.releaseDate.split('-')[0]})
                             </Typography>
                             </div>
                             <div className="info-icon">
@@ -123,14 +121,14 @@ export default function NominationCard(props: NominationCardsProps) {
                             </div>
                         </div>
                     
-                    <div className={`${props.nomination.movieOverview.length > 150 && !expandText ? "card-paragraph-container" : ""}`}>
-                    <Typography className={`${props.nomination.movieOverview.length > 150 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
+                    <div className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "card-paragraph-container" : ""}`}>
+                    <Typography className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
                         {props.nomination.movieOverview}
                     </Typography>
                     </div>
                     
                     <div>
-                        { (props.nomination.movieOverview.length > 150 && !expandText) && 
+                        { (props.nomination.movieOverview?.length > 150 && !expandText) && 
                             <Button 
                                 id={`read-more-btn ${props.nomination.id}`}
                                 name="readMoreBtn"

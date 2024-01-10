@@ -17,7 +17,6 @@
     import CloseIcon from '@mui/icons-material/Close';
     import React, {useContext, useEffect, useRef, useState} from 'react';
     import '../assets/NominationModal.css';
-    import DateSelector from '../component/input/DatePicker';
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
@@ -28,24 +27,15 @@
     import ITmdbResult from '../model/ITmdbResult';
     import IMovieSearchResult from '../model/IMovieSearchResult';
     import { CancelRounded } from '@mui/icons-material';
+    import IMovieDetails from '../model/IMovieDetails';
+    import INominationRequest from '../model/nomination/INominationRequest';
+    import INomination from '../model/nomination/INomination';
 
     interface NewNominationProps {
         isOpen: boolean,
         toggle: () => void,
         segment: IMovieNightSegment,
         segmentRefresh: () => void
-    }
-
-    interface nominationForm {
-        segmentId: number,
-        movieTitle: string,
-        watchDate: string,
-        watchTime: string,
-        watchType: string,
-        posterPath: string,
-        releaseDate: string,
-        userId: number,
-        overview: string
     }
 
     const modalStyle = {
@@ -93,23 +83,22 @@
         const {userId} = useContext(UserContext);
         const currentDate = new Date();
 
-        const defaultNominationForm: nominationForm = ({
+        const defaultNominationRequest: INominationRequest = ({
             segmentId: props.segment.id,
+            movieId: 0,
             movieTitle: '',
-            watchDate: '',
-            watchTime: '5',
-            watchType: 'ANY',
             posterPath: '',
             overview: '',
             releaseDate: '',
+            runtime: 0,
+            genres: [],
             userId: userId,
         });
 
         let startDay = dayjs(props.segment.nominationLockDate);
-        let endDay = dayjs(props.segment.segmentEndDate);
 
         useEffect(() => {
-            setNominationState((p) => (
+            setNominationRequest((p) => (
                 {
                     ...p,
                     segmentId: props.segment.id,
@@ -118,57 +107,58 @@
                 }));
         }, [props.segment.id, userId]);
 
-        const [nominationForm, setNominationState] = useState(defaultNominationForm);
+        const [nominationRequest, setNominationRequest] = useState(defaultNominationRequest);
 
         function resetNominationState() {
-            setNominationState(defaultNominationForm);
+            setNominationRequest(defaultNominationRequest);
             setMovieOptions([]);
             setSelectedMovie(null);
             setSearchTitle('');
         }
 
-        // Need to account for duplicate Movie selections here
         const handleSubmit = (event: React.SyntheticEvent) => {
             event.preventDefault();
-            if (nominationForm.movieTitle === '') {
+
+            if (nominationRequest.movieTitle === '') {
                 toast.error("Movie Selection Is Required");
                 return;
             }
 
-            if (nominationForm.movieTitle) {
-                for (let i = 0; i < props.segment.nominations.length; i++) {
-                    if (nominationForm.movieTitle === props.segment.nominations[i].movieTitle && nominationForm.releaseDate === props.segment.nominations[i].releaseDate) {
-                        toast.error(`${nominationForm.movieTitle} Already Nominated`);
-                        return;
-                    }
-                }
-            }
-
-            if (nominationForm.watchDate === 'Invalid Date') {
-                toast.error("Preferred Watch Date Required");
+            if (props.segment.nominations.findIndex(isNominationMatch) !== -1) {
+                toast.error(`${nominationRequest.movieTitle} Already Nominated`);
                 return;
             }
-            api.post<IMnmApiResponse<any>>('/nomination/create', nominationForm)
-                .then(
-                    (res) => {
-                        if (res.data.status.success && res.data.data != null) {
-                            props.toggle();
-                            resetNominationState();
-                            toast.success(`Created nomination for ${nominationForm.movieTitle} on ${nominationForm.watchDate.split('T')[0].split('-').reverse().join('-')}`);
-                            props.segmentRefresh();
-                        } else {
-                            toast.error('Could not create nomination');
-                        }
-                    },
-                    (err) => {
-                        console.log(err);
+
+            createNomination();
+        }
+
+        function isNominationMatch(nomination: INomination): boolean {
+            return nominationRequest.movieTitle === nomination.movieTitle && nominationRequest.releaseDate === nomination.releaseDate;
+        }
+
+        const createNomination = () => {
+            api.post<IMnmApiResponse<INominationRequest>>('/nomination/create', nominationRequest)
+            .then(
+                (res) => {
+                    if (res.data.status.success && res.data.data != null) {
+                        props.toggle();
+                        resetNominationState();
+                        // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
+                        toast.success(`Created nomination for ${nominationRequest.movieTitle}`);
+                        props.segmentRefresh();
+                    } else {
+                        toast.error('Could not create nomination');
                     }
-                )
-                .catch(
-                    (err) => {
-                        console.log(err.message);
-                    }
-                );
+                },
+                (err) => {
+                    console.log(err);
+                }
+            )
+            .catch(
+                (err) => {
+                    console.log(err.message);
+                }
+            );
         }
 
         const [selectedMovie, setSelectedMovie] = useState<IMovieSearchResult | null>(null);
@@ -176,13 +166,14 @@
         const [searchTitle, setSearchTitle] = useState('');
         const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
         const [isSearching, setIsSearching] = useState(false);
+        
         const handleMovieSearch = (event: any) => {
             event.preventDefault();
             api.get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>('/tmdb/movie/search', { params: { title: searchTitle}})
                 .then(
                     (res) => {
                         if (res.data.data && res.data.status.success) {
-                            res.data.data.total_results > 0 ? setMovieOptions(res.data.data.results) : toast.error(`0 Results for ${searchTitle}, please try another Movie Title`) ;
+                            res.data.data.total_results > 0 ? setMovieOptions(res.data.data.results) : toast.error(`0 Results for ${searchTitle}, please try another Movie Title`);
                         }
                     },
                 )
@@ -193,24 +184,55 @@
                 .finally(() => setIsSearching(false));
         }
 
-        const updateWatchDate = (selectedWatchDate: dayjs.Dayjs) => {
-            setNominationState({
-                ...nominationForm,
-                watchDate: selectedWatchDate.format('YYYY-MM-DDT00:00:00.000')
-            });
+        const updateMovieSelection = async (movie: IMovieSearchResult | null) => {
+            setSelectedMovie(movie);
+
+            if (movie) {
+                const movieDetails = await populateMovieDetails(movie.id);
+                if (movieDetails) {
+                    setNominationRequest({
+                        ...nominationRequest,
+                        overview: movieDetails.overview,
+                        genres: movieDetails.genres.map(genre => genre.name),
+                        runtime: movieDetails.runtime,
+                        movieTitle: movie.title,
+                        movieId: movie.id,
+                        posterPath: movie.posterPath,
+                        releaseDate: movie.releaseDate
+                    });
+                } else {
+                    setNominationRequest({
+                        ...nominationRequest,
+                        movieTitle: movie.title,
+                        movieId: movie.id,
+                        posterPath: movie.posterPath,
+                        releaseDate: movie.releaseDate
+                    });    
+                }
+            } else {
+                setNominationRequest(defaultNominationRequest);
+            }
+
+            // Handle poster preview reset or when no poster given from tmdb
+            movie?.posterPath ? setPreviewPosterPath('https://image.tmdb.org/t/p/w500' + movie.posterPath) : setPreviewPosterPath('/missingPoster.png');
         }
 
-        const updateMovieSelection = (movie: IMovieSearchResult | null) => {
-            setSelectedMovie(movie);
-            movie?.posterPath ? setPreviewPosterPath('https://image.tmdb.org/t/p/w500' + movie.posterPath) : setPreviewPosterPath('/missingPoster.png');
-            setNominationState({
-                ...nominationForm,
-                movieTitle: movie ? movie.title : '',
-                posterPath: movie ? movie.posterPath : '',
-                overview: movie ? movie.overview : '',
-                releaseDate: movie ? movie.releaseDate: ''
-            });
-        }
+        async function populateMovieDetails(movieId: number) {
+            return api.get<IMnmApiResponse<IMovieDetails>>(`/tmdb/movie/${movieId}`)
+                .then(
+                    (res) => {
+                        if (res.data.data && res.data.status.success) {
+                            return res.data.data;
+                        }
+
+                        return null
+                    }
+                )
+                .catch((err) => {
+                    console.log(err.message);
+                    return null;
+                });  
+      }
 
         // Validates if the cancel btn is in focus when tabbing
         const inputRef = useRef(null);
@@ -233,7 +255,7 @@
         const filterMovieDates = movieOptions.filter((option) => {
             const releaseDate = new Date(option.releaseDate);
             return releaseDate <= currentDate;
-          });
+        });
 
         return (
             <Modal
@@ -417,28 +439,6 @@
                                         />
                                     </ListItem>
                                 </List>
-                            </Box>
-
-
-                            <Box sx={{display: 'flex', flexDirection: {xs: 'column', lg: 'row'}}}>
-                                <Box
-                                    sx={{
-                                        pr: {xs: 0, lg: 1},
-                                        pb: {xs: 1, lg: 0},
-                                        width: {xs: '100%', lg: '50%'},
-                                        flexGrow: 1,
-                                    }}>
-                                    <DateSelector
-                                        sx={{
-                                        width: {xs: '100%', lg: '100%'}, 
-                                        pr: {xs: 0, lg: 1}, 
-                                        flexGrow: 1
-                                        }}
-                                        handleChangeDate={updateWatchDate} 
-                                        startDay={startDay}
-                                        endDay={endDay}
-                                    />
-                                </Box>
                             </Box>
 
                             <Button
