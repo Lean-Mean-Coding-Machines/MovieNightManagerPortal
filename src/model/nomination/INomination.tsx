@@ -1,4 +1,3 @@
-import IGenres from "../IGenres";
 import INominationLike from "./INominationLike";
 
 export default interface INomination {
@@ -11,6 +10,6 @@ export default interface INomination {
     movieOverview: string,
     releaseDate: string,
     runtime: number,
-    genres: IGenres[],
+    genres: string[],
     nominationLikes: INominationLike[]
 }

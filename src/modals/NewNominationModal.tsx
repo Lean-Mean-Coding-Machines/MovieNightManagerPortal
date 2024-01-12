@@ -125,7 +125,7 @@
             }
 
             if (props.segment.nominations.findIndex(isNominationMatch) !== -1) {
-                toast.error(`${nominationRequest.movieTitle} Already Nominated`);
+                toast.error(`'${nominationRequest.movieTitle}' Already Nominated`);
                 return;
             }
 
@@ -144,7 +144,7 @@
                         props.toggle();
                         resetNominationState();
                         // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
-                        toast.success(`Created nomination for ${nominationRequest.movieTitle}`);
+                        toast.success(`Created nomination for '${nominationRequest.movieTitle}'`);
                         props.segmentRefresh();
                     } else {
                         toast.error('Could not create nomination');
