@@ -31,7 +31,6 @@ export default function NominationCard(props: NominationCardsProps) {
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
 
-    const [expandText, setExpandText] = useState(false);
 
     const handleNominationLikeToggle = () => {
         if (userId && !likeRequestLoading) {
@@ -70,10 +69,6 @@ export default function NominationCard(props: NominationCardsProps) {
         })
     }
 
-    const expandHandler = () => {
-        setExpandText(!expandText);
-    }
-
     const isFilledLikeIcon = () => {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
@@ -86,25 +81,12 @@ export default function NominationCard(props: NominationCardsProps) {
         <>  
         <Box key={props.nomination.id} >
             <Card variant="outlined" className="card-container">
-
-                <CardMedia
-                    component="img"
-                    sx={{height: '300px', width: '200px', cursor:"pointer"}}
-                    image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
-                    title={props.nomination.movieTitle}
-                    onClick={handleNominationLikeToggle}
-                />
-
-                    {/* TODO: Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
-                    {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
                 <CardContent className="card-content-container ">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div style={{ flex: 1, flexWrap: 'wrap' }}>
+                <div style={{ }}>
+                            <div style={{height:'78px' }}>
                             <div className="card-title-container">
                             <Tooltip title={props.nomination.movieTitle} enterDelay={900}>
-                            <Typography fontWeight={'bold'}>
-                                {props.nomination.movieTitle}
-                            </Typography>
+                            <Typography fontWeight={'bold'}> {props.nomination.movieTitle}</Typography>
                             </Tooltip>
                             </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
@@ -119,40 +101,18 @@ export default function NominationCard(props: NominationCardsProps) {
                                     }} />
                             </Tooltip>
                             </div>
-                        </div>
-                    
-                    <div className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "card-paragraph-container" : ""}`}>
-                    <Typography className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
-                        {props.nomination.movieOverview}
-                    </Typography>
-                    </div>
-                    
-                    <div>
-                        { (props.nomination.movieOverview?.length > 150 && !expandText) && 
-                            <Button 
-                                id={`read-more-btn ${props.nomination.id}`}
-                                name="readMoreBtn"
-                                className="expand-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read More
-                            </Button> 
-                        }
+                            </div>
+                            
+                <CardMedia
+                    component="img"
+                    sx={{height: '300px', width: '200px', cursor:"pointer"}}
+                    image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
+                    title={props.nomination.movieTitle}
+                    onClick={handleNominationLikeToggle}  
+                />
 
-                        { expandText && 
-                            <Button 
-                                id={`read-less-btn ${props.nomination.id}`}
-                                name="readLessBtn"
-                                className="expand-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read Less
-                            </Button> 
-                        }
-                    </div>
-
-                <CardActions className="card-actions-container">
-                    <div style={{display: 'flex', alignItems: 'center'}}>
+            <CardActions sx={{justifyContent:'space-around'}} >
+                    <div style={{display: 'flex', alignItems: 'center', paddingLeft:'40px'}}>
                         {/*TODO: Temp location of deletion, will likely move  */}
                     {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
                                 <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
@@ -181,6 +141,7 @@ export default function NominationCard(props: NominationCardsProps) {
                     </div>
                 </CardActions>
                 </CardContent>
+
             </Card>
         </Box>
         {/* Modals */}

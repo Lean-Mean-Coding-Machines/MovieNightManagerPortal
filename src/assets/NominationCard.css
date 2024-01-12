@@ -1,10 +1,9 @@
-
-
 .card-container {
     display: flex;
     border-radius: 15px !important;
     border: 1px solid #666d77 !important;
-    width: 100%;
+    height: 450px;
+    width: 285px;
     background-color: #f6f6f6 !important;
 }
 
@@ -13,6 +12,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-left: 25px;
+    margin-top: -15px;
 }
 
 .card-title-container {
@@ -20,42 +21,10 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2; 
     overflow: hidden;
-    width: 13em;
-    cursor:default;
+    width: 12em;
+    cursor: default;
+    margin-top: 7px;
   }
-
-.card-paragraph-container {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5; 
-    overflow: hidden;
-    color: #191919;
-  }
-
-.long-overview-desc {
-    text-overflow: ellipsis;
-}
-
-.short-overview-desc {
-    text-overflow: none;
-}
-
-.expand-btn {
-    cursor: pointer;
-    border: 1px solid #757575;
-    color: #757575;
-    text-align: center;
-    border-radius: 4px;
-    padding: 0.6875em 1em;
-    background: none;
-    font-weight: 700;
-    margin-top: 5px;
-}
-
-.expand-btn:hover {
-    background: #c12b5d;
-    color: #fff;
-}
 
 .like-btn {
     display: flex;
@@ -80,11 +49,10 @@
     bottom: 0px;
 }
 
-/* Need to add in hover state */
 .info-icon {
     position: absolute;
-    right: 20px;
-    top: 15px;
+    right: 12px;
+    top: 23px;
     cursor: pointer;
 }
 
