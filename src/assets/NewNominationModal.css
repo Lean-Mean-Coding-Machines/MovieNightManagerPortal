@@ -1,0 +1,19 @@
+.clear-btn, .search-btn {
+    border-color: var(--primary-main);
+    color: var(--primary-main);
+}
+
+.clear-btn:hover, .search-btn:hover {
+    color: var(--primary-main);
+    border-color: var(--primary-main);
+}
+
+.submit-btn {
+    width: 125px;
+    background-color: var(--primary-main);
+    border-radius: 22px !important;
+}
+
+.submit-btn:hover {
+    background-color: #D53069 !important;
+}

@@ -105,14 +105,14 @@ export default function NominationCard(props: NominationCardsProps) {
                             
                 <CardMedia
                     component="img"
-                    sx={{height: '300px', width: '200px', cursor:"pointer"}}
+                    sx={{height: '300px', minHeight:'300px', width: '200px', cursor:"pointer"}}
                     image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
                     title={props.nomination.movieTitle}
                     onClick={handleNominationLikeToggle}  
                 />
 
             <CardActions sx={{justifyContent:'space-around'}} >
-                    <div style={{display: 'flex', alignItems: 'center', paddingLeft:'40px'}}>
+                    <div className='card-actions-container'>
                         {/*TODO: Temp location of deletion, will likely move  */}
                     {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
                                 <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />

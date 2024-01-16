@@ -26,6 +26,12 @@
     margin-top: 7px;
   }
 
+  .card-actions-container {
+    display: flex; 
+    align-items: center; 
+    padding-left: 40px;
+}
+
 .like-btn {
     display: flex;
     align-items: center;
@@ -43,11 +49,6 @@
     color: #000;
 }
 
-.card-actions-container {
-    position: absolute; 
-    right: 10px;
-    bottom: 0px;
-}
 
 .info-icon {
     position: absolute;

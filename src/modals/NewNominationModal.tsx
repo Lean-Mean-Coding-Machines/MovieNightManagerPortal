@@ -16,7 +16,7 @@
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
     import React, {useContext, useEffect, useRef, useState} from 'react';
-    import '../assets/NominationModal.css';
+    import '../assets/NewNominationModal.css';
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
@@ -144,7 +144,7 @@
                         props.toggle();
                         resetNominationState();
                         // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
-                        toast.success(`Created nomination for '${nominationRequest.movieTitle}'`);
+                        toast.success(`Nomination Created for '${nominationRequest.movieTitle}'`);
                         props.segmentRefresh();
                     } else {
                         toast.error('Could not create nomination');
