@@ -90,6 +90,7 @@ function AppNav() {
                                 }
                                 </>
                                 } 
+                            enterDelay={900}
                             >
                                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
                                      <Avatar 
@@ -120,9 +121,12 @@ function AppNav() {
                                  onClick={handleCloseUserMenu}
                              >
                                  {settings.map((setting) => (
-                                     <MenuItem key={setting.dropDownName} onClick={setting.action}>
-                                         <Typography textAlign="center">{setting.dropDownName}</Typography>
-                                     </MenuItem>
+                                    !(setting.dropDownName === 'Profile' && window.location.pathname.includes('/profile')) && (
+                                        <MenuItem key={setting.dropDownName} onClick={setting.action}>
+                                        <Typography textAlign="center">{setting.dropDownName}</Typography>
+                                    </MenuItem>
+                                    )
+
                                  ))}
                              </Menu>
                          </Box> :

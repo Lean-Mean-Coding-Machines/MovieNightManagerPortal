@@ -64,14 +64,14 @@ export default function MovieDetailsModal(props: ModalType) {
                   <div>
 
                   <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>       
-                  <div style={{display:'flex'}}>
+                  <span style={{display:'flex'}}>
                      <li style={{listStyleType: 'none', marginRight:'5px'}}> {props.nomination.releaseDate?.split('-')[0]} </li>
                       <li>
                         <span style={{marginLeft:'-8px'}}>
                         {`${Math.floor(props.nomination.runtime / 60)}h ${props.nomination.runtime % 60}m`}
                         </span>
                       </li>
-                    </div>               
+                    </span>               
                   </Typography>
                   </div>
 
