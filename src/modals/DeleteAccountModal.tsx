@@ -32,29 +32,30 @@ export default function DeleteAccountModal(props: ModalType) {
   aria-describedby="modal-modal-description"
   >
     <Box sx={modalStyle}>
-    <Box sx={{textAlign:'center'}}>
+    <div className="close-btn"
+                     onClick={props.toggle}
+                 >
+                    <IconButton>
+                        <CloseIcon/>
+                    </IconButton>
+                </div>
+    <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center'}}>
 
-        <div style={{ float: 'right'}} 
-             onClick={props.toggle}
-         >
-            <IconButton>
-                <CloseIcon/>
-            </IconButton>
-        </div>
         <Box component='span'
               sx={{
-                  fontWeight: 'bold',
-                  fontSize: {xs: 25, sm: 25, md: 30, lg: 30, xl: 30},
-                  fontFamily: 'SoraBold',
+                fontWeight: 'bold',
+                fontSize: {xs: 25, sm: 25, md: 30, lg: 30, xl: 30},
+                fontFamily: 'SoraBold',
               }}>
             Delete Account
         </Box>
+
     </Box>
     <Box sx={{textAlign: 'center', marginTop: '10px'}}>
 
-       <div style={{marginTop:'35px'}}>  Are you sure you want to delete your account?</div>
+       <div className="delete-desc">  Are you sure you want to delete your account?</div>
 
-        <div style={{ marginTop: '35px', marginRight: '15px'}}>
+        <div className="btn-container">
           
           <Button 
             variant='outlined'

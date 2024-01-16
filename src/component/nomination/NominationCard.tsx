@@ -61,7 +61,7 @@ export default function NominationCard(props: NominationCardsProps) {
         api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}`)
         .then(() => {
                 props.segmentRefresh();
-                toast.success(`${props.nomination.movieTitle} successfully deleted`);
+                toast.success(` '${props.nomination.movieTitle}' successfully deleted`);
         })
         .catch((err) => {
             console.error("Error deleting nomination:", err);
