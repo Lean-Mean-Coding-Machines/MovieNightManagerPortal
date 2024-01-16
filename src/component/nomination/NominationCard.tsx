@@ -82,10 +82,22 @@ export default function NominationCard(props: NominationCardsProps) {
         <Box key={props.nomination.id} >
             <Card variant="outlined" className="card-container">
                 <CardContent className="card-content-container ">
-                <div style={{ }}>
-                            <div style={{height:'78px' }}>
+                <div>
+                            <div style={{height:'78px'}}>
                             <div className="card-title-container">
-                            <Tooltip title={props.nomination.movieTitle} enterDelay={900}>
+                            <Tooltip
+                                title={
+                                    <>
+                                    {<Typography>
+                                        {props.nomination.movieTitle}
+                                    </Typography>
+                                    }
+                                    </>
+                                    } 
+                                enterDelay={900}
+                                placement="bottom-start"
+                            >
+                             
                             <Typography fontWeight={'bold'}> {props.nomination.movieTitle}</Typography>
                             </Tooltip>
                             </div>
@@ -94,7 +106,17 @@ export default function NominationCard(props: NominationCardsProps) {
                             </Typography>
                             </div>
                             <div className="info-icon">
-                            <Tooltip title="More Info">
+                            <Tooltip
+                            title={
+                                <>
+                                {<Typography>
+                                    More Info
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow
+                            >
                                 <InfoOutlined onClick={()=>{
                                     toggle();
                                     setModalName('movieDetails');
@@ -114,7 +136,16 @@ export default function NominationCard(props: NominationCardsProps) {
             <CardActions sx={{justifyContent:'space-around'}} >
                     <div className='card-actions-container'>
                         {/*TODO: Temp location of deletion, will likely move  */}
-                    {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
+                    {props.nomination.submittedBy === username && 
+                            <Tooltip title={
+                                <>
+                                {<Typography>
+                                    Delete Nomination
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow>
                                 <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
                             </Tooltip>}
                         <Button 
@@ -128,20 +159,30 @@ export default function NominationCard(props: NominationCardsProps) {
                             { isFilledLikeIcon() ? <Favorite style={{color: '#f24d85'}}/> : <FavoriteBorder style={{color: '#f24d85'}} />}
                             <Tooltip title={
                                 <>
-                                    {props.nomination.nominationLikes.map(like => (<Typography key={like.username} color="inherit">{like.username}</Typography>))}
+                                    {props.nomination.nominationLikes.map(like => (<Typography key={like.username}>{like.username}</Typography>))}
                                 </>
                             } arrow>
                                 <span style={{font:'Raleway'}}>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
                             </Tooltip>
                         </Button>
 
-                        <Tooltip title={props.nomination.submittedBy}>
+                        <Tooltip 
+                        
+                        title={
+                            <>
+                            {<Typography>
+                                {props.nomination.submittedBy}
+                            </Typography>
+                            }
+                            </>
+                            } 
+                        arrow>
                         <Person style={{marginLeft: '10px'}}></Person>
-                        </Tooltip>
+                        </Tooltip >
                     </div>
                 </CardActions>
                 </CardContent>
-
+   
             </Card>
         </Box>
         {/* Modals */}

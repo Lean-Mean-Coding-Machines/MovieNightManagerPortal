@@ -82,7 +82,15 @@ function AppNav() {
                         { !window.location.pathname.includes('/login') && (
                          username !== ""  ?
                          <Box sx={{flexGrow: 1}}>
-                             <Tooltip title="Open Profile">
+                             <Tooltip title={
+                                <>
+                                {<Typography>
+                                    Manage Profile
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            >
                                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
                                      <Avatar 
                                          alt={username} 
