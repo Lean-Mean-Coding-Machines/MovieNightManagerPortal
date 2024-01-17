@@ -50,9 +50,14 @@
         borderRadius: '1rem',
     }
 
+
     export default function NewNominationModal(props: NewNominationProps) {
         
         const theme = useTheme();
+
+        const mobileView = theme.breakpoints.down('sm');
+
+        const desktopView = theme.breakpoints.up('md');
 
         const searchListStyle = {
             position: 'absolute',
@@ -66,13 +71,13 @@
             bottom: '-4rem',
             top: '8rem',
             // Desktop
-            [theme.breakpoints.up('md')]: {
+            [desktopView]: {
                 width: '100%',
                 bottom: '-4.75rem',
                 top: '11.25rem',
             },
             // Mobile 
-            [theme.breakpoints.down('sm')]: {
+            [mobileView]: {
                 width: '87%',
                 bottom: '-4.25rem',
                 top: '10rem',

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
-import {Box, Card, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography} from "@mui/material";
+import {Box, Card, CardActions, CardContent, CardMedia, ClickAwayListener, IconButton, Tooltip, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {FavoriteBorder, Favorite, Person, InfoOutlined, Delete} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
@@ -32,6 +32,11 @@ export default function NominationCard(props: NominationCardsProps) {
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
     const {isOpen, toggle} = useModal();
     const [modalName, setModalName] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const theme = useTheme();
+    const desktopView = useMediaQuery(theme.breakpoints.up('md'));
+
 
 
     const handleNominationLikeToggle = () => {
@@ -85,7 +90,9 @@ export default function NominationCard(props: NominationCardsProps) {
         setModalName(modalName);
     }
 
-
+    const handleTooltip = () => {
+        setOpen(!open);
+      }
 
     return (
         <>  
@@ -183,18 +190,51 @@ export default function NominationCard(props: NominationCardsProps) {
                             </Tooltip>
                         </Button>
 
-                        <Tooltip 
-                        title={
-                            <>
-                            {<Typography>
-                                {props.nomination.submittedBy}
-                            </Typography>
-                            }
-                            </>
-                            } 
-                        arrow>
-                        <Person style={{marginLeft: '10px'}}></Person>
-                        </Tooltip >
+
+                        {!desktopView ? (
+                            <ClickAwayListener onClickAway={() => {setOpen(false)}}>
+                                <Tooltip 
+
+                                onClose={handleTooltip}
+                                open={open}
+                                disableFocusListener
+                                disableHoverListener
+                                disableTouchListener
+                                title={
+                                    <>
+                                    {<Typography>
+                                        {props.nomination.submittedBy}
+                                    </Typography>
+                                    }
+                                    </>
+                                    } 
+                                arrow>
+                                    <span>
+                                    <IconButton onClick={handleTooltip}>
+                                    
+                                    <Person style={{marginLeft: '10px', color:'#212427'}}></Person>
+                                    </IconButton>
+                                        
+                                    </span>
+                                </Tooltip >
+                                </ClickAwayListener>
+                                ) : (
+                            <Tooltip 
+                            title={
+                                <>
+                                {<Typography>
+                                    {props.nomination.submittedBy}
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow>
+                                <span>
+                                <Person style={{marginLeft: '10px'}}></Person>                                    
+                                </span>
+                            </Tooltip >  
+                            )
+                    }
                     </div>
                 </CardActions>
                 </CardContent>
