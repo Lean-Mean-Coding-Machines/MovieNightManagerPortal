@@ -145,7 +145,7 @@ export default function NominationCard(props: NominationCardsProps) {
                     onClick={handleNominationLikeToggle}  
                 />
 
-            <CardActions sx={{justifyContent:'space-around'}} >
+            <CardActions sx={{justifyContent:'flex-end'}} >
                     <div className='card-actions-container'>
                     {props.nomination.submittedBy === username && 
                             <Tooltip title={

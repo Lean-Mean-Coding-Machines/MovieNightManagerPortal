@@ -29,7 +29,7 @@
   .card-actions-container {
     display: flex; 
     align-items: center; 
-    padding-left: 40px;
+    padding-right: 15px;
 }
 
 .like-btn {
