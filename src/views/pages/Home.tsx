@@ -43,6 +43,7 @@ export function HomePage() {
 
     useEffect(() => {
         getMovieNightSegment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (segment.nominationStartDate) {

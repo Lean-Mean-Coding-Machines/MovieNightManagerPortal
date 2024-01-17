@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
-import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
+import {Box, Card, CardActions, CardContent, CardMedia, IconButton, Tooltip, Typography} from "@mui/material";
 import {FavoriteBorder, Favorite, Person, InfoOutlined, Delete} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
@@ -108,7 +108,7 @@ export default function NominationCard(props: NominationCardsProps) {
                                 placement="bottom-start"
                             >
                              
-                            <Typography fontWeight={'bold'}> {props.nomination.movieTitle}</Typography>
+                            <Typography style={{color:'#212427', fontWeight: 'bold'}}> {props.nomination.movieTitle}</Typography>
                             </Tooltip>
                             </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
@@ -127,9 +127,12 @@ export default function NominationCard(props: NominationCardsProps) {
                                 } 
                             arrow
                             >
-                                <InfoOutlined onClick={()=>{
-                                    toggleModal('movieDetails');
-                                    }} />
+                                <IconButton 
+                                id={`details-btn ${props.nomination.id}`}
+                                aria-label="NominationDetailsBtn"
+                                onClick={()=>{toggleModal('movieDetails')}} sx={{color:'#212427'}}>
+                                <InfoOutlined/>
+                                </IconButton>
                             </Tooltip>
                             </div>
                             </div>
@@ -144,7 +147,6 @@ export default function NominationCard(props: NominationCardsProps) {
 
             <CardActions sx={{justifyContent:'space-around'}} >
                     <div className='card-actions-container'>
-                        {/*TODO: Temp location of deletion, will likely move  */}
                     {props.nomination.submittedBy === username && 
                             <Tooltip title={
                                 <>
@@ -155,7 +157,13 @@ export default function NominationCard(props: NominationCardsProps) {
                                 </>
                                 } 
                             arrow>
-                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggleModal('deleteNomination');}} />
+                                <IconButton 
+                                id={`delete-btn ${props.nomination.id}`}
+                                aria-label="DeleteNominationBtn"
+                                onClick={()=>{toggleModal('deleteNomination');}} 
+                                sx={{color:'#212427'}}>
+                                <Delete style={{cursor:'pointer'}}  />
+                                </IconButton>
                             </Tooltip>}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
@@ -176,7 +184,6 @@ export default function NominationCard(props: NominationCardsProps) {
                         </Button>
 
                         <Tooltip 
-                        
                         title={
                             <>
                             {<Typography>

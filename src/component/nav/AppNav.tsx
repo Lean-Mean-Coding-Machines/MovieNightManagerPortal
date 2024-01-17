@@ -94,6 +94,8 @@ function AppNav() {
                             >
                                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
                                      <Avatar 
+                                         id='profile-btn'
+                                         aria-label="ProfileBtn"
                                          alt={username} 
                                          sx={{color:'#015f76', 
                                          background: '#fff',

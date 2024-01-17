@@ -37,8 +37,6 @@ export function UserRegister(props: userRegisterProps) {
     const [formValues, setFormValues] = useState(defaultValues);
     const [submitErrorTxt, setSubmitErrorTxt] = useState("");
 
-    const navHeight = document.getElementById('header') != null ? document.getElementById('header')!.offsetHeight : 64;
-
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setFormValues({
@@ -317,7 +315,7 @@ export function UserRegister(props: userRegisterProps) {
                     Create
                 </Button>
 
-                <Box>
+                <Box sx={{ paddingBottom:'15px'}}>
                     Already have an account?
                     <Box component='span'
                          sx={{
