@@ -30,9 +30,16 @@ export default function NominationCard(props: NominationCardsProps) {
     const [nominationLiked, setNominationLiked] = useState(props.nomination.nominationLikes.map((like) => like.userId).indexOf(userId) !== -1);
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
+    const {isOpen, toggle} = useModal();
+    const [modalName, setModalName] = useState('');
 
 
     const handleNominationLikeToggle = () => {
+        if (likeCount === 1 && props.nomination.submittedBy === username) {
+            toggleModal('deleteNomination');
+            return;
+        }
+
         if (userId && !likeRequestLoading) {
             setLikeRequestLoading(true);
             const likeRequest: INominationLikeRequest = {
@@ -73,9 +80,12 @@ export default function NominationCard(props: NominationCardsProps) {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
 
-    const {isOpen, toggle} = useModal();
+    const toggleModal = (modalName: string) => {
+        toggle();
+        setModalName(modalName);
+    }
 
-    const [modalName, setModalName] = useState('');
+
 
     return (
         <>  
@@ -118,8 +128,7 @@ export default function NominationCard(props: NominationCardsProps) {
                             arrow
                             >
                                 <InfoOutlined onClick={()=>{
-                                    toggle();
-                                    setModalName('movieDetails');
+                                    toggleModal('movieDetails');
                                     }} />
                             </Tooltip>
                             </div>
@@ -146,7 +155,7 @@ export default function NominationCard(props: NominationCardsProps) {
                                 </>
                                 } 
                             arrow>
-                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
+                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggleModal('deleteNomination');}} />
                             </Tooltip>}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
