@@ -8,7 +8,26 @@ hr {
 
 h3 {
     color: #fff;
-    margin: 0 0 15px 15px;
+    margin: 20px 0 15px 15px;
+}
+
+.profile-info-container {
+    width: 16rem;
+    padding: 2em;
+    background: #f6f6f6;
+    border-radius: 10px;
+    margin: 5px 0 30px 15px;
+}
+
+.desktop-slider-container {
+    max-width: 100%; 
+    padding: 25px 55px 50px;
+}
+
+.mobile-slider-container {
+    max-width: 100%; 
+    padding: 10px 55px 50px;
+
 }
 
 /* Carousel Arrows */
@@ -25,10 +44,13 @@ h3 {
     right: -40px !important;
 }
 
-.profile-info-container {
-    width: 16rem;
-    margin-left: 15px;
-    padding: 2em;
-    background: #f6f6f6;
-    border-radius: 10px;
+.slick-dots li.slick-active button:before {
+    color: #c12b5d !important;
+    font-size: 8px !important;
 }
+
+.slick-dots li button:before {
+    color: #fff !important;
+    font-size: 8px !important;
+}
+/* */
