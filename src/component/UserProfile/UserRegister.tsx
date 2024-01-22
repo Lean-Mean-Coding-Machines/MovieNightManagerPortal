@@ -6,6 +6,7 @@ import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUserCreateResponse from "../../model/user/IUserCreateResponse";
+import { toast } from "react-toastify";
 
 interface formValidationReset {
     "firstName": () => void,
@@ -70,8 +71,13 @@ export function UserRegister(props: userRegisterProps) {
                         setSubmitErrorTxt(res.data.status.message);
                     }
                 },
-                (err) => console.log(err))
-                .catch((err) => console.log(err.message));
+                (err) => {
+                    console.log(err);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                    toast.error(err);
+                });
         }
     }
 
@@ -98,94 +104,138 @@ export function UserRegister(props: userRegisterProps) {
         },
     }
 
-    //Begin Validation -- Is there a way to clean this up / make it better?
+    // Begin Validation 
     const [firstNameValid, setFirstNameValid] = useState(true);
     const [firstNameErrorTxt, setFirstNameErrorTxt] = useState("");
     const validateFirstNameField = () => {
-        if (formValues.firstName === "") {
-            setFirstNameErrorTxt("First Name is required");
+        const firstName = formValues.firstName;
+      
+        const requirements = [
+          { condition: firstName === "", message: "First Name is required" },
+          { condition: firstName.length > 50, message: "First Name cannot be longer than 50 characters" },
+        ];
+      
+        for (const requirement of requirements) {
+          if (requirement.condition) {
+            setFirstNameErrorTxt(requirement.message);
             setFirstNameValid(false);
             return false;
-        } else if (formValues.firstName.length > 50) {
-            setFirstNameErrorTxt("First Name cannot be longer than 50 characters");
-            setFirstNameValid(false);
-            return false;
-        } else {
-            formValidationResets.firstName();
-            return true;
+          }
         }
-    }
+        formValidationResets.firstName();
+        return true;
+      };
+      
 
     const [lastNameValid, setLastNameValid] = useState(true);
     const [lastNameErrorTxt, setLastNameErrorTxt] = useState("");
     const validateLastNameField = () => {
-        if (formValues.lastName === "") {
-            setLastNameErrorTxt("Last Name is required");
+        const lastName = formValues.lastName;
+        const requirements = [
+          { condition: lastName === "", message: "Last Name is required" },
+          { condition: lastName.length > 50, message: "Last Name cannot be longer than 50 characters" },
+        ];
+      
+        for (const requirement of requirements) {
+          if (requirement.condition) {
+            setLastNameErrorTxt(requirement.message);
             setLastNameValid(false);
             return false;
-        } else if (formValues.lastName.length > 50) {
-            setLastNameErrorTxt("Last Name cannot be longer than 50 characters");
-            setLastNameValid(false);
-            return false;
-        } else {
-            formValidationResets.lastName();
-            return true;
+          }
         }
-    }
+        formValidationResets.lastName();
+        return true;
+      };
 
     const [usernameValid, setUsernameValid] = useState(true);
     const [usernameErrorTxt, setUsernameErrorTxt] = useState("");
     const validateUsernameField = () => {
-        if (formValues.username === "") {
-            setUsernameErrorTxt("Username is required");
+        const username = formValues.username;
+      
+        const requirements = [
+          { condition: username === "", message: "Username is required" },
+          { condition: username.length > 50, message: "Username cannot be longer than 50 characters" },
+          { condition: !/\s/.test(username), message: "Username cannot contain spaces"}
+        ];
+        for (const requirement of requirements) {
+          if (requirement.condition) {
+            setUsernameErrorTxt(requirement.message);
             setUsernameValid(false);
             return false;
-        } else if (formValues.username.length > 50) {
-            setUsernameErrorTxt("Username cannot be longer than 50 characters");
-            setUsernameValid(false);
-            return false;
-        } else {
-            formValidationResets.username();
-            return true;
+          }
         }
-    }
+      
+        formValidationResets.username();
+        return true;
+      };
 
     // Expression pulled from: https://dirask.com/posts/TypeScript-validate-email-with-regex-Dn40Ej
     const expression: RegExp = /^(?=.{1,254}$)(?=.{1,64}@)[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+(\.[-!#$%&'*+/0-9=?A-Z^_`a-z{|}~]+)*@[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?(\.[A-Za-z0-9]([A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*$/;
     const [emailValid, setEmailValid] = useState(true);
     const [emailErrorTxt, setEmailErrorTxt] = useState("");
     const validateEmailField = () => {
-        if (formValues.email === "") {
-            setEmailErrorTxt("Email is required");
+        const email = formValues.email;      
+        const requirements = [
+          { condition: email === "", message: "Email is required" },
+          { condition: email.length > 100, message: "Email cannot be longer than 100 characters" },
+          { condition: !expression.test(email.toString()), message: "Given email is not a valid email address" },
+        ];
+        for (const requirement of requirements) {
+          if (requirement.condition) {
+            setEmailErrorTxt(requirement.message);
             setEmailValid(false);
             return false;
-        } else if (formValues.email.length > 100) {
-            setEmailErrorTxt("Email cannot be longer than 100 characters");
-            setEmailValid(false);
-            return false;
-        } else if (!expression.test(formValues.email.toString())) {
-            setEmailErrorTxt("Given email is not a valid email address");
-            setEmailValid(false);
-            return false;
-        } else {
-            formValidationResets.email();
-            return true;
+          }
         }
-    }
+        formValidationResets.email();
+        return true;
+      };
 
-    // TODO: [MNM-53]: Revisit this for proper password validation checks (letters, symbols, numbers + length, etc...) once we really nail down security
     const [passwordValid, setPasswordValid] = useState(true);
     const [passwordErrorTxt, setPasswordErrorTxt] = useState("");
     const validatePasswordField = () => {
-        if (formValues.password === "") {
-            setPasswordErrorTxt("Password is required");
+        const password = formValues.password;
+      
+        const requirements = [
+          {
+            condition: password === "",
+            message: "Password is required",
+          },
+          {
+            condition: !/[A-Z]/.test(password),
+            message: "Password must contain at least one uppercase letter",
+          },
+          {
+            condition: !/[a-z]/.test(password),
+            message: "Password must contain at least one lowercase letter",
+          },
+          {
+            condition: !/\d/.test(password),
+            message: "Password must contain at least one digit",
+          },
+          {
+            condition: !/[!@#$%^&*(),.?":{}|<>]/.test(password),
+            message: "Password must contain at least one special character",
+          },
+          {
+            condition: password.length < 8,
+            message: "Password must be at least 8 characters",
+          },
+          {
+            condition: password === formValues.username,
+            message: "Password cannot be the same as Username",
+          },
+        ];
+        for (const requirement of requirements) {
+          if (requirement.condition) {
+            setPasswordErrorTxt(requirement.message);
             setPasswordValid(false);
             return false;
-        } else {
-            formValidationResets.password();
-            return true;
+          }
         }
-    }
+        formValidationResets.password();
+        return true;
+      };
 
     return (
         <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '75vh'}}>
