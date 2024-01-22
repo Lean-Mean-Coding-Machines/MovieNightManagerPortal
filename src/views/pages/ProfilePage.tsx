@@ -111,8 +111,8 @@ export function ProfilePage() {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    '& .MuiTextField-root': {m: 1},
+                    alignItems: 'center',
+                    '& .MuiTextField-root': {m: 1, width: '100%'},
                 }}
                 noValidate
                 autoComplete="on"
@@ -152,6 +152,7 @@ export function ProfilePage() {
                     id="delete-btn"
                     name='deleteBtn'
                     sx={{
+                    marginTop:'15px',
                     width: '100%',
                     backgroundColor: 'primary',
                     borderRadius: 22,
