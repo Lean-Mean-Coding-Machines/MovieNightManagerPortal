@@ -1,4 +1,4 @@
-import {Box, Button, CardMedia, IconButton, Modal, Typography} from "@mui/material";
+import {Box, Button, CardMedia, IconButton, Modal, Typography, useMediaQuery, useTheme} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import INomination from "../model/nomination/INomination";
 import { useState } from "react";
@@ -25,7 +25,6 @@ interface ModalType {
     overflowY:'auto',
   }
 
-// TODO: Configure styling for web
 
 export default function MovieDetailsModal(props: ModalType) {
 
@@ -34,6 +33,9 @@ export default function MovieDetailsModal(props: ModalType) {
   const expandHandler = () => {
     setExpandText(!expandText);
 }
+
+  const theme = useTheme();
+  const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
   const poster = `https://image.tmdb.org/t/p/w500${props.nomination.posterPath}`;
 
@@ -53,7 +55,7 @@ export default function MovieDetailsModal(props: ModalType) {
                     </IconButton>
                 </div>
 
-            <Box sx={{marginTop: '20px',}}>
+            <Box sx={{marginTop: '20px'}}>
                 <Box component='span'
                       sx={{
                           fontWeight: 'bold',
@@ -85,9 +87,9 @@ export default function MovieDetailsModal(props: ModalType) {
                       title={props.nomination.movieTitle}
                     />
                 </Box>
-
+                        
                 {(props.nomination.genres.length > 0 && props.nomination.genres[0] !== "") &&
-                  <div style={{marginBottom:'15px', display:'flex', flexWrap:'wrap'}}>
+                  <div className="genres-container">
 
                     {props.nomination.genres.map((genre, index) => (
                       <span className="genre" key={index}>{` ${genre} `}</span>
@@ -101,32 +103,33 @@ export default function MovieDetailsModal(props: ModalType) {
                     </Typography>
                 </div>
 
+                  { !desktopView && ( 
                       <div>
-                        {/* TODO: Need to determine why expand class styles are being overwritten */}
-                        { (props.nomination.movieOverview?.length > 350 && !expandText) && 
-                            <Button 
-                                id={`read-more-btn ${props.nomination.id}`}
-                                name="readMoreBtn"
-                                className="expand-text-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read More
-                            </Button> 
-                        }
-                        { expandText && 
-                            <Button 
-                                id={`read-less-btn ${props.nomination.id}`}
-                                name="readLessBtn"
-                                className="expand-text-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read Less
-                            </Button> 
-                        }
-                     </div>
-                
-      
-                <div style={{ textAlign:'center', marginTop:'auto' }}>
+                      {/* TODO: Need to determine why expand class styles are being overwritten */}
+                      { (props.nomination.movieOverview?.length > 350 && !expandText) && 
+                          <Button 
+                              id={`read-more-btn ${props.nomination.id}`}
+                              name="readMoreBtn"
+                              className="expand-text-btn" 
+                              onClick={expandHandler}
+                          >
+                          Read More
+                          </Button> 
+                      }
+                      { expandText && 
+                          <Button 
+                              id={`read-less-btn ${props.nomination.id}`}
+                              name="readLessBtn"
+                              className="expand-text-btn" 
+                              onClick={expandHandler}
+                          >
+                          Read Less
+                          </Button> 
+                      }
+                   </div>
+                  )}
+    
+                <div className="close-btn-container">
                   <Button 
                     variant='contained'
                     id="close-btn"

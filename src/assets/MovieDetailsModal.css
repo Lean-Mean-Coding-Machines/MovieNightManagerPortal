@@ -31,10 +31,25 @@
     text-overflow: none;
 }
 
+.genres-container {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .genre {
     background-color:#015f76;
     color: #fff;
     border-radius: 16px;
     padding: 4px 12px 4px 12px;
     margin: 5px 5px 0 0;
+}
+
+.close-btn-container {
+    text-align: center;
+    position: absolute;
+    margin-bottom: 25px;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
 }

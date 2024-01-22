@@ -27,8 +27,7 @@ const emptyUser: IUser = {
     nominationLikes: []
 };
 
- //TODO: define an interface for props here
-export function ProfilePage(props:any) {
+export function ProfilePage() {
     const {userId} = useContext(UserContext);
 
     const navigate = useNavigate();
