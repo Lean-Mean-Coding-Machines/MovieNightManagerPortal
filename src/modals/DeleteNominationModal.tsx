@@ -95,7 +95,10 @@ export default function DeleteNominationModal(props: ModalType) {
                     marginLeft: '10px',
                     ':hover': {backgroundColor: 'primary'},
                   }} 
-                  onClick={()=>{props.toggle();props.deleteNomination()}}
+                  onClick={()=>{
+                    props.toggle();
+                    props.deleteNomination();
+                  }}
                   >Delete
                   </Button>
 

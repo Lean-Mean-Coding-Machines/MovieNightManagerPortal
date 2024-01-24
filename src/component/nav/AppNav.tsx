@@ -17,7 +17,7 @@ import {UserContext} from "../../context/UserContext";
 import {Link} from 'react-router-dom';
 
 interface menuSettingAction {
-    setting: string,
+    dropDownName: string,
     action: () => void
 }
 
@@ -35,8 +35,8 @@ function AppNav() {
     };
 
     const settings: menuSettingAction[] = [
-        {setting: 'Profile', action: navigateToProfile},
-        {setting: 'Sign Out', action: logoutUser}
+        {dropDownName: 'Profile', action: navigateToProfile},
+        {dropDownName: 'Sign Out', action: logoutUser}
     ];
 
     const handleCloseUserMenu = () => {
@@ -112,8 +112,8 @@ function AppNav() {
                                  onClick={handleCloseUserMenu}
                              >
                                  {settings.map((setting) => (
-                                     <MenuItem key={setting.setting} onClick={setting.action}>
-                                         <Typography textAlign="center">{setting.setting}</Typography>
+                                     <MenuItem key={setting.dropDownName} onClick={setting.action}>
+                                         <Typography textAlign="center">{setting.dropDownName}</Typography>
                                      </MenuItem>
                                  ))}
                              </Menu>

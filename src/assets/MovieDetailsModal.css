@@ -1,0 +1,40 @@
+.expand-text-btn {
+    cursor: pointer;
+    border: 1px solid #757575;
+    color: #757575;
+    text-align: center;
+    border-radius: 4px;
+    padding: 0.6875em 1em;
+    background: none;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+.expand-text-btn:hover {
+    background: #c12b5d;
+    color: #fff;
+}
+
+.details-card-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8; 
+    overflow: hidden;
+    color: #191919;
+  }
+
+.long-overview-desc {
+    text-overflow: ellipsis;
+}
+
+.short-overview-desc {
+    text-overflow: none;
+}
+
+.genre {
+    background-color:#015f76;
+    color: #fff;
+    border-radius: 16px;
+    padding: 4px 12px 4px 12px;
+    margin: 5px 5px 0 0;
+}
