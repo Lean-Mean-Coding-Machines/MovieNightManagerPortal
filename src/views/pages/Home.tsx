@@ -55,7 +55,7 @@ export function HomePage() {
 
                 <Box sx={{display: 'flex', flexDirection: 'column'}}>
                     <h2 style={{textAlign: 'center', color: '#fff'}}>
-                        <div> Nomination Voting Period</div>
+                        <div> Watch Party Nominations</div>
                         {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
