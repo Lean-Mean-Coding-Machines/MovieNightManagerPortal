@@ -82,9 +82,20 @@ function AppNav() {
                         { !window.location.pathname.includes('/login') && (
                          username !== ""  ?
                          <Box sx={{flexGrow: 1}}>
-                             <Tooltip title="Open Profile">
+                             <Tooltip title={
+                                <>
+                                {<Typography>
+                                    Manage Profile
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            enterDelay={900}
+                            >
                                  <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
                                      <Avatar 
+                                         id='profile-btn'
+                                         aria-label="ProfileBtn"
                                          alt={username} 
                                          sx={{color:'#015f76', 
                                          background: '#fff',
@@ -112,9 +123,12 @@ function AppNav() {
                                  onClick={handleCloseUserMenu}
                              >
                                  {settings.map((setting) => (
-                                     <MenuItem key={setting.dropDownName} onClick={setting.action}>
-                                         <Typography textAlign="center">{setting.dropDownName}</Typography>
-                                     </MenuItem>
+                                    !(setting.dropDownName === 'Profile' && window.location.pathname.includes('/profile')) && (
+                                        <MenuItem key={setting.dropDownName} onClick={setting.action}>
+                                        <Typography textAlign="center">{setting.dropDownName}</Typography>
+                                    </MenuItem>
+                                    )
+
                                  ))}
                              </Menu>
                          </Box> :

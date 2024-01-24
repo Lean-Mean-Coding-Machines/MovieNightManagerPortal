@@ -4,18 +4,18 @@ import {useNavigate} from 'react-router-dom';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
 import {useContext, useEffect, useState} from 'react';
-import {Button, Stack, TextField} from "@mui/material";
+import {Button, Stack, TextField, useMediaQuery, useTheme} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
 import IMnmApiResponse from "../../model/IMnmApiResponse";
 import IUser from "../../model/user/IUser";
 import INomination from "../../model/nomination/INomination";
-import NominationCard from "../../component/nomination/NominationCard";
 import '../../assets/ProfilePage.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { toast } from 'react-toastify';
+import ProfileNomCard from '../../component/nomination/ProfileNomCard';
 
 const emptyUser: IUser = {
     id: 0,
@@ -27,7 +27,7 @@ const emptyUser: IUser = {
     nominationLikes: []
 };
 
-export function ProfilePage(props:any) {
+export function ProfilePage() {
     const {userId} = useContext(UserContext);
 
     const navigate = useNavigate();
@@ -42,14 +42,26 @@ export function ProfilePage(props:any) {
 
     const api = useAxios();
     
-    let settings = {
+    let DesktopSettings = {
       dots: true,
       infinite: false,
       speed: 500,
-      slidesToShow: 3,
-      slidesToScroll: 3,
+      slidesToShow: 6,
+      slidesToScroll: 6,
       arrows: true,
     };
+
+    let mobileSettings = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: true,
+      };
+
+      const theme = useTheme();
+      const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
     const deleteUserAccount = () => {
         api.delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
@@ -81,6 +93,7 @@ export function ProfilePage(props:any) {
         } else {
             navigate('/');
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
 
 
@@ -98,8 +111,8 @@ export function ProfilePage(props:any) {
                 sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    '& .MuiTextField-root': {m: 1},
+                    alignItems: 'center',
+                    '& .MuiTextField-root': {m: 1, width: '100%'},
                 }}
                 noValidate
                 autoComplete="on"
@@ -139,12 +152,13 @@ export function ProfilePage(props:any) {
                     id="delete-btn"
                     name='deleteBtn'
                     sx={{
+                    marginTop:'15px',
                     width: '100%',
                     backgroundColor: 'primary',
                     borderRadius: 22,
                     ':hover': {backgroundColor: 'primary'},
                   }} 
-                  onClick={()=>{toggle()}}
+                  onClick={toggle}
                   >Delete Account
                 </Button> 
             </Box>
@@ -154,17 +168,30 @@ export function ProfilePage(props:any) {
 
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
-            {/* TODO:, display text if no Nominations */}
-            <div>
-                {user.nominations.length > 3 ? 
-                <Slider {...settings}>
-                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} segmentRefresh={props.segmentRefresh} />))}
-                </Slider> :             
-                <Stack direction='row' spacing={3}>
-                    {user.nominations.map((nom: INomination, index) => (<NominationCard key={index} nomination={nom} segmentRefresh={props.segmentRefresh}/>))}
-                </Stack> 
-                }
-            </div>
+            { desktopView ? (
+                <div className='desktop-slider-container'>
+                    {user.nominations.length > 6 ? 
+                    <Slider {...DesktopSettings}>
+                        {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                    </Slider> :             
+                    <Stack direction='row' spacing={3} >
+                        {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                    </Stack> 
+                    }
+                </div>
+                ) : (
+                <div className='mobile-slider-container'>  
+                    <Slider {...mobileSettings}>
+                    {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                </Slider> 
+                </div>
+                )
+            }
+
+            { user.nominations.length === 0 && (
+                <div style={{color:'#fff', marginLeft:'60px'}}> You haven't added any movie nominations yet</div>
+            )    
+            }
 
             {/* Modals */}
             <DeleteAccountModal isOpen={isOpen} toggle={toggle} deleteUserAccount={deleteUserAccount}></DeleteAccountModal>

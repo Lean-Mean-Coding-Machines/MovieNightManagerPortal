@@ -16,7 +16,7 @@
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
     import React, {useContext, useEffect, useRef, useState} from 'react';
-    import '../assets/NominationModal.css';
+    import '../assets/NewNominationModal.css';
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
@@ -50,9 +50,14 @@
         borderRadius: '1rem',
     }
 
+
     export default function NewNominationModal(props: NewNominationProps) {
         
         const theme = useTheme();
+
+        const mobileView = theme.breakpoints.down('sm');
+
+        const desktopView = theme.breakpoints.up('md');
 
         const searchListStyle = {
             position: 'absolute',
@@ -66,13 +71,13 @@
             bottom: '-4rem',
             top: '8rem',
             // Desktop
-            [theme.breakpoints.up('md')]: {
+            [desktopView]: {
                 width: '100%',
                 bottom: '-4.75rem',
                 top: '11.25rem',
             },
             // Mobile 
-            [theme.breakpoints.down('sm')]: {
+            [mobileView]: {
                 width: '87%',
                 bottom: '-4.25rem',
                 top: '10rem',
@@ -144,7 +149,7 @@
                         props.toggle();
                         resetNominationState();
                         // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
-                        toast.success(`Created nomination for '${nominationRequest.movieTitle}'`);
+                        toast.success(`Nomination Created for '${nominationRequest.movieTitle}'`);
                         props.segmentRefresh();
                     } else {
                         toast.error('Could not create nomination');

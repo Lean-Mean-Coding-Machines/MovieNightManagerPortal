@@ -22,7 +22,6 @@ interface ModalType {
     borderRadius: '1rem',
   }
 
-// TODO: Configure styling for mobile/web, attach to api details call when created
 
 export default function DeleteNominationModal(props: ModalType) {
 
@@ -66,7 +65,7 @@ export default function DeleteNominationModal(props: ModalType) {
                     />
 
                 </Box>
-               <div style={{marginTop:'35px'}}>  Are you sure you wish to delete <b>"{props.nomination.movieTitle}"</b>?</div>
+               <div style={{marginTop:'35px'}}>  Are you sure you wish to delete your nomination for <b>"{props.nomination.movieTitle}"</b>?</div>
       
                 <div style={{ marginTop: '35px', marginRight: '15px'}}>
                   

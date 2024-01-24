@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import INomination from "../../model/nomination/INomination";
-import {Box, Card, CardActions, CardContent, CardMedia, Tooltip, Typography} from "@mui/material";
+import {Box, Card, CardActions, CardContent, CardMedia, ClickAwayListener, IconButton, Tooltip, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {FavoriteBorder, Favorite, Person, InfoOutlined, Delete} from "@mui/icons-material";
 import INominationLike from "../../model/nomination/INominationLike";
 import {UserContext} from "../../context/UserContext";
@@ -30,10 +30,21 @@ export default function NominationCard(props: NominationCardsProps) {
     const [nominationLiked, setNominationLiked] = useState(props.nomination.nominationLikes.map((like) => like.userId).indexOf(userId) !== -1);
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
+    const {isOpen, toggle} = useModal();
+    const [modalName, setModalName] = useState('');
+    const [open, setOpen] = useState(false);
 
-    const [expandText, setExpandText] = useState(false);
+    const theme = useTheme();
+    const desktopView = useMediaQuery(theme.breakpoints.up('md'));
+
+
 
     const handleNominationLikeToggle = () => {
+        if (likeCount === 1 && props.nomination.submittedBy === username) {
+            toggleModal('deleteNomination');
+            return;
+        }
+
         if (userId && !likeRequestLoading) {
             setLikeRequestLoading(true);
             const likeRequest: INominationLikeRequest = {
@@ -62,7 +73,7 @@ export default function NominationCard(props: NominationCardsProps) {
         api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}`)
         .then(() => {
                 props.segmentRefresh();
-                toast.success(`${props.nomination.movieTitle} successfully deleted`);
+                toast.success(` '${props.nomination.movieTitle}' successfully deleted`);
         })
         .catch((err) => {
             console.error("Error deleting nomination:", err);
@@ -70,41 +81,41 @@ export default function NominationCard(props: NominationCardsProps) {
         })
     }
 
-    const expandHandler = () => {
-        setExpandText(!expandText);
-    }
-
     const isFilledLikeIcon = () => {
         return nominationLiked ? !nominationLikeHover : nominationLikeHover;
     };
 
-    const {isOpen, toggle} = useModal();
+    const toggleModal = (modalName: string) => {
+        toggle();
+        setModalName(modalName);
+    }
 
-    const [modalName, setModalName] = useState('');
+    const handleTooltip = () => {
+        setOpen(!open);
+      }
 
     return (
         <>  
         <Box key={props.nomination.id} >
             <Card variant="outlined" className="card-container">
-
-                <CardMedia
-                    component="img"
-                    sx={{height: '300px', width: '200px', cursor:"pointer"}}
-                    image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
-                    title={props.nomination.movieTitle}
-                    onClick={handleNominationLikeToggle}
-                />
-
-                    {/* TODO: Need to account for mobile width when editing class, this pushes all the content on zoom and looks like shit  */}
-                    {/* This needs to be configured for profile and regular view make a media breakpoint?*/}
                 <CardContent className="card-content-container ">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                            <div style={{ flex: 1, flexWrap: 'wrap' }}>
+                <div>
+                            <div style={{height:'78px'}}>
                             <div className="card-title-container">
-                            <Tooltip title={props.nomination.movieTitle} enterDelay={900}>
-                            <Typography fontWeight={'bold'}>
-                                {props.nomination.movieTitle}
-                            </Typography>
+                            <Tooltip
+                                title={
+                                    <>
+                                    {<Typography>
+                                        {props.nomination.movieTitle}
+                                    </Typography>
+                                    }
+                                    </>
+                                    } 
+                                enterDelay={900}
+                                placement="bottom-start"
+                            >
+                             
+                            <Typography style={{color:'#212427', fontWeight: 'bold'}}> {props.nomination.movieTitle}</Typography>
                             </Tooltip>
                             </div>
                             <Typography variant="body2" color="textSecondary" style={{marginBottom: '10px'}}>
@@ -112,50 +123,54 @@ export default function NominationCard(props: NominationCardsProps) {
                             </Typography>
                             </div>
                             <div className="info-icon">
-                            <Tooltip title="More Info">
-                                <InfoOutlined onClick={()=>{
-                                    toggle();
-                                    setModalName('movieDetails');
-                                    }} />
+                            <Tooltip
+                            title={
+                                <>
+                                {<Typography>
+                                    More Info
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow
+                            >
+                                <IconButton 
+                                id={`details-btn ${props.nomination.id}`}
+                                aria-label="NominationDetailsBtn"
+                                onClick={()=>{toggleModal('movieDetails')}} sx={{color:'#212427'}}>
+                                <InfoOutlined/>
+                                </IconButton>
                             </Tooltip>
                             </div>
-                        </div>
-                    
-                    <div className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "card-paragraph-container" : ""}`}>
-                    <Typography className={`${props.nomination.movieOverview?.length > 150 && !expandText ? "long-overview-desc" : "short-overview-desc"}`}>
-                        {props.nomination.movieOverview}
-                    </Typography>
-                    </div>
-                    
-                    <div>
-                        { (props.nomination.movieOverview?.length > 150 && !expandText) && 
-                            <Button 
-                                id={`read-more-btn ${props.nomination.id}`}
-                                name="readMoreBtn"
-                                className="expand-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read More
-                            </Button> 
-                        }
+                            </div>
+                            
+                <CardMedia
+                    component="img"
+                    sx={{height: '300px', minHeight:'300px', width: '200px', cursor:"pointer"}}
+                    image={poster !== 'https://image.tmdb.org/t/p/w500null' ? poster : '/missingPoster.png'}
+                    title={props.nomination.movieTitle}
+                    onClick={handleNominationLikeToggle}  
+                />
 
-                        { expandText && 
-                            <Button 
-                                id={`read-less-btn ${props.nomination.id}`}
-                                name="readLessBtn"
-                                className="expand-btn" 
-                                onClick={expandHandler}
-                            >
-                            Read Less
-                            </Button> 
-                        }
-                    </div>
-
-                <CardActions className="card-actions-container">
-                    <div style={{display: 'flex', alignItems: 'center'}}>
-                        {/*TODO: Temp location of deletion, will likely move  */}
-                    {props.nomination.submittedBy === username && <Tooltip title="Delete Nomination">
-                                <Delete style={{cursor:'pointer'}} onClick={()=>{toggle();setModalName('deleteNomination');}} />
+            <CardActions sx={{justifyContent:'flex-end'}} >
+                    <div className='card-actions-container'>
+                    {props.nomination.submittedBy === username && 
+                            <Tooltip title={
+                                <>
+                                {<Typography>
+                                    Delete Nomination
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow>
+                                <IconButton 
+                                id={`delete-btn ${props.nomination.id}`}
+                                aria-label="DeleteNominationBtn"
+                                onClick={()=>{toggleModal('deleteNomination');}} 
+                                sx={{color:'#212427'}}>
+                                <Delete style={{cursor:'pointer'}}  />
+                                </IconButton>
                             </Tooltip>}
                         <Button 
                             id={`like-btn ${props.nomination.id}`}
@@ -168,19 +183,62 @@ export default function NominationCard(props: NominationCardsProps) {
                             { isFilledLikeIcon() ? <Favorite style={{color: '#f24d85'}}/> : <FavoriteBorder style={{color: '#f24d85'}} />}
                             <Tooltip title={
                                 <>
-                                    {props.nomination.nominationLikes.map(like => (<Typography key={like.username} color="inherit">{like.username}</Typography>))}
+                                    {props.nomination.nominationLikes.map(like => (<Typography key={like.username}>{like.username}</Typography>))}
                                 </>
                             } arrow>
                                 <span style={{font:'Raleway'}}>{ ` ${likeCount}  ${likeCount > 1 ? 'likes' : 'like'}`}</span>
                             </Tooltip>
                         </Button>
 
-                        <Tooltip title={props.nomination.submittedBy}>
-                        <Person style={{marginLeft: '10px'}}></Person>
-                        </Tooltip>
+
+                        {!desktopView ? (
+                            <ClickAwayListener onClickAway={() => {setOpen(false)}}>
+                                <Tooltip 
+
+                                onClose={handleTooltip}
+                                open={open}
+                                disableFocusListener
+                                disableHoverListener
+                                disableTouchListener
+                                title={
+                                    <>
+                                    {<Typography>
+                                        {props.nomination.submittedBy}
+                                    </Typography>
+                                    }
+                                    </>
+                                    } 
+                                arrow>
+                                    <span>
+                                    <IconButton onClick={handleTooltip}>
+                                    
+                                    <Person style={{marginLeft: '10px', color:'#212427'}}></Person>
+                                    </IconButton>
+                                        
+                                    </span>
+                                </Tooltip >
+                                </ClickAwayListener>
+                                ) : (
+                            <Tooltip 
+                            title={
+                                <>
+                                {<Typography>
+                                    {props.nomination.submittedBy}
+                                </Typography>
+                                }
+                                </>
+                                } 
+                            arrow>
+                                <span>
+                                <Person style={{marginLeft: '10px'}}></Person>                                    
+                                </span>
+                            </Tooltip >  
+                            )
+                    }
                     </div>
                 </CardActions>
                 </CardContent>
+   
             </Card>
         </Box>
         {/* Modals */}

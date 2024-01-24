@@ -43,6 +43,7 @@ export function HomePage() {
 
     useEffect(() => {
         getMovieNightSegment();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (segment.nominationStartDate) {
@@ -58,13 +59,13 @@ export function HomePage() {
                         {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
                         {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
                     </h2>
-                    <Grid container rowSpacing={4} columnSpacing={5} sx={{background: '#14181c', paddingBottom: '5rem', marginTop: '-18px'}}>
+                    <Grid container rowSpacing={4} columnSpacing={5} sx={{background: '#14181c', paddingBottom: '5rem', marginTop: '-18px', paddingLeft:'40px'}}>
                         {segment.nominations
                         .sort((a, b) => b.nominationLikes.length - a.nominationLikes.length)
                         .map((nom: INomination, i) => (
-                            <Grid item xs={12} md={6} lg={4} key={nom.id}>
-                                <div style={{color:'#fff', zIndex:1000, position: 'absolute', background:'#015f76', padding:'9px', borderRadius:'6px', fontWeight: 'bold'}}>{i + 1}</div>
-                                <NominationCard nomination={nom} segmentRefresh={getMovieNightSegment}/>
+                            <Grid item xs={10} md={6} lg={3} key={nom.id} >
+                                <div style={{color:'#fff', zIndex:1000, position: 'absolute', background:'#015f76', padding:'9px', borderRadius:'6px', fontWeight: 'bold', textAlign:'center', width:'19px'}}>{i + 1}</div>
+                                <NominationCard  nomination={nom} segmentRefresh={getMovieNightSegment}/>
                             </Grid>
                         ))}
                     </Grid>
