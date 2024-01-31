@@ -60,6 +60,39 @@ export function ProfilePage() {
         arrows: true,
       };
 
+      let arr = [
+        {skill: 'React',
+         imgpath: '/react.svg'
+        },
+        {skill: 'Angular',
+        imgpath: '/angular.svg'
+        },
+        {skill: 'Javascript',
+        imgpath: '/javascript.svg'
+        },
+        {skill: 'Typescript',
+        imgpath: '/typescript.svg'
+        },
+        {skill: 'Html',
+        imgpath: '/html.svg'
+        },
+        {skill: 'Css',
+        imgpath: '/css.svg'
+        },
+        {skill: 'Figma',
+        imgpath: '/figma.svg'
+        },
+        {skill: 'Mapbox',
+        imgpath: '/mapbox.svg'
+        },
+        {skill: 'Azure Devops',
+        imgpath: '/azure.svg'
+       },
+       {skill: 'RXJS',
+       imgpath: '/rxjs.svg'
+      },
+      ]
+
       const theme = useTheme();
       const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -165,6 +198,26 @@ export function ProfilePage() {
             </div>
 
             <hr/>
+
+            <div style={{borderRadius:'25px', background:'aliceblue', padding:'23px 103px 0 23px', width:'800px', height:'225px', margin:'250px 0 250px 50px'}}>
+
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column', width: '260px', height: '250px' }}>
+                {arr.map((item) => (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '10px', height: '60px', width: '135px', background: '#253551', color: 'white', borderRadius: '8px', margin: '10px' }} >
+                    <img alt='lea' src={item.imgpath} style={{ width: '30px', height: '30px', borderRadius: '4px' }} />
+                    <span style={{ fontSize: '18px', fontWeight: '700', textTransform: 'capitalize',marginLeft:"10px" }}>
+                        {item.skill}
+                    </span>
+                    </div>
+                ))}
+                </div>
+            </div>
+
+
+
+
+
 
             <h3>Nominations</h3>
             {/* Slider is actually a carousel */}
