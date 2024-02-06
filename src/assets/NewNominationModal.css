@@ -1,6 +1,7 @@
 .clear-btn, .search-btn {
     border-color: var(--primary-main);
     color: var(--primary-main);
+    width: 50%;
 }
 
 .clear-btn:hover, .search-btn:hover {
