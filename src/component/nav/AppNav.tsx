@@ -40,7 +40,7 @@ function AppNav() {
         {dropDownName: 'Sign Out', action: logoutUser}
     ];
 
-    const [selectedCommunityVal, setSelectedCommunityVal] = useState(selectedCommunity.id + '');
+    const [selectedCommunityVal, setSelectedCommunityVal] = useState(selectedCommunity.name);
 
     const handleCommunityChange = (event: SelectChangeEvent) => {
         setSelectedCommunityVal(event.target.value);
@@ -102,9 +102,11 @@ function AppNav() {
                                     >
                                         {
                                             communities.map(community => (
-                                                <MenuItem value={community.id}
-                                                          selected={community.id === selectedCommunity.id}>
-                                                    {community.name}
+                                                <MenuItem 
+                                                value={community.id}
+                                                key={community.id}
+                                                selected={community.id === selectedCommunity.id}>
+                                                {community.name}
                                                 </MenuItem>
                                             ))
                                         }

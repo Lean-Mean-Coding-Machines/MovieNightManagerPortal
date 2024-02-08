@@ -1,43 +1,44 @@
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 import ICommunitySummary from "../model/ICommunitySummary";
 
-const getUsername = function (): string {
+const getUsername = (): string => {
     return localStorage.getItem("username") === null ? "" : localStorage.getItem("username")!.toString();
 };
 
-const setUsername = function (name: string) {
+const setUsername = (name: string) => {
     localStorage.setItem("username", name);
 };
 
-const getUserId = function (): number {
-    return localStorage.getItem("userId") === null ? 0 : +localStorage.getItem("userId")!;
+const getUserId = (): number => {
+    return localStorage.getItem("userId") === null ? 0 : + localStorage.getItem("userId")!;
 };
 
-const setUserId = function (id: number) {
+const setUserId = (id: number) => {
     localStorage.setItem("userId", id.toString());
 };
 
-const getSelectedCommunity = function (): ICommunitySummary {
+const getSelectedCommunity = (): ICommunitySummary => {
     return localStorage.getItem("community") === null ? {} as ICommunitySummary : JSON.parse(localStorage.getItem("community")!);
 };
 
-const setSelectedCommunity = function (community: ICommunitySummary) {
+const setSelectedCommunity = (community: ICommunitySummary) => {
     localStorage.setItem("community", JSON.stringify(community));
 };
 
-const getEnrolledCommunities = function (): ICommunitySummary[] {
+const getEnrolledCommunities = (): ICommunitySummary[] => {
     return localStorage.getItem("communities") === null ? [] : JSON.parse(localStorage.getItem("communities")!);
 };
 
-const setEnrolledCommunities = function (communities: ICommunitySummary[]) {
+const setEnrolledCommunities = (communities: ICommunitySummary[]) => {
     localStorage.setItem("communities", JSON.stringify(communities));
 };
 
-const setUserData = function (res: IUserAuthResponse) {
+const setUserData = (res: IUserAuthResponse) => {
     setUsername(res.username);
     setUserId(res.userId);
     setEnrolledCommunities(res.communities);
     setSelectedCommunity(res.communities.length ? res.communities[0] : {id: 0, name: ''});
+
 };
 
 const clearUserData = () => {
@@ -45,13 +46,14 @@ const clearUserData = () => {
     setUserId(0);
     setEnrolledCommunities([]);
     setSelectedCommunity({id: 0, name: ''});
+
 }
 
-const setAuthToken = function (res: IUserAuthResponse) {
+const setAuthToken = (res: IUserAuthResponse) => {
     localStorage.setItem("authToken", res.token);
 };
 
-const getAuthToken = function () {
+const getAuthToken = () => {
     return localStorage.getItem("authToken") === null ? "" : localStorage.getItem("authToken")!.toString();
 };
 
