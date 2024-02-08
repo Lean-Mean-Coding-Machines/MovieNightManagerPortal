@@ -65,7 +65,7 @@ export function HomePage() {
                         .map((nom: INomination, i) => (
                             <Grid item xs={10} md={6} lg={3} key={nom.id} >
                                 <div style={{color:'#fff', zIndex:1000, position: 'absolute', background:'#015f76', padding:'9px', borderRadius:'6px', fontWeight: 'bold', textAlign:'center', width:'19px'}}>{i + 1}</div>
-                                <NominationCard  nomination={nom} segmentRefresh={getMovieNightSegment}/>
+                                <NominationCard segmentId={segment.id} nomination={nom} segmentRefresh={getMovieNightSegment}/>
                             </Grid>
                         ))}
                     </Grid>
