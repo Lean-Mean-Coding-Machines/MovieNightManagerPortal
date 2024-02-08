@@ -29,11 +29,11 @@ export function HomePage() {
     const api = useAxios();
 
     const getMovieNightSegment = () => {
-        api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
+        api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current/" + userContext.selectedCommunity.id)
             .then(
                 (res) => {
-                    if (res.data.status.success && res.data.data != null) {
-                        setSegment(res.data.data);
+                    if (res.data.status.success) {
+                        setSegment(res.data.data ? res.data.data : {} as IMovieNightSegment);
                     }
                     handleAppLoadingChange(false);
                 },
@@ -44,7 +44,7 @@ export function HomePage() {
     useEffect(() => {
         getMovieNightSegment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userContext.selectedCommunity]);
 
     if (segment.nominationStartDate) {
         return (

@@ -85,7 +85,7 @@
         }
 
         const api = useAxios();
-        const {userId} = useContext(UserContext);
+        const {userId, selectedCommunity} = useContext(UserContext);
         const currentDate = new Date();
 
         const defaultNominationRequest: INominationRequest = ({
@@ -97,7 +97,7 @@
             releaseDate: '',
             runtime: 0,
             genres: [],
-            userId: userId,
+            userId: userId
         });
 
         let startDay = dayjs(props.segment.nominationLockDate);
@@ -283,7 +283,7 @@
                                 fontSize: {xs: 25, sm: 25, md: 30, lg: 35, xl: 40},
                                 fontFamily: 'SoraBold'
                             }}>
-                            Nominate a Movie
+                            {'Nominate a Movie for ' + selectedCommunity.name}
                         </Box>
                     </Box>
 

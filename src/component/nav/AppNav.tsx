@@ -12,9 +12,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {UserContext} from "../../context/UserContext";
 import {Link} from 'react-router-dom';
+import Select, {SelectChangeEvent} from "@mui/material/Select";
 
 interface menuSettingAction {
     dropDownName: string,
@@ -23,7 +24,7 @@ interface menuSettingAction {
 
 function AppNav() {
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-    const {username, logoutUser} = useContext(UserContext);
+    const {username, logoutUser, communities, selectedCommunity, setSelectedCommunity} = useContext(UserContext);
 
     const navigate = useNavigate();
     const navigateToProfile = () => {
@@ -39,6 +40,14 @@ function AppNav() {
         {dropDownName: 'Sign Out', action: logoutUser}
     ];
 
+    const [selectedCommunityVal, setSelectedCommunityVal] = useState(selectedCommunity.id + '');
+
+    const handleCommunityChange = (event: SelectChangeEvent) => {
+        setSelectedCommunityVal(event.target.value);
+        communities.findIndex(community => community.id === Number(event.target.value))
+        setSelectedCommunity(communities[communities.findIndex(community => community.id === Number(event.target.value))]);
+    }
+
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
@@ -48,9 +57,9 @@ function AppNav() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#015f76' }}>
-            <Container sx={{"&.MuiContainer-root": { maxWidth: '100%' }}}>
-                <Toolbar disableGutters sx={{display: 'flex'}}>
+        <AppBar position="static" sx={{backgroundColor: '#015f76'}}>
+            <Container sx={{"&.MuiContainer-root": {maxWidth: '100%'}}}>
+                <Toolbar disableGutters sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Typography
                         variant="h6"
                         component={Link}
@@ -68,90 +77,110 @@ function AppNav() {
                             textDecoration: 'none',
                         }}
                     >
-                    {/* Mobile */}
+                        {/* Mobile */}
                         <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
-                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
+                            <AdbIcon sx={{mr: 3, ':hover': {color: '#f1f1f1'}}}/>
                             MNM
                         </Box>
-                    {/* Desktop */}
+                        {/* Desktop */}
                         <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
-                        <AdbIcon sx={{mr: 3, ':hover': { color: '#f1f1f1' }}}/>
+                            <AdbIcon sx={{mr: 3, ':hover': {color: '#f1f1f1'}}}/>
                             Movie Night Manager
                         </Box>
                     </Typography>
-                        { !window.location.pathname.includes('/login') && (
-                         username !== ""  ?
-                         <Box sx={{flexGrow: 1}}>
-                             <Tooltip title={
-                                <>
-                                {<Typography>
-                                    Manage Profile
-                                </Typography>
+                    {!window.location.pathname.includes('/login') && (
+                        username !== "" ?
+                            <Box sx={{flexGrow: 0}}>
+                                {communities &&
+                                    <Select
+                                        labelId="selected-community-dropdown-label"
+                                        id="selected-community-dropdown"
+                                        value={selectedCommunityVal}
+                                        label="Selected Community"
+                                        onChange={handleCommunityChange}
+                                        sx={{mr: 1}}
+                                    >
+                                        {
+                                            communities.map(community => (
+                                                <MenuItem value={community.id}
+                                                          selected={community.id === selectedCommunity.id}>
+                                                    {community.name}
+                                                </MenuItem>
+                                            ))
+                                        }
+                                    </Select>
                                 }
-                                </>
-                                } 
-                            enterDelay={900}
-                            >
-                                 <IconButton onClick={handleOpenUserMenu} sx={{p: 0, float: 'right'}}>
-                                     <Avatar 
-                                         id='profile-btn'
-                                         aria-label="ProfileBtn"
-                                         alt={username} 
-                                         sx={{color:'#015f76', 
-                                         background: '#fff',
-                                         ':hover': {
-                                             background: '#f1f1f1',
-                                         }
-                                         }}/>
-                                 </IconButton>
-                             </Tooltip>
-                             <Menu
-                                 sx={{mt: '45px'}}
-                                 id="menu-appbar"
-                                 anchorEl={anchorElUser}
-                                 anchorOrigin={{
-                                     vertical: 'top',
-                                     horizontal: 'right',
-                                 }}
-                                 keepMounted
-                                 transformOrigin={{
-                                     vertical: 'top',
-                                     horizontal: 'right',
-                                 }}
-                                 open={Boolean(anchorElUser)}
-                                 onClose={handleCloseUserMenu}
-                                 onClick={handleCloseUserMenu}
-                             >
-                                 {settings.map((setting) => (
-                                    !(setting.dropDownName === 'Profile' && window.location.pathname.includes('/profile')) && (
-                                        <MenuItem key={setting.dropDownName} onClick={setting.action}>
-                                        <Typography textAlign="center">{setting.dropDownName}</Typography>
-                                    </MenuItem>
-                                    )
+                                <Tooltip title={
+                                    <>
+                                        {<Typography>
+                                            Manage Profile
+                                        </Typography>
+                                        }
+                                    </>
+                                }
+                                         enterDelay={900}
+                                >
+                                    <IconButton onClick={handleOpenUserMenu}>
+                                        <Avatar
+                                            id='profile-btn'
+                                            aria-label="ProfileBtn"
+                                            alt={username}
+                                            sx={{
+                                                color: '#015f76',
+                                                background: '#fff',
+                                                ':hover': {
+                                                    background: '#f1f1f1',
+                                                }
+                                            }}/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Menu
+                                    sx={{mt: '45px'}}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    {settings.map((setting) => (
+                                        !(setting.dropDownName === 'Profile' && window.location.pathname.includes('/profile')) && (
+                                            <MenuItem key={setting.dropDownName} onClick={setting.action}>
+                                                <Typography textAlign="center">{setting.dropDownName}</Typography>
+                                            </MenuItem>
+                                        )
 
-                                 ))}
-                             </Menu>
-                         </Box> :
-                         <Box sx={{flexGrow: 1}}>
-                             <Box sx={{float: 'right'}}>
-                                 <Button 
-                                     id='sign-in-btn'
-                                     name='signInBtn'
-                                     variant="outlined" 
-                                     sx={{
-                                         color: '#fff',
-                                         borderColor: '#fff',
-                                         ':hover': {
-                                             color: '#f1f1f1',
-                                             borderColor: '#f1f1f1'
-                                         }
-                                     }} 
-                                     onClick={navigateToLogin}>
-                                     Sign In
-                                 </Button>
-                             </Box>
-                         </Box>   
-                        )}
+                                    ))}
+                                </Menu>
+                            </Box> :
+                            <Box sx={{flexGrow: 1}}>
+                                <Box sx={{float: 'right'}}>
+                                    <Button
+                                        id='sign-in-btn'
+                                        name='signInBtn'
+                                        variant="outlined"
+                                        sx={{
+                                            color: '#fff',
+                                            borderColor: '#fff',
+                                            ':hover': {
+                                                color: '#f1f1f1',
+                                                borderColor: '#f1f1f1'
+                                            }
+                                        }}
+                                        onClick={navigateToLogin}>
+                                        Sign In
+                                    </Button>
+                                </Box>
+                            </Box>
+                    )}
                 </Toolbar>
             </Container>
         </AppBar>
