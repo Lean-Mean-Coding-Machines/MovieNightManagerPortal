@@ -64,7 +64,6 @@
             zIndex: 1000,
             maxHeight: 300,
             overflowY: 'scroll',
-            maxWidth: 360,
             bgcolor: 'background.paper',
             borderStyle: 'solid',
             borderColor: '#eaeaea',
@@ -72,13 +71,13 @@
             top: '8rem',
             // Desktop
             [desktopView]: {
-                width: '100%',
+                width: '87%',
                 bottom: '-4.75rem',
                 top: '11.25rem',
             },
             // Mobile 
             [mobileView]: {
-                width: '87%',
+                width: '82%',
                 bottom: '-4.25rem',
                 top: '10rem',
             },
@@ -295,7 +294,7 @@
                                 flexDirection: 'column',
                                 alignItems:'center',
                                 rowGap: '32px',
-                                mt: 2
+                                mt: 2,
                             }}
                             noValidate
                             autoComplete='on'
@@ -307,7 +306,7 @@
                                     name='titleSearch' 
                                     id='nomination-name-input'
                                     required 
-                                    sx={{width: {xs: '100%', lg: '50%'}, marginTop:'32px'}}
+                                    sx={{width: '100%', marginTop:'32px'}}
                                     value={searchTitle}
                                     onChange={(event: any) => setSearchTitle(event.target.value)}
                                     InputProps={{endAdornment: (
@@ -331,7 +330,7 @@
                                     }}
                                 />
                                 
-                            <Box>
+                            <Box sx={{display:'flex', alignItems:'center', justifyContent: 'center', flexWrap:'nowrap', width:'100%'}}>
                                 <Button
                                     sx={{mr: 2}}
                                     id='search-button'
