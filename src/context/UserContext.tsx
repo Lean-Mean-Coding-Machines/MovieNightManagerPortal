@@ -14,6 +14,8 @@ interface UserContextInterface {
     communities: ICommunitySummary[],
     selectedCommunity: ICommunitySummary,
     authToken: string,
+    setCommunityData: (communities: ICommunitySummary[]) => void,
+    setCommunities: (communities: ICommunitySummary[]) => void,
     setSelectedCommunity: (community: ICommunitySummary) => void,
     setUserAuthData: (data: IUserAuthResponse) => void,
     loginUser: (userRequest: IUserAuthRequest) => void,
@@ -30,6 +32,8 @@ const defaultState: UserContextInterface = {
     communities: [],
     selectedCommunity: {id: 0, name: ''} as ICommunitySummary,
     authToken: '',
+    setCommunityData: (communities: ICommunitySummary[]) => {},
+    setCommunities: (communities: ICommunitySummary[]) => {},
     setSelectedCommunity: (community: ICommunitySummary) => {},
     setUserAuthData: (data: IUserAuthResponse) => {},
     loginUser: (userRequest: IUserAuthRequest) => {},
@@ -53,6 +57,10 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setAuthToken(data.token);
         setUserId(data.userId);
         setUsername(data.username);
+    }
+
+    const setCommunityData = (communities: ICommunitySummary[]) => {
+        UserStorageService.setCommunityData(communities);
     }
 
     const loginUser = (userRequest: IUserAuthRequest) => {
@@ -122,6 +130,8 @@ export const UserProvider = ({children}: UserProviderProps) => {
         userId: userId,
         username: username,
         communities: communities,
+        setCommunityData: setCommunityData,
+        setCommunities: setCommunities,
         selectedCommunity: selectedCommunity,
         setSelectedCommunity: setSelectedCommunity,
         authToken: authToken,

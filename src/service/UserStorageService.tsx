@@ -36,17 +36,18 @@ const setEnrolledCommunities = (communities: ICommunitySummary[]) => {
 const setUserData = (res: IUserAuthResponse) => {
     setUsername(res.username);
     setUserId(res.userId);
-    setEnrolledCommunities(res.communities);
-    setSelectedCommunity(res.communities.length ? res.communities[0] : {id: 0, name: ''});
-
 };
+
+const setCommunityData = (res: ICommunitySummary[]) => {
+    setEnrolledCommunities(res);
+    setSelectedCommunity(res.length ? res[0] : {id: 0, name: ''});
+}
 
 const clearUserData = () => {
     setUsername("");
     setUserId(0);
     setEnrolledCommunities([]);
     setSelectedCommunity({id: 0, name: ''});
-
 }
 
 const setAuthToken = (res: IUserAuthResponse) => {
@@ -64,6 +65,7 @@ const UserStorageService = {
     setUsername,
     getUserId,
     setUserId,
+    setCommunityData,
     getSelectedCommunity,
     setSelectedCommunity,
     getEnrolledCommunities,
