@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 interface ModalType {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export default function ResetModal(props: ModalType) {
 
   const [emailFormData, setFormData] = useState({email: ''});
   
-  const handleChange = (e:any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...emailFormData,
@@ -32,7 +32,7 @@ export default function ResetModal(props: ModalType) {
   };
   
   // Need to Expand upon this when Email Submission Post is created
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     props.toggle();
   };

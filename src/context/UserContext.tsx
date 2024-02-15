@@ -41,6 +41,7 @@ const defaultState: UserContextInterface = {
 }
 
 export const UserProvider = ({children}: UserProviderProps) => {
+    
     const [authToken, setAuthToken] = useState(UserStorageService.getAuthToken);
     const [userId, setUserId] = useState(UserStorageService.getUserId);
     const [username, setUsername] = useState(UserStorageService.getUsername);
