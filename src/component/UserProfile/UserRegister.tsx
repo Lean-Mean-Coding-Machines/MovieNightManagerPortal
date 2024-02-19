@@ -155,7 +155,7 @@ export function UserRegister(props: userRegisterProps) {
         const requirements = [
           { condition: username === "", message: "Username is required" },
           { condition: username.length > 50, message: "Username cannot be longer than 50 characters" },
-          { condition: !/\s/.test(username), message: "Username cannot contain spaces"}
+          { condition: username.includes(" "), message: "Username cannot contain spaces"}
         ];
         for (const requirement of requirements) {
           if (requirement.condition) {

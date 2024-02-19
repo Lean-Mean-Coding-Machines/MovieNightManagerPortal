@@ -14,7 +14,7 @@ function Footer() {
 
       </div>
       <div className="footer-copyright">
-        &copy; 2023 Movie Night Manager
+        &copy; 2024 Movie Night Manager
       </div>
     </footer>
   );
