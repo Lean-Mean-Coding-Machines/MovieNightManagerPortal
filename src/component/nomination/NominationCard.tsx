@@ -31,8 +31,7 @@ export default function NominationCard(props: NominationCardsProps) {
     const [nominationLiked, setNominationLiked] = useState(props.nomination.nominationLikes.map((like) => like.userId).indexOf(userId) !== -1);
     const [nominationLikeHover, setNominationLikeHover] = useState(false);
     const [likeRequestLoading, setLikeRequestLoading] = useState(false);
-    const {isOpen, toggle} = useModal();
-    const [modalName, setModalName] = useState('');
+    const {isOpen, toggle, modalName} = useModal();
     const [open, setOpen] = useState(false);
 
     const theme = useTheme();
@@ -87,8 +86,7 @@ export default function NominationCard(props: NominationCardsProps) {
     };
 
     const toggleModal = (modalName: string) => {
-        toggle();
-        setModalName(modalName);
+        toggle(modalName);
     }
 
     const handleTooltip = () => {
