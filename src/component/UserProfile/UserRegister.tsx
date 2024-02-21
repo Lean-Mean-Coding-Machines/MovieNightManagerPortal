@@ -17,7 +17,6 @@ interface formValidationReset {
 }
 
 interface userRegisterProps {
-    handleHomeNav: () => void,
     handleLoginNav: () => void
 }
 
@@ -65,8 +64,7 @@ export function UserRegister(props: userRegisterProps) {
                             username: formValues.username,
                             password: formValues.password
                         };
-                        loginUser(authRequest)
-                        props.handleHomeNav();
+                        loginUser(authRequest);
                     } else {
                         setSubmitErrorTxt(res.data.status.message);
                     }

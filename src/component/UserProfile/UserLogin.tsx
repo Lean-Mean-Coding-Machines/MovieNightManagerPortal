@@ -16,9 +16,7 @@ import IUserAuthRequest from "../../model/user/IUserAuthRequest";
 import {UserContext} from "../../context/UserContext";
 
 interface userRegisterProps {
-    handleHomeNav: () => void,
     handleLoginNav: () => void,
-    handleProfileNav: () => void
 }
 
 export function UserLogin(props: userRegisterProps) {
