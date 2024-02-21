@@ -14,9 +14,7 @@ export function LoginPage() {
     return (
         <>
             {
-                loginPageActive ?
-                    <UserLogin handleLoginNav={loginHandler}  /> :
-                    <UserRegister handleLoginNav={loginHandler}/>
+                loginPageActive ? <UserLogin handleLoginNav={loginHandler}/> : <UserRegister handleLoginNav={loginHandler}/>
             }
         </>
     );
