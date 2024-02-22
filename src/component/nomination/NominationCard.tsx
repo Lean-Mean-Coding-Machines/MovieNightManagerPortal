@@ -15,6 +15,7 @@ import MovieDetailsModal from "../../modals/MovieDetailsModal";
 import DeleteNominationModal from "../../modals/DeleteNominationModal";
 
 interface NominationCardsProps {
+    segmentId: number,
     nomination: INomination,
     segmentRefresh: () => void,
 }
@@ -70,7 +71,7 @@ export default function NominationCard(props: NominationCardsProps) {
     };
 
     const deleteNomination = () => {
-        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}`)
+        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}&segmentId=${props.segmentId}`)
         .then(() => {
                 props.segmentRefresh();
                 toast.success(` '${props.nomination.movieTitle}' successfully deleted`);

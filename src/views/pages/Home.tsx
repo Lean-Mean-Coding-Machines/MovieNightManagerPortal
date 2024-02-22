@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
 import { UserContext } from '../../context/UserContext';
+import ICommunitySummary from "../../model/ICommunitySummary";
 
 export function HomePage() {
 
@@ -27,24 +28,45 @@ export function HomePage() {
     const userContext = useContext(UserContext);
 
     const api = useAxios();
+    
+    const initHomeData = () => {
+        if (userContext.userId) {
+            api.get<IMnmApiResponse<ICommunitySummary[]>>("/community/summary/user/" + userContext.userId)
+                .then(
+                    (res) => {
+                        if (res.data.status.success) {
+                            userContext.setCommunityData(res.data.data!);
+                        }
+                    },
+                    (err) => console.log(err))
+                .catch((err) => console.log(err.message));
+        }
+    }
 
     const getMovieNightSegment = () => {
-        api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current")
-            .then(
-                (res) => {
-                    if (res.data.status.success && res.data.data != null) {
-                        setSegment(res.data.data);
-                    }
-                    handleAppLoadingChange(false);
-                },
-                (err) => console.log(err))
-            .catch((err) => console.log(err.message));
+        if (userContext.selectedCommunity) {
+            api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current/" + userContext.selectedCommunity.id)
+                .then(
+                    (res) => {
+                        if (res.data.status.success) {
+                            setSegment(res.data.data ? res.data.data : {} as IMovieNightSegment);
+                        }
+                        handleAppLoadingChange(false);
+                    },
+                    (err) => console.log(err))
+                .catch((err) => console.log(err.message));
+        }
     }
 
     useEffect(() => {
-        getMovieNightSegment();
+        initHomeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userContext.userId]);
+
+    useEffect(() => {
+        getMovieNightSegment();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userContext.selectedCommunity]);
 
     if (segment.nominationStartDate) {
         return (
@@ -65,7 +87,7 @@ export function HomePage() {
                         .map((nom: INomination, i) => (
                             <Grid item xs={10} md={6} lg={3} key={nom.id} >
                                 <div style={{color:'#fff', zIndex:1000, position: 'absolute', background:'#015f76', padding:'9px', borderRadius:'6px', fontWeight: 'bold', textAlign:'center', width:'19px'}}>{i + 1}</div>
-                                <NominationCard  nomination={nom} segmentRefresh={getMovieNightSegment}/>
+                                <NominationCard segmentId={segment.id} nomination={nom} segmentRefresh={getMovieNightSegment}/>
                             </Grid>
                         ))}
                     </Grid>

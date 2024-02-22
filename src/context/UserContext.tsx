@@ -6,11 +6,17 @@ import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 import { toast } from "react-toastify";
+import ICommunitySummary from "../model/ICommunitySummary";
 
 interface UserContextInterface {
     userId: number,
     username: string,
+    communities: ICommunitySummary[],
+    selectedCommunity: ICommunitySummary,
     authToken: string,
+    setCommunityData: (communities: ICommunitySummary[]) => void,
+    setCommunities: (communities: ICommunitySummary[]) => void,
+    setSelectedCommunity: (community: ICommunitySummary) => void,
     setUserAuthData: (data: IUserAuthResponse) => void,
     loginUser: (userRequest: IUserAuthRequest) => void,
     logoutUser: () => void
@@ -23,7 +29,12 @@ interface UserProviderProps {
 const defaultState: UserContextInterface = {
     userId: 0,
     username: '',
+    communities: [],
+    selectedCommunity: {id: 0, name: ''} as ICommunitySummary,
     authToken: '',
+    setCommunityData: (communities: ICommunitySummary[]) => {},
+    setCommunities: (communities: ICommunitySummary[]) => {},
+    setSelectedCommunity: (community: ICommunitySummary) => {},
     setUserAuthData: (data: IUserAuthResponse) => {},
     loginUser: (userRequest: IUserAuthRequest) => {},
     logoutUser: () => {}
@@ -33,6 +44,8 @@ export const UserProvider = ({children}: UserProviderProps) => {
     const [authToken, setAuthToken] = useState(UserStorageService.getAuthToken);
     const [userId, setUserId] = useState(UserStorageService.getUserId);
     const [username, setUsername] = useState(UserStorageService.getUsername);
+    const [communities, setCommunities] = useState(UserStorageService.getEnrolledCommunities);
+    const [selectedCommunity, setSelectedCommunity] = useState(UserStorageService.getSelectedCommunity)
     const [loading, setLoading] = useState(true);
     const api = useAxios();
 
@@ -46,13 +59,16 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setUsername(data.username);
     }
 
+    const setCommunityData = (communities: ICommunitySummary[]) => {
+        UserStorageService.setCommunityData(communities);
+    }
+
     const loginUser = (userRequest: IUserAuthRequest) => {
         api.post<IMnmApiResponse<IUserAuthResponse>>("/user/authenticate", userRequest)
             .then(
                 (res) => {
                     if (res.data.status.success && res.data.data != null) {
                         setUserAuthData(res.data.data);
-
                         navigate('/');
                     } else {
                         console.log('Could not authenticate user');
@@ -110,10 +126,14 @@ export const UserProvider = ({children}: UserProviderProps) => {
     //     }
     // }
 
-
     let contextData: UserContextInterface = {
         userId: userId,
         username: username,
+        communities: communities,
+        setCommunityData: setCommunityData,
+        setCommunities: setCommunities,
+        selectedCommunity: selectedCommunity,
+        setSelectedCommunity: setSelectedCommunity,
         authToken: authToken,
         setUserAuthData: setUserAuthData,
         loginUser: loginUser,
