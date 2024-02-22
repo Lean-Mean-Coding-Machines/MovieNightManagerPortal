@@ -15,12 +15,12 @@
         InputAdornment
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
-    import React, {useContext, useEffect, useRef, useState} from 'react';
+    import React, {ChangeEvent, useContext, useEffect, useRef, useState} from 'react';
     import '../assets/NewNominationModal.css';
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
-    import IMovieNightSegment from '../model/IMovieNightSegment';
+    import IWatchParty from '../model/IWatchParty';
     import useAxios from '../hooks/useAxios';
     import {UserContext} from '../context/UserContext';
     import IMnmApiResponse from '../model/IMnmApiResponse';
@@ -34,8 +34,9 @@
     interface NewNominationProps {
         isOpen: boolean,
         toggle: () => void,
-        segment: IMovieNightSegment,
-        segmentRefresh: () => void
+        modalName?: string,
+        watchParty: IWatchParty,
+        watchPartyRefresh: () => void
     }
 
     const modalStyle = {
@@ -73,13 +74,13 @@
             [desktopView]: {
                 width: '87%',
                 bottom: '-4.75rem',
-                top: '11.25rem',
+                top: '14.4rem',
             },
             // Mobile 
             [mobileView]: {
                 width: '82%',
                 bottom: '-4.25rem',
-                top: '10rem',
+                top: '12rem',
             },
         }
 
@@ -88,7 +89,7 @@
         const currentDate = new Date();
 
         const defaultNominationRequest: INominationRequest = ({
-            segmentId: props.segment.id,
+            watchPartyId: props.watchParty.id,
             movieId: 0,
             movieTitle: '',
             posterPath: '',
@@ -99,17 +100,18 @@
             userId: userId
         });
 
-        let startDay = dayjs(props.segment.nominationLockDate);
+        let startDay = dayjs(props.watchParty.nominationLockDate);
 
+        // TODO: Remove WatchDate from form submission 
         useEffect(() => {
             setNominationRequest((p) => (
                 {
                     ...p,
-                    segmentId: props.segment.id,
+                    watchPartyId: props.watchParty.id,
                     userId: userId,
                     watchDate: startDay.format('YYYY-MM-DDT00:00:00.000')
                 }));
-        }, [props.segment.id, userId]);
+        }, [props.watchParty.id, userId]);
 
         const [nominationRequest, setNominationRequest] = useState(defaultNominationRequest);
 
@@ -128,7 +130,7 @@
                 return;
             }
 
-            if (props.segment.nominations.findIndex(isNominationMatch) !== -1) {
+            if (props.watchParty.nominations.findIndex(isNominationMatch) !== -1) {
                 toast.error(`'${nominationRequest.movieTitle}' Already Nominated`);
                 return;
             }
@@ -149,7 +151,7 @@
                         resetNominationState();
                         // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
                         toast.success(`Nomination Created for '${nominationRequest.movieTitle}'`);
-                        props.segmentRefresh();
+                        props.watchPartyRefresh();
                     } else {
                         toast.error('Could not create nomination');
                     }
@@ -261,6 +263,7 @@
             return releaseDate <= currentDate;
         });
 
+        if (props.modalName === 'newNomination') {
         return (
             <Modal
                 open={props.isOpen}
@@ -308,7 +311,7 @@
                                     required 
                                     sx={{width: '100%', marginTop:'32px'}}
                                     value={searchTitle}
-                                    onChange={(event: any) => setSearchTitle(event.target.value)}
+                                    onChange={(event:  ChangeEvent<HTMLInputElement>) => setSearchTitle(event.target.value)}
                                     InputProps={{endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton 
@@ -451,6 +454,7 @@
                                 type='submit'
                                 variant='contained'
                                 className='submit-btn'
+                                disabled={selectedMovie === null}
                             >
                                 Submit
                             </Button>
@@ -459,4 +463,8 @@
                 </Box>
             </Modal>
         );
+    } else {
+        return <>
+        </>
     }
+}

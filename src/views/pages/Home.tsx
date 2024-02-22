@@ -1,17 +1,22 @@
-import {Backdrop, Box, CircularProgress, Fab, Grid, Tooltip, useTheme} from '@mui/material';
+import {Backdrop, Box, Button, CircularProgress, Fab, Grid, Tooltip, useTheme} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
-import IMovieNightSegment from '../../model/IMovieNightSegment';
-import useAxios from "../../hooks/useAxios";
-import IMnmApiResponse from "../../model/IMnmApiResponse";
 import AddIcon from '@mui/icons-material/Add';
 import INomination from "../../model/nomination/INomination";
 import NominationCard from "../../component/nomination/NominationCard";
 import { UserContext } from '../../context/UserContext';
-import ICommunitySummary from "../../model/ICommunitySummary";
+import NewWatchPartyModal from '../../modals/NewWatchPartyModal';
+import NewCommunityModal from '../../modals/NewCommunityModal';
+import '../../assets/HomePage.css';
+import useAxios from '../../hooks/useAxios';
+import IWatchParty from '../../model/IWatchParty';
+import IMnmApiResponse from '../../model/IMnmApiResponse';
+import ICommunitySummary from '../../model/ICommunitySummary';
 
 export function HomePage() {
+
+    const api = useAxios();
 
     const theme = useTheme();
 
@@ -21,80 +26,96 @@ export function HomePage() {
         setAppLoading(newState)
     };
 
-    const {isOpen, toggle} = useModal();
-
-    const [segment, setSegment] = useState<IMovieNightSegment>({} as IMovieNightSegment);
+    const {isOpen, toggle, modalName} = useModal();
 
     const userContext = useContext(UserContext);
-
-    const api = useAxios();
     
-    const initHomeData = () => {
-        if (userContext.userId) {
-            api.get<IMnmApiResponse<ICommunitySummary[]>>("/community/summary/user/" + userContext.userId)
-                .then(
-                    (res) => {
-                        if (res.data.status.success) {
-                            userContext.setCommunityData(res.data.data!);
-                        }
-                    },
-                    (err) => console.log(err))
-                .catch((err) => console.log(err.message));
-        }
+    const [watchParty, setWatchParty] = useState<IWatchParty>({} as IWatchParty);
+  
+    const getWatchParty = (selectedCommunity: number) => {  
+          api.get<IMnmApiResponse<IWatchParty>>("/segment/current/" + selectedCommunity)
+              .then(
+                  (res) => {
+                      if (res.data.status.success) {
+                          setWatchParty(res.data.data ? res.data.data : {} as IWatchParty);
+                      }
+                  },
+                  (err) => console.log(err))
+              .catch((err) => console.log(err.message));
     }
 
-    const getMovieNightSegment = () => {
-        if (userContext.selectedCommunity) {
-            api.get<IMnmApiResponse<IMovieNightSegment>>("/segment/current/" + userContext.selectedCommunity.id)
-                .then(
-                    (res) => {
-                        if (res.data.status.success) {
-                            setSegment(res.data.data ? res.data.data : {} as IMovieNightSegment);
-                        }
-                        handleAppLoadingChange(false);
-                    },
-                    (err) => console.log(err))
-                .catch((err) => console.log(err.message));
-        }
+    const getCommunity = () => {
+        api.get<IMnmApiResponse<ICommunitySummary[]>>("/community/summary/user/" + userContext.userId)
+            .then(
+                (res) => {
+                    if (res.data.data) {
+                    const community = res.data.data;
+                        userContext.setCommunityData(community);
+                        userContext.setCommunities(community)
+                    }
+                },
+                (err) => console.log(err))
+            .catch((err) => console.log(err.message));
     }
 
     useEffect(() => {
-        initHomeData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userContext.userId]);
+        if (userContext.userId > 0) {
+            getCommunity();
+            getWatchParty(userContext.selectedCommunity.id);
+        }
+        handleAppLoadingChange(false);
+    }, []);
 
     useEffect(() => {
-        getMovieNightSegment();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userContext.selectedCommunity]);
+        getWatchParty(userContext.selectedCommunity.id);
 
-    if (segment.nominationStartDate) {
+    }, [userContext.selectedCommunity.id]);
+
+    if (watchParty.chosenWatchDate) {
+
+        const chosenWatchDate = new Date(watchParty.chosenWatchDate).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).replace(/\//g, '-');
+
         return (
             <>
                 <Backdrop sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}} open={appLoading}>
                     <CircularProgress color='inherit'/>
                 </Backdrop>
-
-                <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                    <h2 style={{textAlign: 'center', color: '#fff'}}>
-                        <div> Watch Party Nominations</div>
-                        {segment.nominationStartDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)} -{' '}
-                        {segment.segmentEndDate.toString().split('T').shift()?.replaceAll('-', '/').slice(5) + '/' + segment.segmentEndDate.toString().slice(0, 4)}
+                <Box sx={{display: 'flex', flexDirection: 'column',}}
+                  >
+                    <h2 className='center-text'>
+                        <div> {`Watch Party Nominations for ${chosenWatchDate}`}</div>
                     </h2>
-                    <Grid container rowSpacing={4} columnSpacing={5} sx={{background: '#14181c', paddingBottom: '5rem', marginTop: '-18px', paddingLeft:'40px'}}>
-                        {segment.nominations
+                    <Grid container rowSpacing={4} columnSpacing={5} 
+                    sx={{
+                        display:'flex',
+                        background: '#14181c', 
+                        paddingBottom: '5rem', 
+                        marginTop: '-18px', 
+                        paddingLeft:'40px',
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        [theme.breakpoints.up('md')]: {
+                            flexDirection: 'row',
+                            },
+                        [theme.breakpoints.down('sm')]: {
+                            flexDirection: 'column',
+                            flexWrap: 'nowrap'
+                          },
+ 
+                        }}>
+                        {watchParty.nominations
                         .sort((a, b) => b.nominationLikes.length - a.nominationLikes.length)
                         .map((nom: INomination, i) => (
                             <Grid item xs={10} md={6} lg={3} key={nom.id} >
-                                <div style={{color:'#fff', zIndex:1000, position: 'absolute', background:'#015f76', padding:'9px', borderRadius:'6px', fontWeight: 'bold', textAlign:'center', width:'19px'}}>{i + 1}</div>
-                                <NominationCard segmentId={segment.id} nomination={nom} segmentRefresh={getMovieNightSegment}/>
+                                <div className='card-ranking'>{i + 1}</div>
+                                <NominationCard watchPartyId={watchParty.id} nomination={nom} watchPartyRefresh={()=> getWatchParty(userContext.selectedCommunity.id)}/>
                             </Grid>
                         ))}
                     </Grid>
                 </Box>
                 {/* Hides Nominate btn if user isn't logged in */}
                 {userContext.username && <Tooltip title="Nominate a Movie">
-                    <Fab onClick={toggle} sx={{
+                    <Fab onClick={()=>{toggle('newNomination');}} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         color: '#fff',
                         backgroundColor: theme.palette.primary.main,
@@ -118,11 +139,39 @@ export function HomePage() {
                     </Fab>
                 </Tooltip>}
 
-                <NewNominationModal isOpen={isOpen} toggle={toggle} segment={segment}
-                                    segmentRefresh={getMovieNightSegment}/>
+
+                    {/* Modals */}
+                <NewNominationModal isOpen={isOpen} toggle={toggle} watchParty={watchParty} watchPartyRefresh={()=> getWatchParty(userContext.selectedCommunity.id)} modalName={modalName}/>
+                
+                <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}/>
             </>
         );
     } else {
-        return (<></>);
+        return (
+        <>    
+        {userContext.username && !watchParty.chosenWatchDate &&
+        <div className='new-watch-party-container'>
+            <div className='center-text'> Looks like you haven't created a Watch Party yet</div>
+            <div style={{marginTop: '10px'}}>
+            <Button onClick={() => { toggle('newWatchParty')}}
+            id='create-watch-party'
+            name='createWatchPartyBtn'
+            sx={{
+                width: 100,
+                color: '#fff',
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: 22,
+                marginLeft: '10px',
+                ':hover': {backgroundColor: '#D53069'},
+            }}
+            > Create </Button>
+            </div>
+            </div>
+        }
+
+        <NewWatchPartyModal isOpen={isOpen} toggle={toggle} modalName={modalName} setWatchParty={setWatchParty}></NewWatchPartyModal>
+
+        </>
+        );
     }
 }

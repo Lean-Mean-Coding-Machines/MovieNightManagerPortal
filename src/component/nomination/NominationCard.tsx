@@ -15,9 +15,9 @@ import MovieDetailsModal from "../../modals/MovieDetailsModal";
 import DeleteNominationModal from "../../modals/DeleteNominationModal";
 
 interface NominationCardsProps {
-    segmentId: number,
+    watchPartyId: number,
     nomination: INomination,
-    segmentRefresh: () => void,
+    watchPartyRefresh: () => void,
 }
 
 export default function NominationCard(props: NominationCardsProps) {
@@ -57,7 +57,7 @@ export default function NominationCard(props: NominationCardsProps) {
                         if (res.data.data && res.data.status.success) {
                             setNominationLiked(res.data.data.enabled);
                             setLikeCount((prevState) => res.data.data!.enabled ? prevState + 1 : prevState - 1);
-                            props.segmentRefresh();
+                            props.watchPartyRefresh();
                         }
                     },
                     (err) => console.log(err)
@@ -70,9 +70,9 @@ export default function NominationCard(props: NominationCardsProps) {
     };
 
     const deleteNomination = () => {
-        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}&segmentId=${props.segmentId}`)
+        api.delete<IMnmApiResponse<INomination>>(`/nomination/delete/${props.nomination.id}?userId=${userId}&segmentId=${props.watchPartyId}`)
         .then(() => {
-                props.segmentRefresh();
+                props.watchPartyRefresh();
                 toast.success(` '${props.nomination.movieTitle}' successfully deleted`);
         })
         .catch((err) => {

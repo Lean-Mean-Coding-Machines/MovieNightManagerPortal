@@ -269,6 +269,7 @@ export function UserRegister(props: userRegisterProps) {
                     id="create-user-firstname"
                     error={!firstNameValid}
                     value={formValues.firstName}
+                    inputProps={{ maxLength: 50 }}
                     onChange={handleInputChange}
                     onBlur={validateFirstNameField}
                     onFocus={() => {
@@ -286,6 +287,7 @@ export function UserRegister(props: userRegisterProps) {
                     id="create-user-lastname"
                     error={!lastNameValid}
                     value={formValues.lastName}
+                    inputProps={{ maxLength: 50 }}
                     onChange={handleInputChange}
                     onBlur={validateLastNameField}
                     onFocus={() => {
@@ -301,6 +303,7 @@ export function UserRegister(props: userRegisterProps) {
                     label="Username"
                     name="username"
                     id="create-user-username"
+                    inputProps={{ maxLength: 50 }}
                     error={!usernameValid}
                     value={formValues.username}
                     onChange={handleInputChange}

@@ -62,11 +62,12 @@ export function UserLogin(props: userRegisterProps) {
                 <h1>Sign In</h1>
 
                 <div>
-                    <TextField sx={{width: 220,}}
+                    <TextField sx={{width: 220}}
                     label="Username"
                     required 
                     name='username' 
                     id='login-username' 
+                    inputProps={{ maxLength: 50 }}
                     onChange={handleInputChange}/>
                 </div>
 

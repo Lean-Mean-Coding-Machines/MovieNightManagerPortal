@@ -12,10 +12,15 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {useNavigate} from "react-router";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../context/UserContext";
 import {Link} from 'react-router-dom';
 import Select, {SelectChangeEvent} from "@mui/material/Select";
+import NewCommunityModal from '../../modals/NewCommunityModal';
+import useModal from '../../hooks/useModal';
+import { FormControl } from '@mui/material';
+import GroupsIcon from '@mui/icons-material/Groups';
+import AddIcon from '@mui/icons-material/Add';
 
 interface menuSettingAction {
     dropDownName: string,
@@ -23,10 +28,12 @@ interface menuSettingAction {
 }
 
 function AppNav() {
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const {username, logoutUser, communities, selectedCommunity, setSelectedCommunity} = useContext(UserContext);
 
     const navigate = useNavigate();
+    
     const navigateToProfile = () => {
         navigate('/profile')
     };
@@ -44,7 +51,7 @@ function AppNav() {
 
     const handleCommunityChange = (event: SelectChangeEvent) => {
         setSelectedCommunityVal(event.target.value);
-        communities.findIndex(community => community.id === Number(event.target.value))
+        communities.findIndex(community => community.id === Number(event.target.value));
         setSelectedCommunity(communities[communities.findIndex(community => community.id === Number(event.target.value))]);
     }
 
@@ -56,10 +63,24 @@ function AppNav() {
         setAnchorElUser(event.currentTarget);
     };
 
+    const {isOpen, toggle, modalName} = useModal();
+
+    const toggleModal = (modalName: string) => {
+        toggle(modalName);
+    }
+
+    useEffect(() => {
+        if (selectedCommunity.id > 0) {
+            setSelectedCommunityVal(selectedCommunity.id + '');
+        }
+    }, [selectedCommunity])
+
+
     return (
-        <AppBar position="static" sx={{backgroundColor: '#015f76'}}>
-            <Container sx={{"&.MuiContainer-root": {maxWidth: '100%'}}}>
-                <Toolbar disableGutters sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <>
+        <AppBar position="static" sx={{ backgroundColor: '#015f76' }}>
+            <Container sx={{ "&.MuiContainer-root": { maxWidth: '100%' } }}>
+                <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Typography
                         variant="h6"
                         component={Link}
@@ -78,49 +99,87 @@ function AppNav() {
                         }}
                     >
                         {/* Mobile */}
-                        <Box sx={{display: {xs: 'flex', sm: 'none'}}}>
-                            <AdbIcon sx={{mr: 3, ':hover': {color: '#f1f1f1'}}}/>
+                        <Box sx={{ display: { xs: 'flex', sm: 'none' } }}>
+                            <AdbIcon sx={{ mr: 3, ':hover': { color: '#f1f1f1' } }} />
                             MNM
                         </Box>
                         {/* Desktop */}
-                        <Box sx={{display: {xs: 'none', sm: 'flex'}}}>
-                            <AdbIcon sx={{mr: 3, ':hover': {color: '#f1f1f1'}}}/>
+                        <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+                            <AdbIcon sx={{ mr: 3, ':hover': { color: '#f1f1f1' } }} />
                             Movie Night Manager
                         </Box>
                     </Typography>
+
                     {!window.location.pathname.includes('/login') && (
                         username !== "" ?
-                            <Box sx={{flexGrow: 0}}>
-                                {communities &&
-                                    <Select
-                                        labelId="selected-community-dropdown-label"
-                                        id="selected-community-dropdown"
-                                        value={selectedCommunityVal}
-                                        label="Selected Community"
-                                        onChange={handleCommunityChange}
-                                        sx={{mr: 1}}
-                                    >
-                                        {
-                                            communities.map(community => (
-                                                <MenuItem 
-                                                value={community.id}
-                                                key={community.id}
-                                                selected={community.id === selectedCommunity.id}>
-                                                {community.name}
-                                                </MenuItem>
-                                            ))
-                                        }
-                                    </Select>
-                                }
-                                <Tooltip title={
-                                    <>
-                                        {<Typography>
-                                            Manage Profile
-                                        </Typography>
-                                        }
-                                    </>
-                                }
-                                         enterDelay={900}
+                            <Box sx={{ flexGrow: 0 }}>
+
+                                {/*TODO: Need to figure out mobile view for communities  */}
+                            <Tooltip title="Create Community" placement="bottom-start">
+                                <Button 
+                                    variant="outlined"
+                                    sx={{
+                                        color: '#fff',
+                                        borderColor: '#fff',
+                                        marginRight:'15px',
+                                        marginTop: '2px',
+                                        height: '38px',
+                                        ':hover': {
+                                            color: '#f1f1f1',
+                                            borderColor: '#f1f1f1'
+                                        },
+                                        display: { xs: 'none', sm: 'inline-flex' }
+                                    }}
+                                    onClick={() => {toggleModal('newCommunity');}}>
+                                        <AddIcon/>
+                                        <GroupsIcon/>
+                                        </Button>
+                            </Tooltip>
+
+                                {communities.length > 0 &&
+                                <FormControl>
+                                <Select
+                                    labelId="selected-community-dropdown-label"
+                                    id="selected-community-dropdown"
+                                    value={selectedCommunityVal}
+                                    onChange={handleCommunityChange}
+                                    sx={{ 
+                                        color: '#fff', 
+                                        height: '38px', 
+                                        marginTop:'10px', 
+                                        marginRight:'15px',
+                                        border: '1px solid',
+                                    '.MuiOutlinedInput-notchedOutline': {
+                                      borderColor: 'rgba(228, 219, 233, 0.25)',
+                                    },
+                                    '.MuiSvgIcon-root ': {
+                                        fill: "#fff !important",
+                                      },
+                                      "&:hover fieldset": {
+                                        borderColor: "#fff !important"
+                                      },
+                                      display: { xs: 'none', sm: 'inline-flex' }
+                                    }}
+                                >
+                                    {communities.map(community => (
+                                        <MenuItem
+                                            value={community.id}
+                                            key={community.id}
+                                            selected={community.id === selectedCommunity.id}
+                                        >
+                                            {community.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                            }
+
+                                <Tooltip title={<>
+                                    {<Typography>
+                                        Manage Profile
+                                    </Typography>}
+                                </>}
+                                    enterDelay={900}
                                 >
                                     <IconButton onClick={handleOpenUserMenu}>
                                         <Avatar
@@ -133,11 +192,11 @@ function AppNav() {
                                                 ':hover': {
                                                     background: '#f1f1f1',
                                                 }
-                                            }}/>
+                                            }} />
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
-                                    sx={{mt: '45px'}}
+                                    sx={{ mt: '45px' }}
                                     id="menu-appbar"
                                     anchorEl={anchorElUser}
                                     anchorOrigin={{
@@ -163,8 +222,8 @@ function AppNav() {
                                     ))}
                                 </Menu>
                             </Box> :
-                            <Box sx={{flexGrow: 1}}>
-                                <Box sx={{float: 'right'}}>
+                            <Box sx={{ flexGrow: 1 }}>
+                                <Box sx={{ float: 'right' }}>
                                     <Button
                                         id='sign-in-btn'
                                         name='signInBtn'
@@ -182,10 +241,20 @@ function AppNav() {
                                     </Button>
                                 </Box>
                             </Box>
+
+
                     )}
+
+
+
                 </Toolbar>
             </Container>
         </AppBar>
+        <>
+            <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}></NewCommunityModal>
+        </>
+    </>
+
     );
 }
 

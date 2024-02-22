@@ -1,6 +1,6 @@
 
 export default interface INominationRequest {
-    segmentId: number,
+    watchPartyId: number,
     movieId: number,
     movieTitle: string,
     posterPath: string,
