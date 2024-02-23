@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-function PrivacyPage() {
+export default function PrivacyPage() {
 
 
 
@@ -46,5 +46,3 @@ function PrivacyPage() {
     </div>
   );
 }
-
-export default PrivacyPage;

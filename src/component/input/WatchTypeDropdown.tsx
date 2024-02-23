@@ -6,7 +6,7 @@ interface typeSelectorProps {
     sx?: SxProps
 }
 
-function WatchTypeDDLSelector(props: typeSelectorProps) {
+export default function WatchTypeDDLSelector(props: typeSelectorProps) {
 
     const [type, setWatchType] = useState("Any");
 
@@ -39,7 +39,6 @@ function WatchTypeDDLSelector(props: typeSelectorProps) {
     );
 }
 
-export default WatchTypeDDLSelector;
 
 
 

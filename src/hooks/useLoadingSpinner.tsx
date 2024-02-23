@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const useLoadingSpinner = () => {
+export default function useLoadingSpinner() {
   const [loading, setLoading] = useState(false);
 
   const toggleLoading = (loadingStatus: boolean) => {
@@ -13,4 +13,3 @@ const useLoadingSpinner = () => {
     };
 };
 
-export default useLoadingSpinner;

@@ -27,7 +27,7 @@ interface menuSettingAction {
     action: () => void
 }
 
-function AppNav() {
+export default function AppNav() {
 
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const {username, logoutUser, communities, selectedCommunity, setSelectedCommunity} = useContext(UserContext);
@@ -254,5 +254,3 @@ function AppNav() {
 
     );
 }
-
-export default AppNav;

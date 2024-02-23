@@ -1,7 +1,9 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 
-function ContactPage() {
+export default function ContactPage() {
+
+
   const [emailFormData, setFormData] = useState({
     name: '',
     email: '',
@@ -100,5 +102,3 @@ function ContactPage() {
     </Container>
   );
 }
-
-export default ContactPage;

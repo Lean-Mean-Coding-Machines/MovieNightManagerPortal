@@ -8,7 +8,7 @@ import IUserAuthResponse from "../model/user/IUserAuthResponse";
 
 const baseURL = 'http://127.0.0.1:8080/v1';
 
-const useAxios = () => {
+export default function useAxios() {
     const { authToken, logoutUser, setUserAuthData, userId } = useContext(UserContext);
 
     const axiosInstance = axios.create({ baseURL });
@@ -72,5 +72,3 @@ const useAxios = () => {
 
     return axiosInstance;
 };
-
-export default useAxios;

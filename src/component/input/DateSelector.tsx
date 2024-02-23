@@ -13,7 +13,7 @@ interface dateSelectorProps {
 
 const todaysDate = dayjs();
 
-function DateSelector(props: dateSelectorProps) {
+export default function DateSelector(props: dateSelectorProps) {
 
   const [value, setDate] = useState<Dayjs | null>(todaysDate);
   const [dateError, setDateError] = useState('');
@@ -62,4 +62,3 @@ function DateSelector(props: dateSelectorProps) {
   );
 }
 
-export default DateSelector;
