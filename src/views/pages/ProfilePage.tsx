@@ -14,6 +14,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProfileNomCard from '../../component/nomination/ProfileNomCard';
+import useLoadingSpinner from '../../hooks/useLoadingSpinner';
+import { LoadingSpinner } from '../../component/LoadingSpinner';
 
 const emptyUser: IUser = {
     id: 0,
@@ -32,7 +34,8 @@ export function ProfilePage() {
     // Toggles Delete Modal & Edit Modal open and close
     const {isOpen, toggle} = useModal();
 
-    const [userLoading, setUserLoading] = useState(true);
+    const {toggleLoading, loading} = useLoadingSpinner();
+
     const [user, setUser] = useState(emptyUser);
 
     const api = useAxios();
@@ -55,18 +58,19 @@ export function ProfilePage() {
         arrows: true,
       };
 
-      const theme = useTheme();
-      const desktopView = useMediaQuery(theme.breakpoints.up('md'));
+    const theme = useTheme();
+    const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
     
     const getUserDetails = () => {
+        toggleLoading(true);
         api.get<IMnmApiResponse<IUser>>(`/user/details/${userId}`)
             .then(
                 (res) => {
                     if (res.data.status.success && res.data.data != null) {
                         setUser(res.data.data);
                     }
-                    setUserLoading(false);
+                    toggleLoading(false);
                 },
                 (err) => console.log(err))
             .catch((err) => console.log(err.message));
@@ -87,104 +91,108 @@ export function ProfilePage() {
 
     return (
         <>
+        <LoadingSpinner loadingState={loading}/>
+        { !loading && 
+            <>
             <h1 style={{marginLeft: 15, color:'#fff'}}> Profile</h1>
+                <hr/>
 
-            <hr/>
+                <h3>Info</h3>
 
-            <h3>Info</h3>
-
-            <div className='profile-info-container'>
-            <Box
-                component="form"
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    '& .MuiTextField-root': {m: 1, width: '100%'},
-                }}
-                noValidate
-                autoComplete="on"
-            >
-
-                <TextField
-                    disabled
-                    id="first-name-outlined-disabled"
-                    name='firstNameInputDisabled'
-                    label="First Name"
-                    value={user.firstName}
-                />
-                <TextField
-                    disabled
-                    name='lastNameInputDisabled'
-                    id="last-name-outlined-disabled"
-                    label="Last Name"
-                    value={user.lastName}
-                />
-                <TextField
-                    disabled
-                    name='userNameInputDisabled'
-                    id="username-outlined-disabled"
-                    label="Username"
-                    value={user.username}
-                />
-                <TextField
-                    disabled
-                    id="email-outlined-disabled"
-                    name='emailInputDisabled'
-                    label="Email"
-                    value={user.email}
-                />
-
-                <Button 
-                    variant='contained'
-                    id="delete-btn"
-                    name='deleteBtn'
+                <div className='profile-info-container'>
+                <Box
+                    component="form"
                     sx={{
-                    marginTop:'15px',
-                    width: '100%',
-                    backgroundColor: 'primary',
-                    borderRadius: 22,
-                    ':hover': {backgroundColor: 'primary'},
-                  }} 
-                  onClick={toggle}
-                  >Delete Account
-                </Button> 
-            </Box>
-            </div>
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        '& .MuiTextField-root': {m: 1, width: '100%'},
+                    }}
+                    noValidate
+                    autoComplete="on"
+                >
 
-            <hr/>
+                    <TextField
+                        disabled
+                        id="first-name-outlined-disabled"
+                        name='firstNameInputDisabled'
+                        label="First Name"
+                        value={user.firstName}
+                    />
+                    <TextField
+                        disabled
+                        name='lastNameInputDisabled'
+                        id="last-name-outlined-disabled"
+                        label="Last Name"
+                        value={user.lastName}
+                    />
+                    <TextField
+                        disabled
+                        name='userNameInputDisabled'
+                        id="username-outlined-disabled"
+                        label="Username"
+                        value={user.username}
+                    />
+                    <TextField
+                        disabled
+                        id="email-outlined-disabled"
+                        name='emailInputDisabled'
+                        label="Email"
+                        value={user.email}
+                    />
 
-            <h3>Nominations</h3>
-            {/* Slider is actually a carousel */}
-            { desktopView ? (
-                <div className='desktop-slider-container'>
-                    {user.nominations.length > 6 ? 
-                    <Slider {...DesktopSettings}>
-                        {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
-                    </Slider> :             
-                    <Stack direction='row' spacing={3} >
-                        {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
-                    </Stack> 
-                    }
+                    <Button 
+                        variant='contained'
+                        id="delete-btn"
+                        name='deleteBtn'
+                        sx={{
+                        marginTop:'15px',
+                        width: '100%',
+                        backgroundColor: 'primary',
+                        borderRadius: 22,
+                        ':hover': {backgroundColor: 'primary'},
+                    }} 
+                    onClick={toggle}
+                    >Delete Account
+                    </Button> 
+                </Box>
                 </div>
-                ) : (
-                <div className='mobile-slider-container'>  
-                    <Slider {...mobileSettings}>
-                    {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
-                </Slider> 
-                </div>
-                )
-            }
 
-            { user.nominations.length === 0 && (
-                <div style={{color:'#fff', marginLeft:'60px'}}> You haven't added any movie nominations yet</div>
-            )    
-            }
+                <hr/>
 
-            {/* Modals */}
-            <DeleteAccountModal isOpen={isOpen} toggle={toggle}></DeleteAccountModal>
+                <h3>Nominations</h3>
+                {/* Slider is actually a carousel */}
+                { desktopView ? (
+                    <div className='desktop-slider-container'>
+                        {user.nominations.length > 6 ? 
+                        <Slider {...DesktopSettings}>
+                            {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                        </Slider> :             
+                        <Stack direction='row' spacing={3} >
+                            {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                        </Stack> 
+                        }
+                    </div>
+                    ) : (
+                    <div className='mobile-slider-container'>  
+                        <Slider {...mobileSettings}>
+                        {user.nominations.map((nom: INomination, index) => (<ProfileNomCard key={index} nomination={nom}/>))}
+                    </Slider> 
+                    </div>
+                    )
+                }
 
-        </>
+                { user.nominations.length === 0 && (
+                    <div style={{color:'#fff', marginLeft:'60px'}}> You haven't added any movie nominations yet</div>
+                )    
+                }
+
+                {/* Modals */}
+                <DeleteAccountModal isOpen={isOpen} toggle={toggle}></DeleteAccountModal>
+            </>
+        }
+        
+    </>
     );
 }
 

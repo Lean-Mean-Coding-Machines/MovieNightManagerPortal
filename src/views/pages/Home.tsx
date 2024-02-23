@@ -1,4 +1,4 @@
-import {Backdrop, Box, Button, CircularProgress, Fab, Grid, Tooltip, useTheme} from '@mui/material';
+import { Box, Button, Fab, Grid, Tooltip, useTheme} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -13,6 +13,8 @@ import useAxios from '../../hooks/useAxios';
 import IWatchParty from '../../model/IWatchParty';
 import IMnmApiResponse from '../../model/IMnmApiResponse';
 import ICommunitySummary from '../../model/ICommunitySummary';
+import { LoadingSpinner } from '../../component/LoadingSpinner';
+import useLoadingSpinner from '../../hooks/useLoadingSpinner';
 
 export function HomePage() {
 
@@ -20,11 +22,7 @@ export function HomePage() {
 
     const theme = useTheme();
 
-    const [appLoading, setAppLoading] = useState(true);
-
-    const handleAppLoadingChange = (newState: boolean) => {
-        setAppLoading(newState)
-    };
+    const {toggleLoading, loading} = useLoadingSpinner();
 
     const {isOpen, toggle, modalName} = useModal();
 
@@ -59,11 +57,12 @@ export function HomePage() {
     }
 
     useEffect(() => {
+        toggleLoading(true)
         if (userContext.userId > 0) {
             getCommunity();
             getWatchParty(userContext.selectedCommunity.id);
         }
-        handleAppLoadingChange(false);
+        toggleLoading(false)
     }, []);
 
     useEffect(() => {
@@ -77,9 +76,10 @@ export function HomePage() {
 
         return (
             <>
-                <Backdrop sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}} open={appLoading}>
-                    <CircularProgress color='inherit'/>
-                </Backdrop>
+                <LoadingSpinner loadingState={loading}/>
+
+                { !loading && 
+                <>
                 <Box sx={{display: 'flex', flexDirection: 'column',}}
                   >
                     <h2 className='center-text'>
@@ -139,11 +139,13 @@ export function HomePage() {
                     </Fab>
                 </Tooltip>}
 
-
-                    {/* Modals */}
+                {/* Modals */}
                 <NewNominationModal isOpen={isOpen} toggle={toggle} watchParty={watchParty} watchPartyRefresh={()=> getWatchParty(userContext.selectedCommunity.id)} modalName={modalName}/>
                 
                 <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}/>
+                </>
+                }
+                
             </>
         );
     } else {
