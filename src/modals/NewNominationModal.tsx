@@ -12,7 +12,8 @@
         Container,
         Modal,
         TextField,
-        InputAdornment
+        InputAdornment,
+        ClickAwayListener
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
     import React, {ChangeEvent, useContext, useEffect, useRef, useState} from 'react';
@@ -360,7 +361,8 @@
                             </Box>
 
                             {/* Search Results */}
-                            <List hidden={movieOptions.length === 0} sx={searchListStyle} >
+                            <ClickAwayListener onClickAway={()=> {setMovieOptions([])}}>
+                            <List hidden={movieOptions.length === 0} sx={searchListStyle}  >
                             {filterMovieDates.map((option) => (
                                         <div key={option.id} >
                                             <ListItem 
@@ -375,7 +377,8 @@
                                                 onClick={() => {
                                                     updateMovieSelection(option);
                                                     setMovieOptions([]);
-                                                }}          
+                                                }}  
+                                                onBlur={()=> {setMovieOptions([])}}        
                                                 sx={{
                                                     '&:hover': {
                                                     background: '#808080',
@@ -416,6 +419,7 @@
                                     ))
                                 }
                             </List>
+                            </ClickAwayListener>
 
                             {/* Chosen Movie */}
                             <Box hidden={selectedMovie === null}>
