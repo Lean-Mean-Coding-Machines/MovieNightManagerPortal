@@ -120,7 +120,7 @@ export function HomePage() {
                     <Fab onClick={()=>{toggle('newNomination');}} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         color: '#fff',
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor: 'primary.main',
                         position: 'fixed',
                         bottom: '64px',
                         right: '10%',
@@ -134,7 +134,7 @@ export function HomePage() {
                             right: '5%',
                             bottom:'3%',
                           },
-                        ':hover': {backgroundColor: '#D53069'}
+                        ':hover': {backgroundColor: 'primary.dark'}
                     }}
                          aria-label="add">
                         <AddIcon/>
@@ -166,10 +166,10 @@ export function HomePage() {
             sx={{
                 width: 100,
                 color: '#fff',
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: 'primary.main',
                 borderRadius: 22,
                 marginLeft: '10px',
-                ':hover': {backgroundColor: '#D53069'},
+                ':hover': {backgroundColor: 'primary.dark'},
             }}
             > Create </Button>
             </div>

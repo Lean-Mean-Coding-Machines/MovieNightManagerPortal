@@ -18,6 +18,8 @@ const theme = createTheme({
     palette: {
         primary: {
           main: '#c12b5d',
+        // Dark is currently being used for hover state of primary buttons
+          dark: '#D53069'
         },
         secondary: {
           main: '#015f76',

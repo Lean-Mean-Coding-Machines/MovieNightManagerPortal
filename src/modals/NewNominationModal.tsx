@@ -101,16 +101,12 @@
             userId: userId
         });
 
-        let startDay = dayjs(props.watchParty.nominationLockDate);
-
-        // TODO: Remove WatchDate from form submission 
         useEffect(() => {
             setNominationRequest((p) => (
                 {
                     ...p,
                     segmentId: props.watchParty.id,
                     userId: userId,
-                    watchDate: startDay.format('YYYY-MM-DDT00:00:00.000')
                 }));
         }, [props.watchParty.id, userId]);
 

@@ -107,7 +107,7 @@ export function UserLogin(props: userRegisterProps) {
                                         userSelect: "none"
                                     },
                                     '&.Mui-checked': {
-                                        color: 'primary',
+                                        color: 'primary.main',
                                     },
                                 }}
                             />

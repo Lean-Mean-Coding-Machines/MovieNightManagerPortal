@@ -148,9 +148,9 @@ export function ProfilePage() {
                         sx={{
                         marginTop:'15px',
                         width: '100%',
-                        backgroundColor: 'primary',
+                        backgroundColor: 'primary.main',
                         borderRadius: 22,
-                        ':hover': {backgroundColor: 'primary'},
+                        ':hover': {backgroundColor: 'primary.dark'},
                     }} 
                     onClick={toggle}
                     >Delete Account

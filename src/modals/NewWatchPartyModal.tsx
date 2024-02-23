@@ -162,10 +162,10 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 type="submit"
                                 sx={{
                                     width: 100,
-                                    backgroundColor: 'primary',
+                                    backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
-                                    ':hover': {backgroundColor: 'primary'},
+                                    ':hover': {backgroundColor: 'primary.dark'},
                                 }}
                             >Create
                             </Button>

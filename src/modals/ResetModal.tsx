@@ -81,9 +81,9 @@ export default function ResetModal(props: ModalType) {
                   name='sendBtn'
                   sx={{
                   width: 100,
-                  backgroundColor: 'primary',
+                  backgroundColor: 'primary.main',
                   borderRadius: 22,
-                  ':hover': {backgroundColor: 'primary',},
+                  ':hover': {backgroundColor: 'primary.dark',},
                   }} 
                   >Send
                   </Button>
