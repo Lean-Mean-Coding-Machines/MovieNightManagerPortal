@@ -89,7 +89,7 @@
         const currentDate = new Date();
 
         const defaultNominationRequest: INominationRequest = ({
-            watchPartyId: props.watchParty.id,
+            segmentId: props.watchParty.id,
             movieId: 0,
             movieTitle: '',
             posterPath: '',
@@ -107,7 +107,7 @@
             setNominationRequest((p) => (
                 {
                     ...p,
-                    watchPartyId: props.watchParty.id,
+                    segmentId: props.watchParty.id,
                     userId: userId,
                     watchDate: startDay.format('YYYY-MM-DDT00:00:00.000')
                 }));
@@ -279,13 +279,17 @@
                                 </IconButton>
                             </div>
                         <Box
-                            component='span'
+                            component='div'
                             sx={{
                                 fontWeight: 'bold',
                                 fontSize: {xs: 25, sm: 25, md: 30, lg: 35, xl: 40},
-                                fontFamily: 'SoraBold'
+                                fontFamily: 'SoraBold',
+                                display:'flex',
+                                flexDirection:'column',
+                                alignItems:'center'
                             }}>
-                            {'Nominate a Movie for ' + selectedCommunity.name}
+                            <div> Nominate a movie for</div>
+                            <div style={{width:'11em', overflow:'hidden', textOverflow:'ellipsis'}}>{selectedCommunity.name}</div>
                         </Box>
                     </Box>
 
