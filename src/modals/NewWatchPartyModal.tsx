@@ -87,7 +87,7 @@ export default function NewWatchPartyModal (props: ModalType) {
             }));
     }, [userContext.selectedCommunity.id]);
 
-    if (props.modalName === 'newWatchParty') {
+    if (props.modalName === 'Watch Party') {
         return (
             <Modal
                 open={props.isOpen}

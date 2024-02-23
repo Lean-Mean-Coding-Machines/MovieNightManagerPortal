@@ -1,6 +1,6 @@
 import {Box, Button, FormControl, IconButton, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import {  ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import {  ChangeEvent, FormEvent, useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import INewCommunity from "../model/community/INewCommunity";
@@ -100,19 +100,11 @@ export default function NewCommunityModal (props: ModalType) {
         event.preventDefault();
         props.toggle();
         createCommunity(communityRequestState);
+        setCommunityRequestState(initialCommunityState);
       };
 
-      useEffect(() => {
-        setCommunityRequestState((p) => (
-            {
-                ...p,
-                userId: userId,
-            }));
-    }, [userId]);
 
-
-
-    if (props.modalName === 'newCommunity') {
+    if (props.modalName === 'Community') {
         return (
             <Modal
                 open={props.isOpen}

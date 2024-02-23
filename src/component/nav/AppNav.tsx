@@ -130,7 +130,7 @@ function AppNav() {
                                         },
                                         display: { xs: 'none', sm: 'inline-flex' }
                                     }}
-                                    onClick={() => {toggleModal('newCommunity');}}>
+                                    onClick={() => {toggleModal('Community');}}>
                                         <AddIcon/>
                                         <GroupsIcon/>
                                         </Button>
@@ -241,10 +241,7 @@ function AppNav() {
                                     </Button>
                                 </Box>
                             </Box>
-
-
                     )}
-
 
 
                 </Toolbar>

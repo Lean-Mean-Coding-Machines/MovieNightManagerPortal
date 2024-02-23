@@ -29,7 +29,9 @@ export function HomePage() {
     const userContext = useContext(UserContext);
     
     const [watchParty, setWatchParty] = useState<IWatchParty>({} as IWatchParty);
-  
+    
+    const modalTextName = userContext.selectedCommunity.id ? 'Watch Party' : 'Community';
+
     const getWatchParty = (selectedCommunity: number) => {  
           api.get<IMnmApiResponse<IWatchParty>>("/segment/current/" + selectedCommunity)
               .then(
@@ -69,6 +71,7 @@ export function HomePage() {
         getWatchParty(userContext.selectedCommunity.id);
 
     }, [userContext.selectedCommunity.id]);
+
 
     if (watchParty.chosenWatchDate) {
 
@@ -153,9 +156,9 @@ export function HomePage() {
         <>    
         {userContext.username && !watchParty.chosenWatchDate &&
         <div className='new-watch-party-container'>
-            <div className='center-text'> Looks like you haven't created a Watch Party yet</div>
+            <div className='center-text'> {`Looks like you haven't created a ${modalTextName} yet`}</div>
             <div style={{marginTop: '10px'}}>
-            <Button onClick={() => { toggle('newWatchParty')}}
+            <Button onClick={() => { toggle(modalTextName);}}
             id='create-watch-party'
             name='createWatchPartyBtn'
             sx={{
@@ -172,7 +175,7 @@ export function HomePage() {
         }
 
         <NewWatchPartyModal isOpen={isOpen} toggle={toggle} modalName={modalName} setWatchParty={setWatchParty}></NewWatchPartyModal>
-
+        <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}/>
         </>
         );
     }
