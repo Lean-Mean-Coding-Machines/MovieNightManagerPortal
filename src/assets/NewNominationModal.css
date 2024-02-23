@@ -18,3 +18,16 @@
 .submit-btn:hover {
     background-color: #D53069 !important;
 }
+
+
+.community-name-container {
+    width: 11em;
+    overflow: hidden;
+    text-overflow: hidden;
+}
+
+.chosen-movie-heading {
+    margin: 0;
+    text-align: center;
+    color: #000;
+}

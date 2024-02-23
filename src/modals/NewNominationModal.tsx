@@ -149,8 +149,7 @@
                     if (res.data.status.success && res.data.data != null) {
                         props.toggle();
                         resetNominationState();
-                        // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
-                        toast.success(`Nomination Created for '${nominationRequest.movieTitle}'`);
+                        toast.success(`Nomination created for '${nominationRequest.movieTitle}'`);
                         props.watchPartyRefresh();
                     } else {
                         toast.error('Could not create nomination');
@@ -289,7 +288,7 @@
                                 alignItems:'center'
                             }}>
                             <div> Nominate a movie for</div>
-                            <div style={{width:'11em', overflow:'hidden', textOverflow:'ellipsis'}}>{selectedCommunity.name}</div>
+                            <div className='community-name-container'>{selectedCommunity.name}</div>
                         </Box>
                     </Box>
 
@@ -421,7 +420,7 @@
 
                             {/* Chosen Movie */}
                             <Box hidden={selectedMovie === null}>
-                                <h3 style={{margin: 0, textAlign: 'center', color: '#000'}}>Chosen Movie</h3>
+                                <h3 className='chosen-movie-heading'>Chosen Movie</h3>
                                 <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}} >
                                     <ListItem alignItems='flex-start' sx={{pb: 0}}>
                                         <Avatar

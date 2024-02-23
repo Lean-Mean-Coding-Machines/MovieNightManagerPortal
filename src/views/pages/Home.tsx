@@ -51,7 +51,7 @@ export function HomePage() {
                     if (res.data.data) {
                     const community = res.data.data;
                         userContext.setCommunityData(community);
-                        userContext.setCommunities(community)
+                        userContext.setCommunities(community);
                     }
                 },
                 (err) => console.log(err))
@@ -59,17 +59,16 @@ export function HomePage() {
     }
 
     useEffect(() => {
-        toggleLoading(true)
+        toggleLoading(true);
         if (userContext.userId > 0) {
             getCommunity();
             getWatchParty(userContext.selectedCommunity.id);
         }
-        toggleLoading(false)
+        toggleLoading(false);
     }, []);
 
     useEffect(() => {
         getWatchParty(userContext.selectedCommunity.id);
-
     }, [userContext.selectedCommunity.id]);
 
 
@@ -154,7 +153,10 @@ export function HomePage() {
     } else {
         return (
         <>    
-        {userContext.username && !watchParty.chosenWatchDate &&
+        
+        <LoadingSpinner loadingState={loading}/>
+
+        {userContext.username && !watchParty.chosenWatchDate && !loading &&
         <div className='new-watch-party-container'>
             <div className='center-text'> {`Looks like you haven't created a ${modalTextName} yet`}</div>
             <div style={{marginTop: '10px'}}>

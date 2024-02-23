@@ -35,11 +35,11 @@ function AppNav() {
     const navigate = useNavigate();
     
     const navigateToProfile = () => {
-        navigate('/profile')
+        navigate('/profile');
     };
 
     const navigateToLogin = () => {
-        navigate('/login')
+        navigate('/login');
     };
 
     const settings: menuSettingAction[] = [
