@@ -59,7 +59,7 @@ export function UserRegister(props: userRegisterProps) {
         if (isFirstNameValid && isLastNameValid && isUsernameValid && isEmailValid && isPasswordNameValid) {
             api.post<IMnmApiResponse<IUserCreateResponse>>("/user/create", formValues).then(
                 (res) => {
-                    if (res.data.status.success && res.data.data != null) {
+                    if (res.data.status.success && res.data.data !== null) {
                         const authRequest: IUserAuthRequest = {
                             username: formValues.username,
                             password: formValues.password

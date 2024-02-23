@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import INewCommunity from "../model/community/INewCommunity";
 import useAxios from "../hooks/useAxios";
+import { toast } from "react-toastify";
 
 interface ModalType {
     isOpen: boolean,
@@ -92,7 +93,10 @@ export default function NewCommunityModal (props: ModalType) {
                         setCommunityData(addCommunity);
                     }
                 },
-                (err) => console.log(err))
+                (err) => {
+                    toast.error('Could not create Community');
+                    console.log(err);
+                })
             .catch((err) => console.log(err.message));
       };
     

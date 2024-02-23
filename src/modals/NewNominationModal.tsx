@@ -146,17 +146,16 @@
             api.post<IMnmApiResponse<INominationRequest>>('/nomination/create', nominationRequest)
             .then(
                 (res) => {
-                    if (res.data.status.success && res.data.data != null) {
+                    if (res.data.status.success && res.data.data !== null) {
                         props.toggle();
                         resetNominationState();
                         toast.success(`Nomination created for '${nominationRequest.movieTitle}'`);
                         props.watchPartyRefresh();
-                    } else {
-                        toast.error('Could not create nomination');
-                    }
+                    } 
                 },
                 (err) => {
                     console.log(err);
+                    toast.error('Could not create Nomination');
                 }
             )
             .catch(

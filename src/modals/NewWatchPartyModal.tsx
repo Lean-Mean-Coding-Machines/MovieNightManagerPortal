@@ -8,6 +8,7 @@ import IWatchPartyRequest from "../model/watchParty/IWatchPartyRequest";
 import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IWatchParty from "../model/watchParty/IWatchParty";
+import { toast } from "react-toastify";
 
 interface ModalType {
     isOpen: boolean,
@@ -67,9 +68,13 @@ export default function NewWatchPartyModal (props: ModalType) {
                 (res) => {
                     if (res.data.data) {
                         props.setWatchParty(res.data.data ? res.data.data : {} as IWatchParty);
+                        toast.success('Watch Party successfully created')
                     }
                 },
-                (err) => console.log(err))
+                (err) => { 
+                    toast.error('Could not create Watch Party')
+                    console.log(err);
+                })
             .catch((err) => console.log(err.message));
     }
 
