@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import {  ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import IMnmApiResponse from "../model/IMnmApiResponse";
-import INewCommunity from "../model/INewCommunity";
+import INewCommunity from "../model/community/INewCommunity";
 import useAxios from "../hooks/useAxios";
 
 interface ModalType {

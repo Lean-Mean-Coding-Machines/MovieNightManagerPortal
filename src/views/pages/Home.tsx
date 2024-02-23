@@ -10,9 +10,9 @@ import NewWatchPartyModal from '../../modals/NewWatchPartyModal';
 import NewCommunityModal from '../../modals/NewCommunityModal';
 import '../../assets/HomePage.css';
 import useAxios from '../../hooks/useAxios';
-import IWatchParty from '../../model/IWatchParty';
+import IWatchParty from '../../model/watchParty/IWatchParty';
 import IMnmApiResponse from '../../model/IMnmApiResponse';
-import ICommunitySummary from '../../model/ICommunitySummary';
+import ICommunitySummary from '../../model/community/ICommunitySummary';
 import { LoadingSpinner } from '../../component/LoadingSpinner';
 import useLoadingSpinner from '../../hooks/useLoadingSpinner';
 

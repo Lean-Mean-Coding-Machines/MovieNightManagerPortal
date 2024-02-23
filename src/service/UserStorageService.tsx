@@ -1,5 +1,5 @@
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
-import ICommunitySummary from "../model/ICommunitySummary";
+import ICommunitySummary from "../model/community/ICommunitySummary";
 
 const getUsername = (): string => {
     return localStorage.getItem("username") === null ? "" : localStorage.getItem("username")!.toString();

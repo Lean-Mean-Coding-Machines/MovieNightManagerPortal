@@ -6,7 +6,7 @@ import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IUserAuthResponse from "../model/user/IUserAuthResponse";
 import { toast } from "react-toastify";
-import ICommunitySummary from "../model/ICommunitySummary";
+import ICommunitySummary from "../model/community/ICommunitySummary";
 
 interface UserContextInterface {
     userId: number,

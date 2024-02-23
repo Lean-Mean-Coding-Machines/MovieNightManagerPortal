@@ -20,7 +20,7 @@
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
-    import IWatchParty from '../model/IWatchParty';
+    import IWatchParty from '../model/watchParty/IWatchParty';
     import useAxios from '../hooks/useAxios';
     import {UserContext} from '../context/UserContext';
     import IMnmApiResponse from '../model/IMnmApiResponse';

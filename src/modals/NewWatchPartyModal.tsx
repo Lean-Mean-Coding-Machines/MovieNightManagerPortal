@@ -4,10 +4,10 @@ import DateSelector from "../component/input/DateSelector";
 import dayjs from "dayjs";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import IWatchPartyRequest from "../model/IWatchPartyRequest";
+import IWatchPartyRequest from "../model/watchParty/IWatchPartyRequest";
 import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
-import IWatchParty from "../model/IWatchParty";
+import IWatchParty from "../model/watchParty/IWatchParty";
 
 interface ModalType {
     isOpen: boolean,
