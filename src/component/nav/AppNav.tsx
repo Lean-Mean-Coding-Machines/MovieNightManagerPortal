@@ -153,7 +153,7 @@ export default function AppNav() {
                                         height: '38px', 
                                         marginTop:'10px', 
                                         marginRight:'15px',
-                                        maxWidth:'150px',
+                                        width:'150px',
                                     '.MuiOutlinedInput-notchedOutline': {
                                       borderColor: '#fff !important',
                                     },
@@ -169,7 +169,7 @@ export default function AppNav() {
                                     {communities.map(community => (
                                         <MenuItem
                                         style={{whiteSpace: 'normal'}}
-                                            sx={{maxWidth:'150px'}}
+                                            sx={{width:'150px'}}
                                             value={community.id}
                                             key={community.id}
                                             selected={community.id === selectedCommunity.id}
