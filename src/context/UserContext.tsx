@@ -58,6 +58,9 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setUserId(data.userId);
         setUsername(data.username);
         setCommunities(data.communities);
+        if (data.communities[0]) {
+            setSelectedCommunity(data.communities[0]);
+        }
     }
 
     const setCommunityData = (communities: ICommunitySummary[]) => {
