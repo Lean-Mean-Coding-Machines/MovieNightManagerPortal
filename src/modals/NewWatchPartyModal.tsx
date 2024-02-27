@@ -4,10 +4,11 @@ import DateSelector from "../component/input/DateSelector";
 import dayjs from "dayjs";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import IWatchPartyRequest from "../model/IWatchPartyRequest";
+import IWatchPartyRequest from "../model/watchParty/IWatchPartyRequest";
 import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
-import IWatchParty from "../model/IWatchParty";
+import IWatchParty from "../model/watchParty/IWatchParty";
+import { toast } from "react-toastify";
 
 interface ModalType {
     isOpen: boolean,
@@ -67,9 +68,13 @@ export default function NewWatchPartyModal (props: ModalType) {
                 (res) => {
                     if (res.data.data) {
                         props.setWatchParty(res.data.data ? res.data.data : {} as IWatchParty);
+                        toast.success('Watch Party successfully created')
                     }
                 },
-                (err) => console.log(err))
+                (err) => { 
+                    toast.error('Could not create Watch Party')
+                    console.log(err);
+                })
             .catch((err) => console.log(err.message));
     }
 
@@ -87,7 +92,7 @@ export default function NewWatchPartyModal (props: ModalType) {
             }));
     }, [userContext.selectedCommunity.id]);
 
-    if (props.modalName === 'newWatchParty') {
+    if (props.modalName === 'Watch Party') {
         return (
             <Modal
                 open={props.isOpen}
@@ -157,10 +162,10 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 type="submit"
                                 sx={{
                                     width: 100,
-                                    backgroundColor: 'primary',
+                                    backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
-                                    ':hover': {backgroundColor: 'primary'},
+                                    ':hover': {backgroundColor: 'primary.dark'},
                                 }}
                             >Create
                             </Button>

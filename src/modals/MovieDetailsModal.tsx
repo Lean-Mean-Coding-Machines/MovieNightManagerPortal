@@ -105,10 +105,10 @@ export default function MovieDetailsModal(props: ModalType) {
 
                   { !desktopView && ( 
                       <div>
-                      {/* TODO: Need to determine why expand class styles are being overwritten */}
-                      {/* Likely need to use the provided theme and drill down from there */}
                       { (props.nomination.movieOverview?.length > 350 && !expandText) && 
                           <Button 
+                          sx={{border: '1px solid',
+                        }}
                               id={`read-more-btn ${props.nomination.id}`}
                               name="readMoreBtn"
                               className="expand-text-btn" 
@@ -119,6 +119,8 @@ export default function MovieDetailsModal(props: ModalType) {
                       }
                       { expandText && 
                           <Button 
+                          sx={{border: '1px solid',
+                        }}
                               id={`read-less-btn ${props.nomination.id}`}
                               name="readLessBtn"
                               className="expand-text-btn" 
@@ -137,10 +139,10 @@ export default function MovieDetailsModal(props: ModalType) {
                     name='closeBtn'
                     sx={{
                     width: 100,
-                    backgroundColor: 'primary',
+                    backgroundColor: 'primary.main',
                     borderRadius: 22,
                     cursor:'pointer',
-                    ':hover': {backgroundColor: 'primary'},
+                    ':hover': {backgroundColor: 'primary.dark'},
                     }} 
                     onClick={props.toggle}
                   >Close

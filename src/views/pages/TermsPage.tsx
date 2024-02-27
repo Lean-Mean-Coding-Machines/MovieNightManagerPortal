@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function TermsPage() {
+export default function TermsPage() {
   
   
   return (
@@ -40,5 +40,3 @@ function TermsPage() {
     </div>
   );
 }
-
-export default TermsPage;

@@ -12,7 +12,8 @@
         Container,
         Modal,
         TextField,
-        InputAdornment
+        InputAdornment,
+        ClickAwayListener
     } from '@mui/material';
     import CloseIcon from '@mui/icons-material/Close';
     import React, {ChangeEvent, useContext, useEffect, useRef, useState} from 'react';
@@ -20,7 +21,7 @@
     import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
-    import IWatchParty from '../model/IWatchParty';
+    import IWatchParty from '../model/watchParty/IWatchParty';
     import useAxios from '../hooks/useAxios';
     import {UserContext} from '../context/UserContext';
     import IMnmApiResponse from '../model/IMnmApiResponse';
@@ -89,7 +90,7 @@
         const currentDate = new Date();
 
         const defaultNominationRequest: INominationRequest = ({
-            watchPartyId: props.watchParty.id,
+            segmentId: props.watchParty.id,
             movieId: 0,
             movieTitle: '',
             posterPath: '',
@@ -100,16 +101,12 @@
             userId: userId
         });
 
-        let startDay = dayjs(props.watchParty.nominationLockDate);
-
-        // TODO: Remove WatchDate from form submission 
         useEffect(() => {
             setNominationRequest((p) => (
                 {
                     ...p,
-                    watchPartyId: props.watchParty.id,
+                    segmentId: props.watchParty.id,
                     userId: userId,
-                    watchDate: startDay.format('YYYY-MM-DDT00:00:00.000')
                 }));
         }, [props.watchParty.id, userId]);
 
@@ -146,18 +143,16 @@
             api.post<IMnmApiResponse<INominationRequest>>('/nomination/create', nominationRequest)
             .then(
                 (res) => {
-                    if (res.data.status.success && res.data.data != null) {
+                    if (res.data.status.success && res.data.data !== null) {
                         props.toggle();
                         resetNominationState();
-                        // TODO: Do this ${nominationRequest.watchDate.split('T')[0].split('-').reverse().join('-')} but from movie segment watch date. To be passed in with future changes
-                        toast.success(`Nomination Created for '${nominationRequest.movieTitle}'`);
+                        toast.success(`Nomination created for '${nominationRequest.movieTitle}'`);
                         props.watchPartyRefresh();
-                    } else {
-                        toast.error('Could not create nomination');
-                    }
+                    } 
                 },
                 (err) => {
                     console.log(err);
+                    toast.error('Could not create Nomination');
                 }
             )
             .catch(
@@ -279,13 +274,17 @@
                                 </IconButton>
                             </div>
                         <Box
-                            component='span'
+                            component='div'
                             sx={{
                                 fontWeight: 'bold',
                                 fontSize: {xs: 25, sm: 25, md: 30, lg: 35, xl: 40},
-                                fontFamily: 'SoraBold'
+                                fontFamily: 'SoraBold',
+                                display:'flex',
+                                flexDirection:'column',
+                                alignItems:'center'
                             }}>
-                            {'Nominate a Movie for ' + selectedCommunity.name}
+                            <div> Nominate a movie for</div>
+                            <div className='community-name-container'>{selectedCommunity.name}</div>
                         </Box>
                     </Box>
 
@@ -358,7 +357,8 @@
                             </Box>
 
                             {/* Search Results */}
-                            <List hidden={movieOptions.length === 0} sx={searchListStyle} >
+                            <ClickAwayListener onClickAway={()=> {setMovieOptions([])}}>
+                            <List hidden={movieOptions.length === 0} sx={searchListStyle}  >
                             {filterMovieDates.map((option) => (
                                         <div key={option.id} >
                                             <ListItem 
@@ -373,7 +373,8 @@
                                                 onClick={() => {
                                                     updateMovieSelection(option);
                                                     setMovieOptions([]);
-                                                }}          
+                                                }}  
+                                                onBlur={()=> {setMovieOptions([])}}        
                                                 sx={{
                                                     '&:hover': {
                                                     background: '#808080',
@@ -414,10 +415,11 @@
                                     ))
                                 }
                             </List>
+                            </ClickAwayListener>
 
                             {/* Chosen Movie */}
                             <Box hidden={selectedMovie === null}>
-                                <h3 style={{margin: 0, textAlign: 'center', color: '#000'}}>Chosen Movie</h3>
+                                <h3 className='chosen-movie-heading'>Chosen Movie</h3>
                                 <List sx={{maxHeight: 300, width: '100%', maxWidth: 360,}} >
                                     <ListItem alignItems='flex-start' sx={{pb: 0}}>
                                         <Avatar

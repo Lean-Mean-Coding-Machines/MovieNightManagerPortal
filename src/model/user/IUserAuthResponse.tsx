@@ -1,4 +1,4 @@
-import ICommunitySummary from "../ICommunitySummary";
+import ICommunitySummary from "../community/ICommunitySummary";
 
 export default interface IUserAuthResponse {
     token: string,

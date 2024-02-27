@@ -47,37 +47,33 @@ export function UserRegister(props: userRegisterProps) {
     };
 
     const handleSubmit = (event: React.SyntheticEvent) => {
-        event.preventDefault();
+      event.preventDefault();
+  
+      const isFirstNameValid = validateFirstNameField();
+      const isLastNameValid = validateLastNameField();
+      const isUsernameValid = validateUsernameField();
+      const isEmailValid = validateEmailField();
+      const isPasswordNameValid = validatePasswordField();
+  
+      if (isFirstNameValid && isLastNameValid && isUsernameValid && isEmailValid && isPasswordNameValid) {
+          api.post<IMnmApiResponse<IUserCreateResponse>>("/user/create", formValues)
+              .then((res) => {
+                  if (res.data.status.success) {
+                      const authRequest: IUserAuthRequest = {
+                          username: formValues.username,
+                          password: formValues.password
+                      };
+                      loginUser(authRequest);
+                  } 
+              })
+              .catch((error) => {
+                setSubmitErrorTxt(error.response.data.status.message);
+                console.error(error.response.data.status.message);
+                toast.error(submitErrorTxt); 
+            });
+      }
+  }
 
-        const isFirstNameValid = validateFirstNameField();
-        const isLastNameValid = validateLastNameField();
-        const isUsernameValid = validateUsernameField();
-        const isEmailValid = validateEmailField();
-        const isPasswordNameValid = validatePasswordField();
-
-
-        if (isFirstNameValid && isLastNameValid && isUsernameValid && isEmailValid && isPasswordNameValid) {
-            api.post<IMnmApiResponse<IUserCreateResponse>>("/user/create", formValues).then(
-                (res) => {
-                    if (res.data.status.success && res.data.data != null) {
-                        const authRequest: IUserAuthRequest = {
-                            username: formValues.username,
-                            password: formValues.password
-                        };
-                        loginUser(authRequest);
-                    } else {
-                        setSubmitErrorTxt(res.data.status.message);
-                    }
-                },
-                (err) => {
-                    console.log(err);
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                    toast.error(err);
-                });
-        }
-    }
 
     const formValidationResets: formValidationReset = {
         firstName: () => {

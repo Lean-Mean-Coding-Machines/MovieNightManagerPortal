@@ -1,4 +1,4 @@
-import INomination from "./nomination/INomination";
+import INomination from "../nomination/INomination";
 
 export default interface IWatchParty {
     id: number,

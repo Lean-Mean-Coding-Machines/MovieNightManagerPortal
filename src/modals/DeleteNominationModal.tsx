@@ -91,10 +91,10 @@ export default function DeleteNominationModal(props: ModalType) {
                                 name='deleteBtn'
                                 sx={{
                                     width: 100,
-                                    backgroundColor: 'primary',
+                                    backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
-                                    ':hover': {backgroundColor: 'primary'},
+                                    ':hover': {backgroundColor: 'primary.dark'},
                                 }}
                                 onClick={() => {
                                     props.toggle();

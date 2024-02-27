@@ -1,10 +1,11 @@
 import {Box, Button, FormControl, IconButton, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import {  ChangeEvent, FormEvent, useContext, useEffect, useState } from "react";
+import {  ChangeEvent, FormEvent, useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import IMnmApiResponse from "../model/IMnmApiResponse";
-import INewCommunity from "../model/INewCommunity";
+import INewCommunity from "../model/community/INewCommunity";
 import useAxios from "../hooks/useAxios";
+import { toast } from "react-toastify";
 
 interface ModalType {
     isOpen: boolean,
@@ -92,7 +93,10 @@ export default function NewCommunityModal (props: ModalType) {
                         setCommunityData(addCommunity);
                     }
                 },
-                (err) => console.log(err))
+                (err) => {
+                    toast.error('Could not create Community');
+                    console.log(err);
+                })
             .catch((err) => console.log(err.message));
       };
     
@@ -100,19 +104,11 @@ export default function NewCommunityModal (props: ModalType) {
         event.preventDefault();
         props.toggle();
         createCommunity(communityRequestState);
+        setCommunityRequestState(initialCommunityState);
       };
 
-      useEffect(() => {
-        setCommunityRequestState((p) => (
-            {
-                ...p,
-                userId: userId,
-            }));
-    }, [userId]);
 
-
-
-    if (props.modalName === 'newCommunity') {
+    if (props.modalName === 'Community') {
         return (
             <Modal
                 open={props.isOpen}
@@ -206,10 +202,10 @@ export default function NewCommunityModal (props: ModalType) {
                                 disabled={communityRequestState.communityName === '' || communityRequestState.timezone === ''}
                                 sx={{
                                     width: 100,
-                                    backgroundColor: 'primary',
+                                    backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
-                                    ':hover': {backgroundColor: 'primary'},
+                                    ':hover': {backgroundColor: 'primary.dark'},
                                 }}
                             >Create
                             </Button>

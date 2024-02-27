@@ -27,7 +27,7 @@ interface menuSettingAction {
     action: () => void
 }
 
-function AppNav() {
+export default function AppNav() {
 
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const {username, logoutUser, communities, selectedCommunity, setSelectedCommunity} = useContext(UserContext);
@@ -35,11 +35,11 @@ function AppNav() {
     const navigate = useNavigate();
     
     const navigateToProfile = () => {
-        navigate('/profile')
+        navigate('/profile');
     };
 
     const navigateToLogin = () => {
-        navigate('/login')
+        navigate('/login');
     };
 
     const settings: menuSettingAction[] = [
@@ -130,7 +130,7 @@ function AppNav() {
                                         },
                                         display: { xs: 'none', sm: 'inline-flex' }
                                     }}
-                                    onClick={() => {toggleModal('newCommunity');}}>
+                                    onClick={() => {toggleModal('Community');}}>
                                         <AddIcon/>
                                         <GroupsIcon/>
                                         </Button>
@@ -241,10 +241,7 @@ function AppNav() {
                                     </Button>
                                 </Box>
                             </Box>
-
-
                     )}
-
 
 
                 </Toolbar>
@@ -257,5 +254,3 @@ function AppNav() {
 
     );
 }
-
-export default AppNav;

@@ -8,7 +8,7 @@ interface timeSelectorProps {
     sx?: SxProps
 }
 
-function TimeSelector(props: timeSelectorProps) {
+export default function TimeSelector(props: timeSelectorProps) {
     const [time, setTime] = useState("5");
 
     const handleTimeChange = (event: SelectChangeEvent | null) => {
@@ -47,4 +47,3 @@ function TimeSelector(props: timeSelectorProps) {
     );
 }
 
-export default TimeSelector;

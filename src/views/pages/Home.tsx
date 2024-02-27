@@ -1,4 +1,4 @@
-import {Backdrop, Box, Button, CircularProgress, Fab, Grid, Tooltip, useTheme} from '@mui/material';
+import { Box, Button, Fab, Grid, Tooltip, useTheme} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -10,9 +10,11 @@ import NewWatchPartyModal from '../../modals/NewWatchPartyModal';
 import NewCommunityModal from '../../modals/NewCommunityModal';
 import '../../assets/HomePage.css';
 import useAxios from '../../hooks/useAxios';
-import IWatchParty from '../../model/IWatchParty';
+import IWatchParty from '../../model/watchParty/IWatchParty';
 import IMnmApiResponse from '../../model/IMnmApiResponse';
-import ICommunitySummary from '../../model/ICommunitySummary';
+import ICommunitySummary from '../../model/community/ICommunitySummary';
+import { LoadingSpinner } from '../../component/LoadingSpinner';
+import useLoadingSpinner from '../../hooks/useLoadingSpinner';
 
 export function HomePage() {
 
@@ -20,18 +22,16 @@ export function HomePage() {
 
     const theme = useTheme();
 
-    const [appLoading, setAppLoading] = useState(true);
-
-    const handleAppLoadingChange = (newState: boolean) => {
-        setAppLoading(newState)
-    };
+    const {toggleLoading, loading} = useLoadingSpinner();
 
     const {isOpen, toggle, modalName} = useModal();
 
     const userContext = useContext(UserContext);
     
     const [watchParty, setWatchParty] = useState<IWatchParty>({} as IWatchParty);
-  
+    
+    const modalTextName = userContext.selectedCommunity.id ? 'Watch Party' : 'Community';
+
     const getWatchParty = (selectedCommunity: number) => {  
           api.get<IMnmApiResponse<IWatchParty>>("/segment/current/" + selectedCommunity)
               .then(
@@ -51,7 +51,7 @@ export function HomePage() {
                     if (res.data.data) {
                     const community = res.data.data;
                         userContext.setCommunityData(community);
-                        userContext.setCommunities(community)
+                        userContext.setCommunities(community);
                     }
                 },
                 (err) => console.log(err))
@@ -59,17 +59,18 @@ export function HomePage() {
     }
 
     useEffect(() => {
+        toggleLoading(true);
         if (userContext.userId > 0) {
             getCommunity();
             getWatchParty(userContext.selectedCommunity.id);
         }
-        handleAppLoadingChange(false);
+        toggleLoading(false);
     }, []);
 
     useEffect(() => {
         getWatchParty(userContext.selectedCommunity.id);
-
     }, [userContext.selectedCommunity.id]);
+
 
     if (watchParty.chosenWatchDate) {
 
@@ -77,9 +78,10 @@ export function HomePage() {
 
         return (
             <>
-                <Backdrop sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}} open={appLoading}>
-                    <CircularProgress color='inherit'/>
-                </Backdrop>
+                <LoadingSpinner loadingState={loading}/>
+
+                { !loading && 
+                <>
                 <Box sx={{display: 'flex', flexDirection: 'column',}}
                   >
                     <h2 className='center-text'>
@@ -118,7 +120,7 @@ export function HomePage() {
                     <Fab onClick={()=>{toggle('newNomination');}} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         color: '#fff',
-                        backgroundColor: theme.palette.primary.main,
+                        backgroundColor: 'primary.main',
                         position: 'fixed',
                         bottom: '64px',
                         right: '10%',
@@ -132,37 +134,42 @@ export function HomePage() {
                             right: '5%',
                             bottom:'3%',
                           },
-                        ':hover': {backgroundColor: '#D53069'}
+                        ':hover': {backgroundColor: 'primary.dark'}
                     }}
                          aria-label="add">
                         <AddIcon/>
                     </Fab>
                 </Tooltip>}
 
-
-                    {/* Modals */}
+                {/* Modals */}
                 <NewNominationModal isOpen={isOpen} toggle={toggle} watchParty={watchParty} watchPartyRefresh={()=> getWatchParty(userContext.selectedCommunity.id)} modalName={modalName}/>
                 
                 <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}/>
+                </>
+                }
+                
             </>
         );
     } else {
         return (
         <>    
-        {userContext.username && !watchParty.chosenWatchDate &&
+        
+        <LoadingSpinner loadingState={loading}/>
+
+        {userContext.username && !watchParty.chosenWatchDate && !loading &&
         <div className='new-watch-party-container'>
-            <div className='center-text'> Looks like you haven't created a Watch Party yet</div>
+            <div className='center-text'> {`Looks like you haven't created a ${modalTextName} yet`}</div>
             <div style={{marginTop: '10px'}}>
-            <Button onClick={() => { toggle('newWatchParty')}}
+            <Button onClick={() => { toggle(modalTextName);}}
             id='create-watch-party'
             name='createWatchPartyBtn'
             sx={{
                 width: 100,
                 color: '#fff',
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: 'primary.main',
                 borderRadius: 22,
                 marginLeft: '10px',
-                ':hover': {backgroundColor: '#D53069'},
+                ':hover': {backgroundColor: 'primary.dark'},
             }}
             > Create </Button>
             </div>
@@ -170,7 +177,7 @@ export function HomePage() {
         }
 
         <NewWatchPartyModal isOpen={isOpen} toggle={toggle} modalName={modalName} setWatchParty={setWatchParty}></NewWatchPartyModal>
-
+        <NewCommunityModal isOpen={isOpen} toggle={toggle} modalName={modalName}/>
         </>
         );
     }
