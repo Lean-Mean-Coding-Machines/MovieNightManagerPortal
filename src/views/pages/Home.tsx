@@ -1,4 +1,4 @@
-import { Box, Button, Fab, Grid, Tooltip, useTheme} from '@mui/material';
+import { Box, Button, Fab, Grid, Tooltip, Typography, useTheme} from '@mui/material';
 import React, {useContext, useEffect, useState} from 'react';
 import NewNominationModal from '../../modals/NewNominationModal';
 import useModal from '../../hooks/useModal';
@@ -116,7 +116,11 @@ export function HomePage() {
                     </Grid>
                 </Box>
                 {/* Hides Nominate btn if user isn't logged in */}
-                {userContext.username && <Tooltip title="Nominate a Movie">
+                {userContext.username && <Tooltip title={<>
+                                    {<Typography>
+                                        Nominate a Movie                                   
+                                    </Typography>}
+                                </>} >
                     <Fab onClick={()=>{toggle('newNomination');}} sx={{
                         visibility: isOpen ? 'hidden' : 'visible',
                         color: '#fff',

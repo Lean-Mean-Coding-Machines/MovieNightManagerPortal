@@ -115,7 +115,11 @@ export default function AppNav() {
                             <Box sx={{ flexGrow: 0 }}>
 
                                 {/*TODO: Need to figure out mobile view for communities  */}
-                            <Tooltip title="Create Community" placement="bottom-start">
+                            <Tooltip title={<>
+                                    {<Typography>
+                                        Create Community                                    
+                                    </Typography>}
+                                </>} placement="bottom-start">
                                 <Button 
                                     variant="outlined"
                                     sx={{
@@ -136,8 +140,9 @@ export default function AppNav() {
                                         </Button>
                             </Tooltip>
 
-                                {communities.length > 0 &&
-                                <FormControl>
+                        {/* #TODO: add tooltip for Select Communities, needs to use open/close state since it covers menu items  */}
+                            {communities.length > 0 &&
+                            <FormControl>
                                 <Select
                                     labelId="selected-community-dropdown-label"
                                     id="selected-community-dropdown"
@@ -148,9 +153,9 @@ export default function AppNav() {
                                         height: '38px', 
                                         marginTop:'10px', 
                                         marginRight:'15px',
-                                        border: '1px solid',
+                                        maxWidth:'150px',
                                     '.MuiOutlinedInput-notchedOutline': {
-                                      borderColor: 'rgba(228, 219, 233, 0.25)',
+                                      borderColor: '#fff !important',
                                     },
                                     '.MuiSvgIcon-root ': {
                                         fill: "#fff !important",
@@ -163,11 +168,15 @@ export default function AppNav() {
                                 >
                                     {communities.map(community => (
                                         <MenuItem
+                                        style={{whiteSpace: 'normal'}}
+                                            sx={{maxWidth:'150px'}}
                                             value={community.id}
                                             key={community.id}
                                             selected={community.id === selectedCommunity.id}
                                         >
-                                            {community.name}
+                                        <div style={{ overflow: "hidden", textOverflow: "ellipsis" }}>
+                                            {community.name}              
+                                            </div>  
                                         </MenuItem>
                                     ))}
                                 </Select>
