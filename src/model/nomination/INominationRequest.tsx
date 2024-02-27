@@ -8,5 +8,5 @@ export default interface INominationRequest {
     runtime: number,
     genres: string[],
     userId: number,
-    overview: string
+    overview: string,
 }

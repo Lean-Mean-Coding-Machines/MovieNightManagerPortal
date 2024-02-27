@@ -18,7 +18,6 @@
     import CloseIcon from '@mui/icons-material/Close';
     import React, {ChangeEvent, useContext, useEffect, useRef, useState} from 'react';
     import '../assets/NewNominationModal.css';
-    import dayjs from 'dayjs';
     import { useTheme } from '@mui/material/styles';
     import {toast} from 'react-toastify'
     import IWatchParty from '../model/watchParty/IWatchParty';
@@ -190,6 +189,7 @@
 
             if (movie) {
                 const movieDetails = await populateMovieDetails(movie.id);
+
                 if (movieDetails) {
                     setNominationRequest({
                         ...nominationRequest,
@@ -201,7 +201,7 @@
                         posterPath: movie.posterPath,
                         releaseDate: movie.releaseDate
                     });
-                } else {
+                    } else {
                     setNominationRequest({
                         ...nominationRequest,
                         movieTitle: movie.title,
@@ -209,7 +209,7 @@
                         posterPath: movie.posterPath,
                         releaseDate: movie.releaseDate
                     });    
-                }
+                    }
             } else {
                 setNominationRequest(defaultNominationRequest);
             }
@@ -219,7 +219,7 @@
         }
 
         async function populateMovieDetails(movieId: number) {
-            return api.get<IMnmApiResponse<IMovieDetails>>(`/tmdb/movie/${movieId}`)
+            return api.get<IMnmApiResponse<IMovieDetails>>(`/tmdb/movie/${movieId}?append_to_response=credits`)
                 .then(
                     (res) => {
                         if (res.data.data && res.data.status.success) {
