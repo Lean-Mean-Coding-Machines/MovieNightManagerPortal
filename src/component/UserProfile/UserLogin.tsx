@@ -16,9 +16,7 @@ import IUserAuthRequest from "../../model/user/IUserAuthRequest";
 import {UserContext} from "../../context/UserContext";
 
 interface userRegisterProps {
-    handleHomeNav: () => void,
     handleLoginNav: () => void,
-    handleProfileNav: () => void
 }
 
 export function UserLogin(props: userRegisterProps) {
@@ -27,7 +25,7 @@ export function UserLogin(props: userRegisterProps) {
 
     const {isOpen, toggle} = useModal();
 
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -64,11 +62,12 @@ export function UserLogin(props: userRegisterProps) {
                 <h1>Sign In</h1>
 
                 <div>
-                    <TextField sx={{width: 220,}}
+                    <TextField sx={{width: 220}}
                     label="Username"
                     required 
                     name='username' 
                     id='login-username' 
+                    inputProps={{ maxLength: 50 }}
                     onChange={handleInputChange}/>
                 </div>
 

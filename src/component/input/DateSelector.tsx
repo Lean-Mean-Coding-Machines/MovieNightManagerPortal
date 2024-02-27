@@ -7,39 +7,55 @@ import {SxProps} from "@mui/material";
 
 interface dateSelectorProps {
   handleChangeDate: (input: dayjs.Dayjs) => void;
-  startDay: dayjs.Dayjs;
-  endDay?: dayjs.Dayjs;
+  labelName: string;
   sx?: SxProps;
 }
 
+const todaysDate = dayjs();
+
 function DateSelector(props: dateSelectorProps) {
 
-  const [value, setDate] = useState<Dayjs | null>(props.startDay);
+  const [value, setDate] = useState<Dayjs | null>(todaysDate);
+  const [dateError, setDateError] = useState('');
 
   const handleDateChange = (date: dayjs.Dayjs | null) => {
     if (date === null) {
-      console.log(date);
+      setDateError("Date is required");
       return;
     }
-    props.handleChangeDate(date!);
-    setDate(date!);
+    if (!dayjs(date).isValid()) {
+      setDateError("Invalid date selection");
+      return;
+    }
+    setDateError('');
+    props.handleChangeDate(date);
+    setDate(date);
+  };
+
+  const handleClearDate = () => {
+    setDate(null);
+    setDateError('');
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
             sx={props.sx}
-            label="Preferred Watch Date"
+            label={props.labelName}
             value={value}
+            minDate={todaysDate}
             onChange={(newValue) => handleDateChange(newValue)}
-            defaultValue={props.startDay}
-            minDate={props.startDay}
-            maxDate={props.endDay}
             views={["year", "month", "day"]}
             slotProps={{
               textField: {
                 required: true,
+                error: !!dateError,
+                helperText: dateError
               },
+              field: {
+                clearable: true,
+                onClear: handleClearDate
+              }
             }}
           />
     </LocalizationProvider>

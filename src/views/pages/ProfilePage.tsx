@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {useNavigate} from 'react-router-dom';
 import DeleteAccountModal from '../../modals/DeleteAccountModal';
 import useModal from '../../hooks/useModal';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {Button, Stack, TextField, useMediaQuery, useTheme} from "@mui/material";
 import {UserContext} from "../../context/UserContext";
 import useAxios from "../../hooks/useAxios";
@@ -14,7 +13,6 @@ import '../../assets/ProfilePage.css';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { toast } from 'react-toastify';
 import ProfileNomCard from '../../component/nomination/ProfileNomCard';
 
 const emptyUser: IUser = {
@@ -30,15 +28,12 @@ const emptyUser: IUser = {
 export function ProfilePage() {
     const {userId} = useContext(UserContext);
 
-    const navigate = useNavigate();
 
     // Toggles Delete Modal & Edit Modal open and close
     const {isOpen, toggle} = useModal();
 
     const [userLoading, setUserLoading] = useState(true);
     const [user, setUser] = useState(emptyUser);
-
-    const {logoutUser} = useContext(UserContext);
 
     const api = useAxios();
     
@@ -63,16 +58,6 @@ export function ProfilePage() {
       const theme = useTheme();
       const desktopView = useMediaQuery(theme.breakpoints.up('md'));
 
-    const deleteUserAccount = () => {
-        api.delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
-        .then(() => {
-            logoutUser();
-        })
-        .catch((err) => {
-            console.error("Error deleting user account:", err);
-            toast.error(`Account deletion failed`)
-        })
-    }
     
     const getUserDetails = () => {
         api.get<IMnmApiResponse<IUser>>(`/user/details/${userId}`)
@@ -87,11 +72,14 @@ export function ProfilePage() {
             .catch((err) => console.log(err.message));
     }
     
+    const isMounted = useRef(false);
+
     useEffect(() => {
-        if (userId) {
-            getUserDetails();
-        } else {
-            navigate('/');
+        if (!isMounted.current) {
+            isMounted.current = true;
+            if (userId) {
+                getUserDetails();
+            }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userId]);
@@ -194,7 +182,7 @@ export function ProfilePage() {
             }
 
             {/* Modals */}
-            <DeleteAccountModal isOpen={isOpen} toggle={toggle} deleteUserAccount={deleteUserAccount}></DeleteAccountModal>
+            <DeleteAccountModal isOpen={isOpen} toggle={toggle}></DeleteAccountModal>
 
         </>
     );

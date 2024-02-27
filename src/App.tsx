@@ -1,20 +1,25 @@
-import {Outlet, Route, Routes} from 'react-router-dom';
-import {LoginPage} from './views/pages/LoginPage';
-import {HomePage} from './views/pages/Home';
-import {ProfilePage} from './views/pages/ProfilePage';
+import { Outlet, Route, Routes } from 'react-router-dom';
+import { LoginPage } from './views/pages/LoginPage';
+import { HomePage } from './views/pages/Home';
+import { ProfilePage } from './views/pages/ProfilePage';
 import TermsPage from './views/pages/TermsPage';
 import PrivacyPage from './views/pages/PrivacyPage';
 import './assets/styles.css';
 import Layout from "./views/pages/Layout";
 import ContactPage from './views/pages/ContactPage';
 
+interface WithNavLayoutProps {
+    children?: React.ReactNode;
+}
+
+const WithNavLayout = ({ children }: WithNavLayoutProps) => (
+    <Layout>
+        <Outlet /> 
+        {children}
+    </Layout>
+);
+
 export function App() {
-
-    const WithNavLayout = () =>
-        <Layout>
-            <Outlet/>
-        </Layout>
-
     return (
         <Routes>
             <Route element={<WithNavLayout/>}>

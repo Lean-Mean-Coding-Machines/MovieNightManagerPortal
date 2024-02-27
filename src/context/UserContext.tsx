@@ -41,12 +41,12 @@ const defaultState: UserContextInterface = {
 }
 
 export const UserProvider = ({children}: UserProviderProps) => {
+    
     const [authToken, setAuthToken] = useState(UserStorageService.getAuthToken);
     const [userId, setUserId] = useState(UserStorageService.getUserId);
     const [username, setUsername] = useState(UserStorageService.getUsername);
     const [communities, setCommunities] = useState(UserStorageService.getEnrolledCommunities);
     const [selectedCommunity, setSelectedCommunity] = useState(UserStorageService.getSelectedCommunity)
-    const [loading, setLoading] = useState(true);
     const api = useAxios();
 
     const navigate = useNavigate();
@@ -57,6 +57,7 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setAuthToken(data.token);
         setUserId(data.userId);
         setUsername(data.username);
+        setCommunities(data.communities);
     }
 
     const setCommunityData = (communities: ICommunitySummary[]) => {
@@ -95,9 +96,11 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setAuthToken('');
         setUserId(0);
         setUsername('');
-        localStorage.removeItem('authToken');
+        setSelectedCommunity({id: 0, name: ''});
+        setCommunities([]);
         UserStorageService.clearUserData();
-        navigate('/');
+        localStorage.removeItem('authToken');
+        navigate('/login');
     }
 
 
@@ -156,6 +159,6 @@ export const UserProvider = ({children}: UserProviderProps) => {
             {children}
         </UserContext.Provider>
     );
-}
+};
 
 export const UserContext = createContext(defaultState);

@@ -106,6 +106,7 @@ export default function MovieDetailsModal(props: ModalType) {
                   { !desktopView && ( 
                       <div>
                       {/* TODO: Need to determine why expand class styles are being overwritten */}
+                      {/* Likely need to use the provided theme and drill down from there */}
                       { (props.nomination.movieOverview?.length > 350 && !expandText) && 
                           <Button 
                               id={`read-more-btn ${props.nomination.id}`}

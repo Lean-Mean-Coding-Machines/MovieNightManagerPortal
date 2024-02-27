@@ -1,14 +1,17 @@
 import { Box, Button, IconButton, Modal } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import '../assets/DeleteAccountModal.css';
+import IMnmApiResponse from "../model/IMnmApiResponse";
+import IUser from "../model/user/IUser";
+import { UserContext } from "../context/UserContext";
+import useAxios from "../hooks/useAxios";
+import { toast } from "react-toastify";
 
 interface ModalType {
   children?: ReactNode,
   isOpen: boolean,
   toggle: () => void,
-  modalName?: string,
-  deleteUserAccount: () => void
 }
 
 const modalStyle = {
@@ -23,7 +26,27 @@ const modalStyle = {
   borderRadius: '1rem',
 }
 
+
 export default function DeleteAccountModal(props: ModalType) {
+
+  const {userId} = useContext(UserContext);
+
+  const api = useAxios();
+
+  const {logoutUser} = useContext(UserContext);
+
+  const deleteUserAccount = () => {
+    api.delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
+    .then(() => {
+        logoutUser();
+    })
+    .catch((err) => {
+        console.error("Error deleting user account:", err);
+        toast.error(`Account deletion failed`)
+    })
+}
+
+
   return (
   <Modal
   open={props.isOpen}
@@ -84,7 +107,7 @@ export default function DeleteAccountModal(props: ModalType) {
           }} 
           onClick={()=>{
             props.toggle();
-            props.deleteUserAccount();
+            deleteUserAccount();
           }}
           >Delete
           </Button>

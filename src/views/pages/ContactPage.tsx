@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 
 function ContactPage() {
@@ -8,7 +8,7 @@ function ContactPage() {
     message: '',
   });
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...emailFormData,
@@ -17,7 +17,7 @@ function ContactPage() {
   };
 
   // TODO: Need to Expand upon this when Email Submission Post is created
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(emailFormData);
   };
