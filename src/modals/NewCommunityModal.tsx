@@ -119,7 +119,7 @@ export default function NewCommunityModal (props: ModalType) {
                             
             <form onSubmit={handleSubmit}>
                 <Box sx={modalStyle}>
-                    <Box sx={{textAlign: 'center'}}>
+                    <Box sx={{textAlign: 'center', marginTop:'15px'}}>
 
                         <div style={{float: 'right'}}
                              onClick={props.toggle}
@@ -137,55 +137,53 @@ export default function NewCommunityModal (props: ModalType) {
                             Create a new Community
                         </Box>
                     </Box>
-                    <Box sx={{textAlign: 'center', marginTop: '10px'}}>
-                        <div style={{display: 'flex',  flexDirection:'column'}}>
-                            <div style={{marginTop:'15px'}}>
+                    
+                    <Box sx={{textAlign: 'center', marginTop: '45px', display: 'flex',  flexDirection:'column', flexWrap:'nowrap', alignItems:'center'}}>
+                        <div>
+                            <div style={{display:'flex', fontSize:'20px', fontWeight:'bold'}}> Community Name</div>
+                                <div style={{marginTop:'15px'}}>
+                                    <TextField
+                                    sx={{width:'300px'}}
+                                    id="community-name"
+                                    name="communityName"
+                                    label="Community Name"
+                                    required
+                                    inputProps={{ maxLength: 50 }}
+                                    value={communityRequestState.communityName}
+                                    onChange={updateCommunityName}
+                                    />
+                                </div>
 
-                                <TextField
-                                sx={{width:'300px'}}
-                                id="community-name"
-                                name="communityName"
-                                label="Community Name"
-                                required
-                                inputProps={{ maxLength: 50 }}
-                                value={communityRequestState.communityName}
-                                onChange={updateCommunityName}
-                                />
+                            <div style={{marginTop:'30px'}}>
+                                <div style={{display:'flex', fontSize:'20px', fontWeight:'bold'}}> Select Timezone</div>
+                                    <FormControl sx={{width:'300px', marginTop:'15px'}}>
+                                    <InputLabel id="timezone-label">Select Timezone</InputLabel>
+                                            <Select
+                                            labelId="timezone-label"
+                                            id="timezone"
+                                            value={communityRequestState.timezone}
+                                            onChange={updateTimeZone}
+                                            label="Select Timezone"
+                                            required
+                                            >
+                                            <MenuItem value="">
+                                                <em>None</em>
+                                            </MenuItem>
+                                            {northAmericanTimezones.map((timezone) => (
+                                                <MenuItem key={timezone} value={timezone} tabIndex={0}>{timezone} </MenuItem>
+                                            ))}
+                                            </Select>
+                                    </FormControl>
                             </div>
-
-                        <div style={{marginTop:'15px'}}>
-
-                        <FormControl sx={{width:'300px'}}>
-
-                           <InputLabel id="timezone-label">Select Timezone</InputLabel>
-                                <Select
-                                labelId="timezone-label"
-                                id="timezone"
-                                value={communityRequestState.timezone}
-                                onChange={updateTimeZone}
-                                label="Select Timezone"
-                                required
-                                >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                {northAmericanTimezones.map((timezone) => (
-                                    <MenuItem key={timezone} value={timezone} tabIndex={0}>{timezone} </MenuItem>
-                                ))}
-                                </Select>
-                            </FormControl>
-                        </div>
-
                         </div>
             
-                        <div style={{marginTop: '35px', marginRight: '15px'}}>
-
+                        <div style={{marginTop: '55px', width:'100%', display:'flex', marginBottom:'10px'}}>
                             <Button
                                 variant='outlined'
                                 id="cancel-btn"
                                 name='cancelBtn'
                                 sx={{
-                                    width: 100,
+                                    width: '50%',
                                     backgroundColor: 'primary',
                                     borderRadius: 22,
                                     ':hover': {backgroundColor: 'primary'},
@@ -201,7 +199,7 @@ export default function NewCommunityModal (props: ModalType) {
                                 type="submit"
                                 disabled={communityRequestState.communityName === '' || communityRequestState.timezone === ''}
                                 sx={{
-                                    width: 100,
+                                    width: '50%',
                                     backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
@@ -209,7 +207,6 @@ export default function NewCommunityModal (props: ModalType) {
                                 }}
                             >Create
                             </Button>
-
                         </div>
                     </Box>
                 </Box>
