@@ -71,7 +71,7 @@ export function HomePage() {
 
     useEffect(() => {
         getWatchParty(userContext.selectedCommunity.id);
-    }, [userContext.selectedCommunity.id, userContext.userId]);
+    }, [userContext.selectedCommunity.id]);
 
 
     if (watchParty.chosenWatchDate) {

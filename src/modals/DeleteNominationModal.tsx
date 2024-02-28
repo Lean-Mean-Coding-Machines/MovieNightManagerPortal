@@ -36,7 +36,7 @@ export default function DeleteNominationModal(props: ModalType) {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={modalStyle}>
-                    <Box sx={{textAlign: 'center'}}>
+                    <Box sx={{textAlign: 'center', marginTop:'15px'}}>
 
                         <div style={{float: 'right'}}
                              onClick={props.toggle}
@@ -51,10 +51,10 @@ export default function DeleteNominationModal(props: ModalType) {
                                  fontSize: {xs: 25, sm: 25, md: 30, lg: 30, xl: 30},
                                  fontFamily: 'SoraBold',
                              }}>
-                            Delete Nomination?
+                            Delete Nomination
                         </Box>
                     </Box>
-                    <Box sx={{textAlign: 'center', marginTop: '10px'}}>
+                    <Box sx={{textAlign: 'center', marginTop: '25px'}}>
 
                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             <CardMedia
