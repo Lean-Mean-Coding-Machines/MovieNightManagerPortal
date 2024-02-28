@@ -112,7 +112,7 @@ export default function AppNav() {
 
                     {!window.location.pathname.includes('/login') && (
                         username !== "" ?
-                            <Box sx={{ flexGrow: 0 }}>
+                            <Box sx={{ flexGrow: 0, display:'flex', alignItems:'center' }}>
 
                                 {/*TODO: Need to figure out mobile view for communities  */}
                             <Tooltip title={<>
@@ -126,7 +126,6 @@ export default function AppNav() {
                                         color: '#fff',
                                         borderColor: '#fff',
                                         marginRight:'15px',
-                                        marginTop: '2px',
                                         height: '38px',
                                         ':hover': {
                                             color: '#f1f1f1',
@@ -151,7 +150,6 @@ export default function AppNav() {
                                     sx={{ 
                                         color: '#fff', 
                                         height: '38px', 
-                                        marginTop:'10px', 
                                         marginRight:'15px',
                                         width:'150px',
                                     '.MuiOutlinedInput-notchedOutline': {
