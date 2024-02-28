@@ -9,6 +9,7 @@ import useAxios from "../hooks/useAxios";
 import IMnmApiResponse from "../model/IMnmApiResponse";
 import IWatchParty from "../model/watchParty/IWatchParty";
 import { toast } from "react-toastify";
+import '../assets/NewWatchPartyModal.css';
 
 interface ModalType {
     isOpen: boolean,
@@ -103,7 +104,7 @@ export default function NewWatchPartyModal (props: ModalType) {
             <form onSubmit={handleSubmit}>
 
                 <Box sx={modalStyle}>
-                    <Box sx={{textAlign: 'center'}}>
+                    <Box sx={{textAlign: 'center', marginTop:'15px'}}>
 
                         <div style={{float: 'right'}}
                              onClick={props.toggle}
@@ -121,32 +122,25 @@ export default function NewWatchPartyModal (props: ModalType) {
                             Create a new Watch Party
                         </Box>
                     </Box>
+
                     <Box sx={{textAlign: 'center', marginTop: '10px'}}>
-
-                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                             <div style={{display:'flex', alignItems:'center', flexDirection:'column'}}>
-                                <div style={{marginTop:'15px'}}>
-                             <DateSelector handleChangeDate={updateWatchDateSelector} labelName="Watch Date" ></DateSelector>
-
-                                </div>
-                                <div style={{marginTop:'30px'}}>
-                             <DateSelector handleChangeDate={(date) => updateWatchDateSelector(date, true)} labelName="Nomination Lock Date"/>
-                                </div>
+                        <div className="input-outer-container ">
+                             <div className="input-inner-container">
+                                <div className="input-field-text"> Watch Date</div>
+                     {/* TODO: Need to add in some error handling regarding parsed date, can't be greater than nomination date */}
+                                    <DateSelector handleChangeDate={updateWatchDateSelector} sx={{marginTop:'8px'}}></DateSelector>
+                                <div className="input-field-text"> Nomination Lock Date</div>
+                                    <DateSelector handleChangeDate={(date) => updateWatchDateSelector(date, true)} sx={{marginTop:'8px'}}/>
                              </div>
-                             
-                                {/* TODO: Need to add in some error handling regarding parsed date, can't be greater than nomination date */}
-
-                        </Box>
+                        </div>
             
-
-                        <div style={{marginTop: '35px', marginRight: '15px'}}>
-
+                        <div className="button-container">
                             <Button
                                 variant='outlined'
                                 id="cancel-btn"
                                 name='cancelBtn'
                                 sx={{
-                                    width: 100,
+                                    width: '50%',
                                     backgroundColor: 'primary',
                                     borderRadius: 22,
                                     ':hover': {backgroundColor: 'primary'},
@@ -161,7 +155,7 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 name='createBtn'
                                 type="submit"
                                 sx={{
-                                    width: 100,
+                                    width: '50%',
                                     backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
@@ -169,7 +163,6 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 }}
                             >Create
                             </Button>
-
                         </div>
                     </Box>
                 </Box>

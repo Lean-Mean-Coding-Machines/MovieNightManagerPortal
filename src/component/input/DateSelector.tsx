@@ -7,7 +7,7 @@ import {SxProps} from "@mui/material";
 
 interface dateSelectorProps {
   handleChangeDate: (input: dayjs.Dayjs) => void;
-  labelName: string;
+  labelName?: string;
   sx?: SxProps;
 }
 
