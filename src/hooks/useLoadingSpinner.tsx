@@ -7,9 +7,8 @@ export default function useLoadingSpinner() {
     setLoading(loadingStatus);
   };
 
-  return { 
-    loading, 
-    toggleLoading 
-    };
-};
-
+  return {
+    loading,
+    toggleLoading,
+  };
+}

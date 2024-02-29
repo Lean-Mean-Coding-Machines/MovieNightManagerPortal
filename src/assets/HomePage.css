@@ -1,22 +1,23 @@
 .new-watch-party-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 70vh;
-    justify-content: center;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+  justify-content: center;
+}
 
-  .center-text, .card-ranking {
-    color: #fff;
-    text-align: center;
-  }
+.center-text,
+.card-ranking {
+  color: #fff;
+  text-align: center;
+}
 
-  .card-ranking {
-    z-index: 1000;
-    position: absolute;
-    background: #015f76;
-    padding: 9px;
-    border-radius: 6px;
-    font-weight: bold;
-    width: 19px;
-  }
+.card-ranking {
+  z-index: 1000;
+  position: absolute;
+  background: #015f76;
+  padding: 9px;
+  border-radius: 6px;
+  font-weight: bold;
+  width: 19px;
+}

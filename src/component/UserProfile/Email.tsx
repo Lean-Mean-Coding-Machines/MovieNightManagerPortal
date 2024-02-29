@@ -1,13 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment } from 'react';
 import { styled } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch, { SwitchProps } from '@mui/material/Switch';
-import { Button, FormControl, OutlinedInput } from "@mui/material";
-
+import { Button, FormControl, OutlinedInput } from '@mui/material';
 
 //Styling for IOS Toggle
 const IOSSwitch = styled((props: SwitchProps) => (
-  <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
+  <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />
 ))(({ theme }) => ({
   width: 42,
   height: 26,
@@ -57,15 +56,12 @@ const IOSSwitch = styled((props: SwitchProps) => (
   },
 }));
 
-
-
 export default function Email() {
   return (
     <Fragment>
       <div style={{ marginLeft: 50 }}>
         <h3>Update Email Address</h3>
-        <div style={{ fontWeight: 'bold' }}> Current Email
-        </div>
+        <div style={{ fontWeight: 'bold' }}> Current Email</div>
         <div>{`Your current email address is GlobLauncher@gmail.com`}</div>
 
         <div style={{ marginTop: 10, fontWeight: 'bold' }}> New Email</div>
@@ -76,18 +72,29 @@ export default function Email() {
           </FormControl>
         </div>
         <div>
-          <Button variant='contained' sx={{ width: 155, backgroundColor: '#1F1F1F', marginTop: 2, borderRadius: 22, ':hover': { backgroundColor: '#1F1F1F', }, }}>
+          <Button
+            variant='contained'
+            sx={{
+              width: 155,
+              backgroundColor: '#1F1F1F',
+              marginTop: 2,
+              borderRadius: 22,
+              ':hover': { backgroundColor: '#1F1F1F' },
+            }}
+          >
             Save Changes
           </Button>
         </div>
 
-
         <FormControl>
           <div style={{ marginTop: 10 }}>
-            <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} label="Email Notifications" />
+            <FormControlLabel
+              control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+              label='Email Notifications'
+            />
           </div>
         </FormControl>
       </div>
     </Fragment>
   );
-};
+}

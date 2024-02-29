@@ -14,11 +14,7 @@ body {
 }
 
 @font-face {
-  font-family: "SoraBold";
-  src: local("SoraBold"),
-   url("../fonts/Sora/Sora-Bold.ttf") format("truetype");
-   font-display: swap;
-  }
-
-
-
+  font-family: 'SoraBold';
+  src: local('SoraBold'), url('../fonts/Sora/Sora-Bold.ttf') format('truetype');
+  font-display: swap;
+}

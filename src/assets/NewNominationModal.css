@@ -1,33 +1,34 @@
-.clear-btn, .search-btn {
-    border-color: var(--primary-main);
-    color: var(--primary-main);
-    width: 50%;
+.clear-btn,
+.search-btn {
+  border-color: var(--primary-main);
+  color: var(--primary-main);
+  width: 50%;
 }
 
-.clear-btn:hover, .search-btn:hover {
-    color: var(--primary-main);
-    border-color: var(--primary-main);
+.clear-btn:hover,
+.search-btn:hover {
+  color: var(--primary-main);
+  border-color: var(--primary-main);
 }
 
 .submit-btn {
-    width: 125px;
-    background-color: var(--primary-main);
-    border-radius: 22px !important;
+  width: 125px;
+  background-color: var(--primary-main);
+  border-radius: 22px !important;
 }
 
 .submit-btn:hover {
-    background-color: #D53069 !important;
+  background-color: #d53069 !important;
 }
 
-
 .community-name-container {
-    width: 11em;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 11em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chosen-movie-heading {
-    margin: 0;
-    text-align: center;
-    color: #000;
+  margin: 0;
+  text-align: center;
+  color: #000;
 }

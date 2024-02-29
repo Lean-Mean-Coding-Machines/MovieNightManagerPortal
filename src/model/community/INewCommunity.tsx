@@ -1,5 +1,5 @@
 export default interface INewCommunity {
-    id: number,
-    name: string,
-    timezone: string
+  id: number;
+  name: string;
+  timezone: string;
 }
