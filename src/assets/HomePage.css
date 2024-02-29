@@ -6,8 +6,7 @@
   justify-content: center;
 }
 
-.center-text,
-.card-ranking {
+.center-text {
   color: #fff;
   text-align: center;
   font-size: calc(23px + 6 * ((100vw - 320px) / 680));
@@ -21,4 +20,6 @@
   border-radius: 6px;
   font-weight: bold;
   width: 19px;
+  color: #fff;
+  text-align: center;
 }
