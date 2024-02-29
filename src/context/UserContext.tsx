@@ -1,4 +1,11 @@
-import { useState, createContext, useEffect, ReactNode } from 'react';
+import {
+  useState,
+  createContext,
+  useEffect,
+  ReactNode,
+  SetStateAction,
+  Dispatch,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import IUserAuthRequest from '../model/user/IUserAuthRequest';
 import UserStorageService from '../service/UserStorageService';
@@ -20,6 +27,8 @@ interface UserContextInterface {
   setUserAuthData: (data: IUserAuthResponse) => void;
   loginUser: (userRequest: IUserAuthRequest) => void;
   logoutUser: () => void;
+  setLoginActive: Dispatch<SetStateAction<boolean>>;
+  loginPageActive: boolean;
 }
 
 interface UserProviderProps {
@@ -38,6 +47,8 @@ const defaultState: UserContextInterface = {
   setUserAuthData: (data: IUserAuthResponse) => {},
   loginUser: (userRequest: IUserAuthRequest) => {},
   logoutUser: () => {},
+  loginPageActive: true,
+  setLoginActive: () => {},
 };
 
 export const UserProvider = ({ children }: UserProviderProps) => {
@@ -50,6 +61,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
   const [selectedCommunity, setSelectedCommunity] = useState(
     UserStorageService.getSelectedCommunity
   );
+
+  const [loginPageActive, setLoginActive] = useState(true);
+
   const api = useAxios();
 
   const navigate = useNavigate();
@@ -143,6 +157,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setUserAuthData: setUserAuthData,
     loginUser: loginUser,
     logoutUser: logoutUser,
+    loginPageActive: loginPageActive,
+    setLoginActive: setLoginActive,
   };
 
   // useEffect(() => {

@@ -35,6 +35,8 @@ export default function AppNav() {
     communities,
     selectedCommunity,
     setSelectedCommunity,
+    loginPageActive,
+    setLoginActive,
   } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -101,6 +103,7 @@ export default function AppNav() {
             <Typography
               variant='h6'
               component={Link}
+              onClick={() => setLoginActive(true)}
               to='/'
               noWrap
               sx={{
@@ -127,7 +130,7 @@ export default function AppNav() {
               </Box>
             </Typography>
 
-            {!window.location.pathname.includes('/login') &&
+            {(window.location.pathname === '/' || !loginPageActive) &&
               (username !== '' ? (
                 <Box
                   sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}
