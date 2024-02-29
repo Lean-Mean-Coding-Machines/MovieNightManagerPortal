@@ -10,6 +10,7 @@
 .card-ranking {
   color: #fff;
   text-align: center;
+  font-size: calc(23px + 6 * ((100vw - 320px) / 680));
 }
 
 .card-ranking {
