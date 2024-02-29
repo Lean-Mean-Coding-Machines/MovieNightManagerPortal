@@ -89,15 +89,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         },
         (err) => {
           console.log(err);
+          toast.error(err.response.data.status.message);
           return null;
         }
-      )
-      .catch((err) => {
-        //TODO: Error Handling needs to be improved for failed authentication, handle this on the backend?
-        toast.error(`Invalid User Name/Password combination`);
-        console.log(err.message);
-        return null;
-      });
+      );
   };
 
   let logoutUser = () => {
