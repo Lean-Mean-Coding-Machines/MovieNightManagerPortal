@@ -16,6 +16,8 @@ interface ModalType {
   toggle: () => void;
   modalName?: string;
   setWatchParty: React.Dispatch<React.SetStateAction<IWatchParty>>;
+  setManageWatchPartyActive?: React.Dispatch<React.SetStateAction<boolean>>;
+  manageWatchPartyActive: boolean;
 }
 
 const modalStyle = {
@@ -30,12 +32,16 @@ const modalStyle = {
   borderRadius: '1rem',
 };
 
-export default function NewWatchPartyModal(props: ModalType) {
+export default function WatchPartyModal(props: ModalType) {
   const api = useAxios();
 
   const userContext = useContext(UserContext);
 
   const todaysDate = dayjs().toISOString().replace(new RegExp('Z', 'g'), '');
+
+  const modalTitleText = props.manageWatchPartyActive ? 'Edit' : 'Create a new';
+
+  const submitBtn = props.manageWatchPartyActive ? 'Submit' : 'Create';
 
   const initialWatchPartyRequest: IWatchPartyRequest = {
     chosenWatchDate: todaysDate,
@@ -89,10 +95,13 @@ export default function NewWatchPartyModal(props: ModalType) {
       .catch((err) => console.log(err.message));
   };
 
+  // TODO: Add in API call for editing/managing Watch Date
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     props.toggle();
-    createWatchParty(watchPartyRequestState);
+    if (!props.manageWatchPartyActive) {
+      createWatchParty(watchPartyRequestState);
+    }
   };
 
   useEffect(() => {
@@ -126,7 +135,7 @@ export default function NewWatchPartyModal(props: ModalType) {
                   fontFamily: 'SoraBold',
                 }}
               >
-                Create a new Watch Party
+                {modalTitleText} Watch Party
               </Box>
             </Box>
 
@@ -178,7 +187,7 @@ export default function NewWatchPartyModal(props: ModalType) {
                     ':hover': { backgroundColor: 'primary.dark' },
                   }}
                 >
-                  Create
+                  {submitBtn}
                 </Button>
               </div>
             </Box>

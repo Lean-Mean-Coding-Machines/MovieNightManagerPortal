@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import INomination from '../../model/nomination/INomination';
 import NominationCard from '../../component/nomination/NominationCard';
 import { UserContext } from '../../context/UserContext';
-import NewWatchPartyModal from '../../modals/NewWatchPartyModal';
+import NewWatchPartyModal from '../../modals/WatchPartyModal';
 import NewCommunityModal from '../../modals/NewCommunityModal';
 import '../../assets/HomePage.css';
 import useAxios from '../../hooks/useAxios';
@@ -23,6 +23,9 @@ import IMnmApiResponse from '../../model/IMnmApiResponse';
 import ICommunitySummary from '../../model/community/ICommunitySummary';
 import { LoadingSpinner } from '../../component/LoadingSpinner';
 import useLoadingSpinner from '../../hooks/useLoadingSpinner';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeletWatchPartyModal from '../../modals/DeleteWatchPartyModal';
 
 export function HomePage() {
   const api = useAxios();
@@ -40,6 +43,8 @@ export function HomePage() {
   const modalTextName = userContext.selectedCommunity.id
     ? 'Watch Party'
     : 'Community';
+
+  const [manageWatchPartyActive, setManageWatchPartyActive] = useState(Boolean);
 
   const getWatchParty = (selectedCommunity: number) => {
     if (selectedCommunity > 0) {
@@ -109,7 +114,59 @@ export function HomePage() {
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
               <h2 className='center-text'>
-                <div> {`Watch Party Nominations for ${chosenWatchDate}`}</div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  {' '}
+                  {`Watch Party Nominations for ${chosenWatchDate}`}
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginLeft: '8px',
+                      padding: '5px 10px 0 10px',
+                    }}
+                  >
+                    <div style={{ paddingLeft: '5px' }}>
+                      <Tooltip
+                        title={<>{<Typography>Edit Watch Party</Typography>}</>}
+                      >
+                        <EditIcon
+                          sx={{
+                            backgroundColor: 'primary.main',
+                            cursor: 'pointer',
+                            padding: '5px',
+                            borderRadius: '5px',
+                            ':hover': { backgroundColor: 'primary.dark' },
+                          }}
+                          onClick={() => {
+                            setManageWatchPartyActive(true);
+                            toggle(modalTextName);
+                          }}
+                        ></EditIcon>
+                      </Tooltip>
+                    </div>
+
+                    <div style={{ paddingLeft: '10px' }}>
+                      <Tooltip
+                        title={
+                          <>{<Typography>Delete Watch Party</Typography>}</>
+                        }
+                      >
+                        <DeleteIcon
+                          sx={{
+                            backgroundColor: 'primary.main',
+                            cursor: 'pointer',
+                            padding: '5px',
+                            borderRadius: '5px',
+                            ':hover': { backgroundColor: 'primary.dark' },
+                          }}
+                          onClick={() => {
+                            toggle('Delete Watch Party');
+                          }}
+                        ></DeleteIcon>
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
               </h2>
               <Grid
                 container
@@ -200,6 +257,22 @@ export function HomePage() {
               toggle={toggle}
               modalName={modalName}
             />
+
+            <NewWatchPartyModal
+              isOpen={isOpen}
+              toggle={toggle}
+              modalName={modalName}
+              setWatchParty={setWatchParty}
+              setManageWatchPartyActive={setManageWatchPartyActive}
+              manageWatchPartyActive={manageWatchPartyActive}
+            />
+
+            <DeletWatchPartyModal
+              isOpen={isOpen}
+              toggle={toggle}
+              modalName={modalName}
+              watchParty={watchParty}
+            />
           </>
         )}
       </>
@@ -218,6 +291,7 @@ export function HomePage() {
             <div style={{ marginTop: '10px' }}>
               <Button
                 onClick={() => {
+                  setManageWatchPartyActive(false);
                   toggle(modalTextName);
                 }}
                 id='create-watch-party'
@@ -243,6 +317,7 @@ export function HomePage() {
           toggle={toggle}
           modalName={modalName}
           setWatchParty={setWatchParty}
+          manageWatchPartyActive={manageWatchPartyActive}
         />
         <NewCommunityModal
           isOpen={isOpen}

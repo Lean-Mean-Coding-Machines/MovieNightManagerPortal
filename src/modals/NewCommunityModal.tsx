@@ -237,7 +237,7 @@ export default function NewCommunityModal(props: ModalType) {
                   id='cancel-btn'
                   name='cancelBtn'
                   sx={{
-                    width: '50%',
+                    width: '10rem',
                     backgroundColor: 'primary',
                     borderRadius: 22,
                     ':hover': { backgroundColor: 'primary' },
@@ -257,7 +257,7 @@ export default function NewCommunityModal(props: ModalType) {
                     communityRequestState.timezone === ''
                   }
                   sx={{
-                    width: '50%',
+                    width: '10rem',
                     backgroundColor: 'primary.main',
                     borderRadius: 22,
                     marginLeft: '10px',
