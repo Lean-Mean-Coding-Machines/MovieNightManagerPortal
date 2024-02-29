@@ -201,10 +201,7 @@ export function ProfilePage() {
           )}
 
           {/* Modals */}
-          <DeleteAccountModal
-            isOpen={isOpen}
-            toggle={toggle}
-          ></DeleteAccountModal>
+          <DeleteAccountModal isOpen={isOpen} toggle={toggle} />
         </>
       )}
     </>

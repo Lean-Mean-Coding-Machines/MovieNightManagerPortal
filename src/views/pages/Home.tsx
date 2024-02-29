@@ -243,7 +243,7 @@ export function HomePage() {
           toggle={toggle}
           modalName={modalName}
           setWatchParty={setWatchParty}
-        ></NewWatchPartyModal>
+        />
         <NewCommunityModal
           isOpen={isOpen}
           toggle={toggle}
