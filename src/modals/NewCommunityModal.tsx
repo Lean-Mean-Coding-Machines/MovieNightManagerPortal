@@ -177,7 +177,7 @@ export default function NewCommunityModal (props: ModalType) {
                             </div>
                         </div>
             
-                        <div style={{marginTop: '55px', width:'100%', display:'flex', marginBottom:'10px'}}>
+                        <div style={{marginTop: '55px', width:'100%', display:'flex', marginBottom:'10px', justifyContent:'center'}}>
                             <Button
                                 variant='outlined'
                                 id="cancel-btn"

@@ -140,7 +140,7 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 id="cancel-btn"
                                 name='cancelBtn'
                                 sx={{
-                                    width: '50%',
+                                    width: '10rem',
                                     backgroundColor: 'primary',
                                     borderRadius: 22,
                                     ':hover': {backgroundColor: 'primary'},
@@ -155,7 +155,7 @@ export default function NewWatchPartyModal (props: ModalType) {
                                 name='createBtn'
                                 type="submit"
                                 sx={{
-                                    width: '50%',
+                                    width: '10rem',
                                     backgroundColor: 'primary.main',
                                     borderRadius: 22,
                                     marginLeft: '10px',
