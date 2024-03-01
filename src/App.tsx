@@ -5,33 +5,33 @@ import { ProfilePage } from './views/pages/ProfilePage';
 import TermsPage from './views/pages/TermsPage';
 import PrivacyPage from './views/pages/PrivacyPage';
 import './assets/styles.css';
-import Layout from "./views/pages/Layout";
+import Layout from './views/pages/Layout';
 import ContactPage from './views/pages/ContactPage';
 
 interface WithNavLayoutProps {
-    children?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const WithNavLayout = ({ children }: WithNavLayoutProps) => (
-    <Layout>
-        <Outlet /> 
-        {children}
-    </Layout>
+  <Layout>
+    <Outlet />
+    {children}
+  </Layout>
 );
 
 export function App() {
-    return (
-        <Routes>
-            <Route element={<WithNavLayout/>}>
-                <Route path='/' element={<HomePage/>}/>
-                <Route path='/profile' element={<ProfilePage/>}/>
-                <Route path='/login' element={<LoginPage/>}/>
-                <Route path='/terms' element={<TermsPage/>}/>
-                <Route path='/privacy' element={<PrivacyPage/>}/> 
-                <Route path='/contact' element={<ContactPage/>}/> 
-            </Route>
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route element={<WithNavLayout />}>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/terms' element={<TermsPage />} />
+        <Route path='/privacy' element={<PrivacyPage />} />
+        <Route path='/contact' element={<ContactPage />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default App;

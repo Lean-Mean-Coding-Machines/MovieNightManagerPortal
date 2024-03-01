@@ -1,4 +1,4 @@
 export default interface INominationLikeRequest {
-    nominationId: number,
-    userId: number
+  nominationId: number;
+  userId: number;
 }

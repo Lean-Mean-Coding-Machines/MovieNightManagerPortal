@@ -1,6 +1,6 @@
-import IResponseStatus from "./IApiResponseStatus";
+import IResponseStatus from './IApiResponseStatus';
 
 export default interface IMnmApiResponse<T> {
-    data?: T | null,
-    status: IResponseStatus
+  data?: T | null;
+  status: IResponseStatus;
 }

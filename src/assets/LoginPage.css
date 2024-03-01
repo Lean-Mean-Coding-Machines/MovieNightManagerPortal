@@ -14,8 +14,8 @@
   background-color: #f6f6f6;
   padding: 4em;
   border-radius: 10px;
-}  
-  
+}
+
 .sign-in-btn-container {
   margin-top: 1.5rem;
 }
@@ -34,13 +34,13 @@
   margin-top: 10px;
 }
 
-
 .create-link {
   font-weight: bold;
   cursor: pointer;
   margin: 5px 0 0 5px;
 }
 
-.forgot-password-link:hover, .create-link:hover {
+.forgot-password-link:hover,
+.create-link:hover {
   color: #c12b5d;
 }

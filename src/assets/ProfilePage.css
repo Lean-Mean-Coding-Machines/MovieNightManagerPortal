@@ -1,56 +1,56 @@
 hr {
-    height: .1px;
-    border-color: #fff;
-    width: 20rem;
-    margin-left: 15px;
-    background-color: #fff;
+  height: 0.1px;
+  border-color: #fff;
+  width: 20rem;
+  margin-left: 15px;
+  background-color: #fff;
 }
 
 h3 {
-    color: #fff;
-    margin: 20px 0 15px 15px;
+  color: #fff;
+  margin: 20px 0 15px 15px;
 }
 
 .profile-info-container {
-    width: 16rem;
-    padding: 2em;
-    background: #f6f6f6;
-    border-radius: 10px;
-    margin: 5px 0 30px 15px;
+  width: 16rem;
+  padding: 2em;
+  background: #f6f6f6;
+  border-radius: 10px;
+  margin: 5px 0 30px 15px;
 }
 
 .desktop-slider-container {
-    max-width: 100%; 
-    padding: 25px 55px 50px;
+  max-width: 100%;
+  padding: 25px 55px 50px;
 }
 
 .mobile-slider-container {
-    max-width: 100%; 
-    padding: 10px 55px 50px;
-
+  max-width: 100%;
+  padding: 10px 55px 50px;
 }
 
 /* Carousel Arrows */
-.slick-prev:before, .slick-next:before {
-    color: #c12b5d !important;
-    font-size: 33px !important;
+.slick-prev:before,
+.slick-next:before {
+  color: #c12b5d !important;
+  font-size: 33px !important;
 }
 
 .slick-prev {
-    left: -50px !important;
+  left: -50px !important;
 }
 
 .slick-next {
-    right: -40px !important;
+  right: -40px !important;
 }
 
 .slick-dots li.slick-active button:before {
-    color: #c12b5d !important;
-    font-size: 8px !important;
+  color: #c12b5d !important;
+  font-size: 8px !important;
 }
 
 .slick-dots li button:before {
-    color: #fff !important;
-    font-size: 8px !important;
+  color: #fff !important;
+  font-size: 8px !important;
 }
 /* */
