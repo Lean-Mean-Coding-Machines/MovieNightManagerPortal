@@ -272,6 +272,9 @@ export function HomePage() {
               toggle={toggle}
               modalName={modalName}
               watchParty={watchParty}
+              watchPartyRefresh={() =>
+                getWatchParty(userContext.selectedCommunity.id)
+              }
             />
           </>
         )}

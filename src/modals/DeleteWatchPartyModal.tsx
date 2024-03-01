@@ -1,10 +1,8 @@
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
 import '../assets/DeleteAccountModal.css';
 import IMnmApiResponse from '../model/IMnmApiResponse';
-import IUser from '../model/user/IUser';
-import { UserContext } from '../context/UserContext';
 import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
 import IWatchParty from '../model/watchParty/IWatchParty';
@@ -15,6 +13,7 @@ interface ModalType {
   toggle: () => void;
   modalName?: string;
   watchParty: IWatchParty;
+  watchPartyRefresh: () => void;
 }
 
 const modalStyle = {
@@ -30,22 +29,27 @@ const modalStyle = {
 };
 
 export default function DeletWatchPartyModal(props: ModalType) {
-  const { userId } = useContext(UserContext);
-
   const api = useAxios();
 
-  // TODO: Attach delete watch party API
-  // const deleteWatchParty = () => {
-  //   api
-  //     .delete<IMnmApiResponse<IUser>>(`/user/delete/${userId}`)
-  //     .then(() => {
+  const deleteWatchParty = () => {
+    api
+      .delete<IMnmApiResponse<IWatchParty>>(
+        `/segment/delete/${props.watchParty.id}`
+      )
+      .then(() => {
+        props.watchPartyRefresh();
+      })
+      .catch((err) => {
+        console.error('Error Deleting Watch Party', err);
+        toast.error(`Watch Party deletion failed`);
+      });
+  };
 
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error deleting user account:', err);
-  //       toast.error(`Account deletion failed`);
-  //     });
-  // };
+  const handleSubmit = () => {
+    deleteWatchParty();
+    props.toggle();
+  };
+
   if (props.modalName === 'Delete Watch Party') {
     const chosenWatchDate = new Date(props.watchParty.chosenWatchDate)
       .toLocaleDateString('en-US', {
@@ -62,85 +66,85 @@ export default function DeletWatchPartyModal(props: ModalType) {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={modalStyle}>
-          <Box sx={{ marginTop: '15px' }}>
-            <div className='close-btn' onClick={props.toggle}>
-              <IconButton>
-                <CloseIcon />
-              </IconButton>
-            </div>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
+        <form onSubmit={handleSubmit}>
+          <Box sx={modalStyle}>
+            <Box sx={{ marginTop: '15px' }}>
+              <div className='close-btn' onClick={props.toggle}>
+                <IconButton>
+                  <CloseIcon />
+                </IconButton>
+              </div>
               <Box
-                component='span'
                 sx={{
-                  fontWeight: 'bold',
-                  fontSize: { xs: 25, sm: 25, md: 30, lg: 30, xl: 30 },
-                  fontFamily: 'SoraBold',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
-                {props.modalName}
+                <Box
+                  component='span'
+                  sx={{
+                    fontWeight: 'bold',
+                    fontSize: { xs: 25, sm: 25, md: 30, lg: 30, xl: 30 },
+                    fontFamily: 'SoraBold',
+                  }}
+                >
+                  {props.modalName}
+                </Box>
+              </Box>
+              <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
+                <div className='delete-desc'>
+                  <p
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    {`Are you sure you want to delete your Watch Party for\u00A0`}
+                    <b>{chosenWatchDate}</b>?
+                  </p>
+                  <div>
+                    <b>{`This will also delete all nominations as well.`}</b>
+                  </div>
+                </div>
+
+                <div className='btn-container'>
+                  <Button
+                    variant='outlined'
+                    id='cancel-btn'
+                    name='cancelBtn'
+                    sx={{
+                      width: '10rem',
+                      backgroundColor: 'primary',
+                      borderRadius: 22,
+                      ':hover': { backgroundColor: 'primary' },
+                    }}
+                    onClick={props.toggle}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    type='submit'
+                    variant='contained'
+                    id='delete-btn'
+                    name='deleteBtn'
+                    sx={{
+                      width: '10rem',
+                      backgroundColor: 'primary.main',
+                      borderRadius: 22,
+                      marginLeft: '10px',
+                      ':hover': { backgroundColor: 'primary.dark' },
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </Box>
             </Box>
-            <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
-              <div className='delete-desc'>
-                <p
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  {`Are you sure you want to delete your Watch Party for\u00A0`}
-                  <b>{chosenWatchDate}</b>?
-                </p>
-                <div>
-                  <b>{`This will also delete all nominations as well.`}</b>
-                </div>
-              </div>
-
-              <div className='btn-container'>
-                <Button
-                  variant='outlined'
-                  id='cancel-btn'
-                  name='cancelBtn'
-                  sx={{
-                    width: '10rem',
-                    backgroundColor: 'primary',
-                    borderRadius: 22,
-                    ':hover': { backgroundColor: 'primary' },
-                  }}
-                  onClick={props.toggle}
-                >
-                  Cancel
-                </Button>
-
-                <Button
-                  variant='contained'
-                  id='delete-btn'
-                  name='deleteBtn'
-                  sx={{
-                    width: '10rem',
-                    backgroundColor: 'primary.main',
-                    borderRadius: 22,
-                    marginLeft: '10px',
-                    ':hover': { backgroundColor: 'primary.dark' },
-                  }}
-                  onClick={() => {
-                    props.toggle();
-                  }}
-                >
-                  Delete
-                </Button>
-              </div>
-            </Box>
           </Box>
-        </Box>
+        </form>
       </Modal>
     );
   } else {
