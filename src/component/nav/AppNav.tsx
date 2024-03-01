@@ -47,6 +47,7 @@ export default function AppNav() {
 
   const navigateToLogin = () => {
     navigate('/login');
+    setLoginActive(true);
   };
 
   const settings: menuSettingAction[] = [
@@ -130,7 +131,10 @@ export default function AppNav() {
               </Box>
             </Typography>
 
-            {(window.location.pathname === '/' || !loginPageActive) &&
+            {(!loginPageActive ||
+              ['/privacy', '/terms', '/contact', '/', '/profile'].includes(
+                window.location.pathname
+              )) &&
               (username !== '' ? (
                 <Box
                   sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}
