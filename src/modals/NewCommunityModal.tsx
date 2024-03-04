@@ -17,6 +17,7 @@ import IMnmApiResponse from '../model/IMnmApiResponse';
 import INewCommunity from '../model/community/INewCommunity';
 import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
+import ICommunitySummary from '../model/community/ICommunitySummary';
 
 interface ModalType {
   isOpen: boolean;
@@ -36,12 +37,6 @@ const modalStyle = {
   borderRadius: '1rem',
 };
 
-interface communityForm {
-  userId: Number;
-  communityName: string;
-  timezone: string;
-}
-
 export default function NewCommunityModal(props: ModalType) {
   const api = useAxios();
 
@@ -53,7 +48,7 @@ export default function NewCommunityModal(props: ModalType) {
     setCommunityData,
   } = useContext(UserContext);
 
-  const initialCommunityState: communityForm = {
+  const initialCommunityState: INewCommunity = {
     userId: userId,
     communityName: '',
     timezone: '',
@@ -94,9 +89,9 @@ export default function NewCommunityModal(props: ModalType) {
     });
   };
 
-  const createCommunity = (communityRequest: any) => {
+  const createCommunity = (communityRequest: INewCommunity) => {
     api
-      .post<IMnmApiResponse<INewCommunity>>(
+      .post<IMnmApiResponse<ICommunitySummary>>(
         '/community/create',
         communityRequest
       )
