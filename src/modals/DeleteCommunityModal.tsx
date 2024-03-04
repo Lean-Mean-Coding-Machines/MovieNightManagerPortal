@@ -2,6 +2,9 @@ import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import '../assets/DeleteAccountModal.css';
 import useAxios from '../hooks/useAxios';
+import { toast } from 'react-toastify';
+import IMnmApiResponse from '../model/IMnmApiResponse';
+import ICommunitySummary from '../model/community/ICommunitySummary';
 
 interface ModalType {
   isOpen: boolean;
@@ -24,8 +27,22 @@ const modalStyle = {
 export default function DeleteCommunityModal(props: ModalType) {
   const api = useAxios();
 
+  const deleteCommunity = () => {
+    api
+      // TODO: Replace 33333 with communityID
+      .delete<IMnmApiResponse<ICommunitySummary>>(`/community/delete/${33333}`)
+      .then(() => {
+        // TODO: add in community refresh api
+      })
+      .catch((err) => {
+        console.error('Error Deleting Watch Party', err);
+        toast.error(`Watch Party deletion failed`);
+      });
+  };
+
   const handleSubmit = () => {
     props.toggle();
+    deleteCommunity();
   };
 
   if (props.modalName === 'Delete Community') {
