@@ -117,6 +117,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     setCommunities([]);
     UserStorageService.clearUserData();
     localStorage.removeItem('authToken');
+    setLoginActive(true);
     navigate('/login');
   };
 
