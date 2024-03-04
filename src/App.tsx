@@ -7,6 +7,7 @@ import PrivacyPage from './views/pages/PrivacyPage';
 import './assets/styles.css';
 import Layout from './views/pages/Layout';
 import ContactPage from './views/pages/ContactPage';
+import { CommunityPage } from './views/pages/CommunityPage';
 
 interface WithNavLayoutProps {
   children?: React.ReactNode;
@@ -29,6 +30,7 @@ export function App() {
         <Route path='/terms' element={<TermsPage />} />
         <Route path='/privacy' element={<PrivacyPage />} />
         <Route path='/contact' element={<ContactPage />} />
+        <Route path='/communities' element={<CommunityPage />} />
       </Route>
     </Routes>
   );

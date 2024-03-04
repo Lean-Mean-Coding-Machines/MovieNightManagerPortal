@@ -50,8 +50,13 @@ export default function AppNav() {
     setLoginActive(true);
   };
 
+  const navigateToCommunities = () => {
+    navigate('/communities');
+  };
+
   const settings: menuSettingAction[] = [
     { dropDownName: 'Profile', action: navigateToProfile },
+    { dropDownName: 'Communities', action: navigateToCommunities },
     { dropDownName: 'Sign Out', action: logoutUser },
   ];
 
@@ -132,9 +137,14 @@ export default function AppNav() {
             </Typography>
 
             {(!loginPageActive ||
-              ['/privacy', '/terms', '/contact', '/', '/profile'].includes(
-                window.location.pathname
-              )) &&
+              [
+                '/privacy',
+                '/terms',
+                '/contact',
+                '/',
+                '/profile',
+                '/communities',
+              ].includes(window.location.pathname)) &&
               (username !== '' ? (
                 <Box
                   sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}
@@ -254,6 +264,10 @@ export default function AppNav() {
                         !(
                           setting.dropDownName === 'Profile' &&
                           window.location.pathname.includes('/profile')
+                        ) &&
+                        !(
+                          setting.dropDownName === 'Communities' &&
+                          window.location.pathname.includes('/communities')
                         ) && (
                           <MenuItem
                             key={setting.dropDownName}
