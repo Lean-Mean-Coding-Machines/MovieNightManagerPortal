@@ -1,6 +1,5 @@
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode } from 'react';
 import '../assets/DeleteAccountModal.css';
 import IMnmApiResponse from '../model/IMnmApiResponse';
 import useAxios from '../hooks/useAxios';
@@ -8,7 +7,6 @@ import { toast } from 'react-toastify';
 import IWatchParty from '../model/watchParty/IWatchParty';
 
 interface ModalType {
-  children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
   modalName?: string;

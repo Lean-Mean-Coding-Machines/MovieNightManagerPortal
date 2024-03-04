@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode, useContext } from 'react';
+import React, { useContext } from 'react';
 import '../assets/DeleteAccountModal.css';
 import IMnmApiResponse from '../model/IMnmApiResponse';
 import IUser from '../model/user/IUser';
@@ -9,7 +9,6 @@ import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
 
 interface ModalType {
-  children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
 }
