@@ -181,7 +181,7 @@ export default function NewNominationModal(props: NewNominationProps) {
   const [movieOptions, setMovieOptions] = useState<IMovieSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
-  const handleMovieSearch = (event: any) => {
+  const handleMovieSearch = (event: React.FormEvent) => {
     event.preventDefault();
     api
       .get<IMnmApiResponse<ITmdbResult<IMovieSearchResult[]>>>(
