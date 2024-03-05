@@ -75,8 +75,7 @@ export function HomePage() {
         (res) => {
           if (res.data.data) {
             const community = res.data.data;
-            userContext.setCommunityData(community);
-            userContext.setCommunities(community);
+            userContext.setCommunityData(community, null);
           }
         },
         (err) => console.log(err)

@@ -21,7 +21,7 @@ interface UserContextInterface {
     communities: ICommunitySummary[];
     selectedCommunity: ICommunitySummary;
     authToken: string;
-    setCommunityData: (communities: ICommunitySummary[]) => void;
+    setCommunityData: (communities: ICommunitySummary[], manualOverride: ICommunitySummary | null) => void;
     setCommunities: (communities: ICommunitySummary[]) => void;
     setSelectedCommunity: (community: ICommunitySummary) => void;
     setUserAuthData: (data: IUserAuthResponse) => void;
@@ -83,11 +83,16 @@ export const UserProvider = ({children}: UserProviderProps) => {
         setUsername(data.username);
     };
 
-    const setCommunityData = (communities: ICommunitySummary[]) => {
+    const setCommunityData = (communities: ICommunitySummary[], selectionOverride: ICommunitySummary | null) => {
         UserStorageService.setEnrolledCommunities(communities);
         setCommunities(communities);
 
-        const selectedCommunity = communities.length ? communities[0] : {id: 0, name: ''};
+        let selectedCommunity = {id: 0, name: ''} as ICommunitySummary;
+        if (selectionOverride) {
+           selectedCommunity = selectionOverride;
+        } else if (communities.length) {
+            selectedCommunity = communities[0];
+        }
         UserStorageService.setSelectedCommunity(selectedCommunity);
         setSelectedCommunity(selectedCommunity);
     };
