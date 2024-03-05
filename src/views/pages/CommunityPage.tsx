@@ -212,6 +212,8 @@ interface EnhancedTableToolbarProps {
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   const { numSelected } = props;
 
+  const { isOpen, toggle, modalName } = useModal();
+
   return (
     <Toolbar
       sx={{
@@ -258,6 +260,13 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           </IconButton>
         </Tooltip>
       )}
+
+      {/* Modals */}
+      <DeleteCommunityModal
+        isOpen={isOpen}
+        toggle={toggle}
+        modalName={modalName}
+      ></DeleteCommunityModal>
     </Toolbar>
   );
 }
