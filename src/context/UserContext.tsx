@@ -1,179 +1,187 @@
 import {
-  useState,
-  createContext,
-  useEffect,
-  ReactNode,
-  SetStateAction,
-  Dispatch,
+    useState,
+    createContext,
+    useEffect,
+    ReactNode,
+    SetStateAction,
+    Dispatch,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import IUserAuthRequest from '../model/user/IUserAuthRequest';
 import UserStorageService from '../service/UserStorageService';
 import useAxios from '../hooks/useAxios';
 import IMnmApiResponse from '../model/IMnmApiResponse';
 import IUserAuthResponse from '../model/user/IUserAuthResponse';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import ICommunitySummary from '../model/community/ICommunitySummary';
 
 interface UserContextInterface {
-  userId: number;
-  username: string;
-  communities: ICommunitySummary[];
-  selectedCommunity: ICommunitySummary;
-  authToken: string;
-  setCommunityData: (communities: ICommunitySummary[]) => void;
-  setCommunities: (communities: ICommunitySummary[]) => void;
-  setSelectedCommunity: (community: ICommunitySummary) => void;
-  setUserAuthData: (data: IUserAuthResponse) => void;
-  loginUser: (userRequest: IUserAuthRequest) => void;
-  logoutUser: () => void;
-  setLoginActive: Dispatch<SetStateAction<boolean>>;
-  loginPageActive: boolean;
+    userId: number;
+    username: string;
+    communities: ICommunitySummary[];
+    selectedCommunity: ICommunitySummary;
+    authToken: string;
+    setCommunityData: (communities: ICommunitySummary[]) => void;
+    setCommunities: (communities: ICommunitySummary[]) => void;
+    setSelectedCommunity: (community: ICommunitySummary) => void;
+    setUserAuthData: (data: IUserAuthResponse) => void;
+    loginUser: (userRequest: IUserAuthRequest) => void;
+    logoutUser: () => void;
+    setLoginActive: Dispatch<SetStateAction<boolean>>;
+    loginPageActive: boolean;
 }
 
 interface UserProviderProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
 const defaultState: UserContextInterface = {
-  userId: 0,
-  username: '',
-  communities: [],
-  selectedCommunity: { id: 0, name: '' } as ICommunitySummary,
-  authToken: '',
-  setCommunityData: (communities: ICommunitySummary[]) => {},
-  setCommunities: (communities: ICommunitySummary[]) => {},
-  setSelectedCommunity: (community: ICommunitySummary) => {},
-  setUserAuthData: (data: IUserAuthResponse) => {},
-  loginUser: (userRequest: IUserAuthRequest) => {},
-  logoutUser: () => {},
-  loginPageActive: true,
-  setLoginActive: () => {},
+    userId: 0,
+    username: '',
+    communities: [],
+    selectedCommunity: {id: 0, name: ''} as ICommunitySummary,
+    authToken: '',
+    setCommunityData: (communities: ICommunitySummary[]) => {
+    },
+    setCommunities: (communities: ICommunitySummary[]) => {
+    },
+    setSelectedCommunity: (community: ICommunitySummary) => {
+    },
+    setUserAuthData: (data: IUserAuthResponse) => {
+    },
+    loginUser: (userRequest: IUserAuthRequest) => {
+    },
+    logoutUser: () => {
+    },
+    loginPageActive: true,
+    setLoginActive: () => {
+    },
 };
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-  const [authToken, setAuthToken] = useState(UserStorageService.getAuthToken);
-  const [userId, setUserId] = useState(UserStorageService.getUserId);
-  const [username, setUsername] = useState(UserStorageService.getUsername);
-  const [communities, setCommunities] = useState(
-    UserStorageService.getEnrolledCommunities
-  );
-  const [selectedCommunity, setSelectedCommunity] = useState(
-    UserStorageService.getSelectedCommunity
-  );
+export const UserProvider = ({children}: UserProviderProps) => {
+    const [authToken, setAuthToken] = useState(UserStorageService.getAuthToken);
+    const [userId, setUserId] = useState(UserStorageService.getUserId);
+    const [username, setUsername] = useState(UserStorageService.getUsername);
+    const [communities, setCommunities] = useState(
+        UserStorageService.getEnrolledCommunities
+    );
+    const [selectedCommunity, setSelectedCommunity] = useState(
+        UserStorageService.getSelectedCommunity
+    );
 
-  const [loginPageActive, setLoginActive] = useState(true);
+    const [loginPageActive, setLoginActive] = useState(true);
 
-  const api = useAxios();
+    const api = useAxios();
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  const setUserAuthData = (data: IUserAuthResponse) => {
-    UserStorageService.setAuthToken(data);
-    UserStorageService.setUserData(data);
-    setAuthToken(data.token);
-    setUserId(data.userId);
-    setUsername(data.username);
-    setCommunities(data.communities);
-    if (data.communities[0]) {
-      setSelectedCommunity(data.communities[0]);
-    }
-  };
+    const setUserAuthData = (data: IUserAuthResponse) => {
+        UserStorageService.setAuthToken(data);
+        UserStorageService.setUserData(data);
+        setAuthToken(data.token);
+        setUserId(data.userId);
+        setUsername(data.username);
+    };
 
-  const setCommunityData = (communities: ICommunitySummary[]) => {
-    UserStorageService.setCommunityData(communities);
-  };
+    const setCommunityData = (communities: ICommunitySummary[]) => {
+        UserStorageService.setEnrolledCommunities(communities);
+        setCommunities(communities);
 
-  const loginUser = (userRequest: IUserAuthRequest) => {
-    api
-      .post<IMnmApiResponse<IUserAuthResponse>>(
-        '/user/authenticate',
-        userRequest
-      )
-      .then(
-        (res) => {
-          if (res.data.status.success && res.data.data != null) {
-            setUserAuthData(res.data.data);
-            navigate('/');
-          } else {
-            console.log('Could not authenticate user');
-          }
+        const selectedCommunity = communities.length ? communities[0] : {id: 0, name: ''};
+        UserStorageService.setSelectedCommunity(selectedCommunity);
+        setSelectedCommunity(selectedCommunity);
+    };
 
-          return res.data.data;
-        },
-        (err) => {
-          console.log(err);
-          toast.error(err.response.data.status.message);
-          return null;
-        }
-      );
-  };
+    const loginUser = (userRequest: IUserAuthRequest) => {
+        api
+            .post<IMnmApiResponse<IUserAuthResponse>>(
+                '/user/authenticate',
+                userRequest
+            )
+            .then(
+                (res) => {
+                    if (res.data.status.success && res.data.data != null) {
+                        setUserAuthData(res.data.data);
+                        navigate('/');
+                    } else {
+                        console.log('Could not authenticate user');
+                    }
 
-  let logoutUser = () => {
-    setAuthToken('');
-    setUserId(0);
-    setUsername('');
-    setSelectedCommunity({ id: 0, name: '' });
-    setCommunities([]);
-    UserStorageService.clearUserData();
-    localStorage.removeItem('authToken');
-    navigate('/login');
-  };
+                    return res.data.data;
+                },
+                (err) => {
+                    console.log(err);
+                    toast.error(err.response.data.status.message);
+                    return null;
+                }
+            );
+    };
 
-  // let updateToken = async ()=> {
+    let logoutUser = () => {
+        setAuthToken('');
+        setUserId(0);
+        setUsername('');
+        setSelectedCommunity({id: 0, name: ''});
+        setCommunities([]);
+        UserStorageService.clearUserData();
+        localStorage.removeItem('authToken');
+        navigate('/login');
+    };
 
-  //     let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-  //         method:'POST',
-  //         headers:{
-  //             'Content-Type':'application/json'
-  //         },
-  //         body:JSON.stringify({'refresh':authTokens?.refresh})
-  //     })
+    // let updateToken = async ()=> {
 
-  //     let data = await response.json()
+    //     let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+    //         method:'POST',
+    //         headers:{
+    //             'Content-Type':'application/json'
+    //         },
+    //         body:JSON.stringify({'refresh':authTokens?.refresh})
+    //     })
 
-  //     if (response.status === 200){
-  //         setAuthTokens(data)
-  //         setUser(jwt_decode(data.access))
-  //         localStorage.setItem('authTokens', JSON.stringify(data))
-  //     }else{
-  //         logoutUser()
-  //     }
+    //     let data = await response.json()
 
-  //     if(loading){
-  //         setLoading(false)
-  //     }
-  // }
+    //     if (response.status === 200){
+    //         setAuthTokens(data)
+    //         setUser(jwt_decode(data.access))
+    //         localStorage.setItem('authTokens', JSON.stringify(data))
+    //     }else{
+    //         logoutUser()
+    //     }
 
-  let contextData: UserContextInterface = {
-    userId: userId,
-    username: username,
-    communities: communities,
-    setCommunityData: setCommunityData,
-    setCommunities: setCommunities,
-    selectedCommunity: selectedCommunity,
-    setSelectedCommunity: setSelectedCommunity,
-    authToken: authToken,
-    setUserAuthData: setUserAuthData,
-    loginUser: loginUser,
-    logoutUser: logoutUser,
-    loginPageActive: loginPageActive,
-    setLoginActive: setLoginActive,
-  };
+    //     if(loading){
+    //         setLoading(false)
+    //     }
+    // }
 
-  // useEffect(() => {
-  //
-  //     if (authTokens) {
-  //         setUser(jwt_decode(authTokens.access));
-  //     }
-  //     setLoading(false);
-  //
-  //
-  // }, [authTokens, loading]);
+    let contextData: UserContextInterface = {
+        userId: userId,
+        username: username,
+        communities: communities,
+        setCommunityData: setCommunityData,
+        setCommunities: setCommunities,
+        selectedCommunity: selectedCommunity,
+        setSelectedCommunity: setSelectedCommunity,
+        authToken: authToken,
+        setUserAuthData: setUserAuthData,
+        loginUser: loginUser,
+        logoutUser: logoutUser,
+        loginPageActive: loginPageActive,
+        setLoginActive: setLoginActive,
+    };
 
-  return (
-    <UserContext.Provider value={contextData}>{children}</UserContext.Provider>
-  );
+    // useEffect(() => {
+    //
+    //     if (authTokens) {
+    //         setUser(jwt_decode(authTokens.access));
+    //     }
+    //     setLoading(false);
+    //
+    //
+    // }, [authTokens, loading]);
+
+    return (
+        <UserContext.Provider value={contextData}>{children}</UserContext.Provider>
+    );
 };
 
 export const UserContext = createContext(defaultState);
