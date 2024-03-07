@@ -300,7 +300,10 @@ export function HomePage() {
                 id='create-watch-party'
                 name='createWatchPartyBtn'
                 sx={{
-                  width: 100,
+                  width: '12rem',
+                  height: '3rem',
+                  marginTop: '4rem',
+                  fontSize: 'larger',
                   color: '#fff',
                   backgroundColor: 'primary.main',
                   borderRadius: 22,

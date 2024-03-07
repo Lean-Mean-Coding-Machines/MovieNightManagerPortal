@@ -3,7 +3,15 @@ import { Link } from 'react-router-dom';
 
 export default function PrivacyPage() {
   return (
-    <div style={{ color: '#fff' }}>
+    <div
+      style={{
+        color: '#fff',
+        marginTop: '2rem',
+        paddingBottom: '2rem',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
       <h1>Privacy Policy</h1>
 
       <h2>1. Information We Collect</h2>
