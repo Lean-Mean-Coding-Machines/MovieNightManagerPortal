@@ -1,17 +1,26 @@
+# Prerequisites
+
+Before running the application, ensure you have the following:
+
+- **Node.js:** Ensure you have Node.js installed on your machine. You can download it from [https://nodejs.org/](https://nodejs.org/).
+- **Java Development Kit (JDK):** Make sure you have JDK installed on your system for running the backend Java project. You can download it from [https://www.oracle.com/java/technologies/javase-jdk11-downloads.html](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) or use OpenJDK.
+- **IDE (Integrated Development Environment):** You will need an IDE to work with the Java backend. We recommend using IntelliJ IDEA, Eclipse, or Visual Studio Code.
+- **npm Packages:** After cloning the repository, navigate to the `src` folder and run `npm install` to install all necessary dependencies.
+
 # Running the Application
 
 # (Front End)
 
-1. Navigate to the src folder in your project directory
-2. Run npm install
-3. Run npm start
+1. Navigate to the `src` folder in your project directory
+2. Run `npm install`
+3. Run `npm start`
 4. An instance of the applicaiton should open in your browser, if it doesn't navigate to http://localhost:3000
 
 # (Back End)
 
 1. Open up a separate instance of your your IDE and open the Java project
    a. Click Run & Debug on the left side panel if you're on Visual Studio Code
-   b. Click Run & Debug to get the backend running and connected to the front end
+   b. Click Run & Debug to get the backend running and connected to the frontend
 
 ## Available Scripts
 
@@ -38,7 +47,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+See the section about [deployment](https://vitejs.dev/guide/build) for more information.
 
 ## Coding standards
 
