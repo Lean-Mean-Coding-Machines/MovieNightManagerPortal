@@ -18,6 +18,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.2.2",
     "dayjs": "^1.11.7",
+    "jest-environment-jsdom": "^29.7.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-avatar-editor": "^13.0.0",
@@ -34,10 +35,11 @@
     "vite-tsconfig-paths": "^4.3.1",
     "web-vitals": "^3.1.0"
   },
+  "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "vite build",
-    "test": "vite test",
+    "build": "tsc && vite build",
+    "test": "jest",
     "eject": "vite eject"
   },
   "eslintConfig": {

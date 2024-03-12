@@ -18,9 +18,10 @@ Before running the application, ensure you have the following:
 
 # (Back End)
 
-1. Open up a separate instance of your your IDE and open the Java project
-   a. Click Run & Debug on the left side panel if you're on Visual Studio Code
-   b. Click Run & Debug to get the backend running and connected to the frontend
+1. Open up a separate instance of your your IDE and open the Java project [https://github.com/Lean-Mean-Coding-Machines/MovieNightManagerJava]
+
+- Click `Run & Debug` on the left side panel if you're on Visual Studio Code
+- Click `Run & Debug` to get the backend running and connected to the frontend
 
 ## Available Scripts
 
