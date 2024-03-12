@@ -59,7 +59,6 @@ export function UserRegister(props: userRegisterProps) {
   const { loginUser } = useContext(UserContext);
 
   const [formValues, setFormValues] = useState(defaultValues);
-  const [submitErrorTxt, setSubmitErrorTxt] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -461,7 +460,7 @@ export function UserRegister(props: userRegisterProps) {
                   multiple
                   value={selectedCommunities}
                   onChange={handleCommunityChange}
-                  input={<OutlinedInput label="Tag" />}
+                  input={<OutlinedInput label="Watch Group" />}
                   renderValue={(selected) => selected.join(', ')}
                   MenuProps={CommunitySelectProps}
                   error={!communityValid}
@@ -473,16 +472,8 @@ export function UserRegister(props: userRegisterProps) {
                       </MenuItem>
                   ))}
               </Select>
-            <FormHelperText sx={{ color: '#e74c3c' }} hidden={communityValid}>{communityErrorTxt}</FormHelperText>
+            <FormHelperText sx={{ color: '#d32f2f' }} hidden={communityValid}>{communityErrorTxt}</FormHelperText>
           </FormControl>
-
-        <Box
-          component='span'
-          sx={{ m: 1, color: '#e74c3c' }}
-          hidden={submitErrorTxt === ''}
-        >
-          {submitErrorTxt}
-        </Box>
 
         <Button
           id='create-btn'
