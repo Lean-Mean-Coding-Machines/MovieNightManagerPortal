@@ -7,9 +7,9 @@ import {
   InputLabel,
   ListItemText,
   OutlinedInput,
-  TextField
+  TextField,
 } from '@mui/material';
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import IUserCreateRequest from '../../model/user/IUserCreateRequest';
 import IUserAuthRequest from '../../model/user/IUserAuthRequest';
 import { UserContext } from '../../context/UserContext';
@@ -17,9 +17,9 @@ import useAxios from '../../hooks/useAxios';
 import IMnmApiResponse from '../../model/IMnmApiResponse';
 import IUserCreateResponse from '../../model/user/IUserCreateResponse';
 import { toast } from 'react-toastify';
-import Select, {SelectChangeEvent} from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import ICommunitySummary from "../../model/community/ICommunitySummary";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import ICommunitySummary from '../../model/community/ICommunitySummary';
 
 interface formValidationReset {
   firstName: () => void;
@@ -36,14 +36,13 @@ interface userRegisterProps {
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const CommunitySelectProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
     },
+  },
 };
-
 
 export function UserRegister(props: userRegisterProps) {
   const api = useAxios();
@@ -85,13 +84,19 @@ export function UserRegister(props: userRegisterProps) {
       isUsernameValid &&
       isEmailValid &&
       isPasswordNameValid &&
-        isCommunitySelectValid
+      isCommunitySelectValid
     ) {
       //Get the ids from the multi selected names list
-      const communityIds = selectedCommunities.map(selected => availCommunities.find(community => community.name === selected)!.id);
+      const communityIds = selectedCommunities.map(
+        (selected) =>
+          availCommunities.find((community) => community.name === selected)!.id
+      );
 
       api
-        .post<IMnmApiResponse<IUserCreateResponse>>('/user/create', {...formValues, communityIds})
+        .post<IMnmApiResponse<IUserCreateResponse>>('/user/create', {
+          ...formValues,
+          communityIds,
+        })
         .then((res) => {
           if (res.data.status.success) {
             const authRequest: IUserAuthRequest = {
@@ -103,7 +108,9 @@ export function UserRegister(props: userRegisterProps) {
         })
         .catch((error) => {
           console.error(error.response.data.status.message);
-          toast.error('There was an error submitting your registration. Please try again.');
+          toast.error(
+            'There was an error submitting your registration. Please try again.'
+          );
         });
     }
   };
@@ -132,7 +139,7 @@ export function UserRegister(props: userRegisterProps) {
     communities: () => {
       setCommunityErrorTxt('');
       setCommunityValid(true);
-    }
+    },
   };
 
   // Begin Validation
@@ -286,32 +293,38 @@ export function UserRegister(props: userRegisterProps) {
     return true;
   };
 
-  const [availCommunities, setAvailCommunities] = useState([] as ICommunitySummary[]);
-  const [selectedCommunities, setSelectedCommunities] = React.useState<string[]>([]);
+  const [availCommunities, setAvailCommunities] = useState(
+    [] as ICommunitySummary[]
+  );
+  const [selectedCommunities, setSelectedCommunities] = React.useState<
+    string[]
+  >([]);
 
   const getAllCommunities = () => {
-      api
-          .get<IMnmApiResponse<ICommunitySummary[]>>('/community/all')
-          .then((res) => {
-              if (res.data.status.success) {
-                  setAvailCommunities(res.data.data!);
-              }
-          })
-          .catch((error) => {
-              console.error(error.response);
-          });
-  }
+    api
+      .get<IMnmApiResponse<ICommunitySummary[]>>('/community/all')
+      .then((res) => {
+        if (res.data.status.success) {
+          setAvailCommunities(res.data.data!);
+        }
+      })
+      .catch((error) => {
+        console.error(error.response);
+      });
+  };
 
   useEffect(() => {
-      getAllCommunities();
+    getAllCommunities();
   }, []);
 
-  const handleCommunityChange = (event: SelectChangeEvent<typeof selectedCommunities>) => {
+  const handleCommunityChange = (
+    event: SelectChangeEvent<typeof selectedCommunities>
+  ) => {
     const {
       target: { value },
     } = event;
     setSelectedCommunities(
-        typeof value === 'string' ? value.split(',') : value,
+      typeof value === 'string' ? value.split(',') : value
     );
     if (!communityValid) {
       formValidationResets.communities();
@@ -327,15 +340,16 @@ export function UserRegister(props: userRegisterProps) {
       return false;
     }
     return true;
-  }
+  };
 
   return (
     <div
+      // This controls the modals position
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '75vh',
+        minHeight: '88vh',
       }}
     >
       <Box
@@ -452,28 +466,34 @@ export function UserRegister(props: userRegisterProps) {
           helperText={passwordErrorTxt}
         />
 
-          <FormControl sx={{ width: '100%' }}>
-              <InputLabel id="community-multiple-checkbox-label">Watch Group</InputLabel>
-              <Select
-                  labelId="community-multiple-checkbox-label"
-                  id="community-multiple-checkbox"
-                  multiple
-                  value={selectedCommunities}
-                  onChange={handleCommunityChange}
-                  input={<OutlinedInput label="Watch Group" />}
-                  renderValue={(selected) => selected.join(', ')}
-                  MenuProps={CommunitySelectProps}
-                  error={!communityValid}
-              >
-                  {availCommunities.map((community) => (
-                      <MenuItem key={community.id} value={community.name}>
-                          <Checkbox checked={selectedCommunities.indexOf(community.name) > -1} />
-                          <ListItemText primary={community.name} />
-                      </MenuItem>
-                  ))}
-              </Select>
-            <FormHelperText sx={{ color: '#d32f2f' }} hidden={communityValid}>{communityErrorTxt}</FormHelperText>
-          </FormControl>
+        <FormControl sx={{ width: '100%' }}>
+          <InputLabel id='community-multiple-checkbox-label'>
+            Watch Group
+          </InputLabel>
+          <Select
+            labelId='community-multiple-checkbox-label'
+            id='community-multiple-checkbox'
+            multiple
+            value={selectedCommunities}
+            onChange={handleCommunityChange}
+            input={<OutlinedInput label='Watch Group' />}
+            renderValue={(selected) => selected.join(', ')}
+            MenuProps={CommunitySelectProps}
+            error={!communityValid}
+          >
+            {availCommunities.map((community) => (
+              <MenuItem key={community.id} value={community.name}>
+                <Checkbox
+                  checked={selectedCommunities.indexOf(community.name) > -1}
+                />
+                <ListItemText primary={community.name} />
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText sx={{ color: '#d32f2f' }} hidden={communityValid}>
+            {communityErrorTxt}
+          </FormHelperText>
+        </FormControl>
 
         <Button
           id='create-btn'
