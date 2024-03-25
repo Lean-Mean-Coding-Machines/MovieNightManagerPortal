@@ -75,8 +75,7 @@ export function HomePage() {
         (res) => {
           if (res.data.data) {
             const community = res.data.data;
-            userContext.setCommunityData(community);
-            userContext.setCommunities(community);
+            userContext.setCommunityData(community, null);
           }
         },
         (err) => console.log(err)
@@ -84,17 +83,20 @@ export function HomePage() {
       .catch((err) => console.log(err.message));
   };
 
+  // Load community data (available communities and their preferred community) on home load
   useEffect(() => {
     toggleLoading(true);
     if (userContext.userId > 0) {
       getCommunity();
-      getWatchParty(userContext.selectedCommunity.id);
     }
     toggleLoading(false);
   }, []);
 
+  // Get watch party segment data whenever someone changes the community they're viewing
   useEffect(() => {
-    getWatchParty(userContext.selectedCommunity.id);
+    if (userContext.selectedCommunity.id > 0) {
+      getWatchParty(userContext.selectedCommunity.id);
+    }
   }, [userContext.selectedCommunity.id]);
 
   if (watchParty.chosenWatchDate) {

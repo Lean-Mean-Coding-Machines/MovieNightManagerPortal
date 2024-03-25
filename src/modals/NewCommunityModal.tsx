@@ -11,13 +11,13 @@ import {
   TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import IMnmApiResponse from '../model/IMnmApiResponse';
-import INewCommunity from '../model/community/INewCommunity';
+import ICommunity from '../model/community/ICommunity';
 import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
-import ICommunitySummary from '../model/community/ICommunitySummary';
+import ICommunityRequest from '../model/community/ICommunityRequest';
 
 interface ModalType {
   isOpen: boolean;
@@ -40,19 +40,20 @@ const modalStyle = {
 export default function NewCommunityModal(props: ModalType) {
   const api = useAxios();
 
-  const {
-    userId,
-    setSelectedCommunity,
-    communities,
-    setCommunities,
-    setCommunityData,
-  } = useContext(UserContext);
+  const { userId, communities, setCommunityData } = useContext(UserContext);
 
-  const initialCommunityState: INewCommunity = {
+  const initialCommunityState: ICommunityRequest = {
     userId: userId,
     communityName: '',
     timezone: '',
   };
+
+  useEffect(() => {
+    setCommunityRequestState({
+      ...communityRequestState,
+      userId: userId,
+    });
+  }, [userId]);
 
   const [communityRequestState, setCommunityRequestState] = useState(
     initialCommunityState
@@ -89,22 +90,21 @@ export default function NewCommunityModal(props: ModalType) {
     });
   };
 
-  const createCommunity = (communityRequest: INewCommunity) => {
+  const createCommunity = (communityRequest: ICommunityRequest) => {
     api
-      .post<IMnmApiResponse<ICommunitySummary>>(
-        '/community/create',
-        communityRequest
-      )
+      .post<IMnmApiResponse<ICommunity>>('/community/create', communityRequest)
       .then(
         (res) => {
           if (res.data.data) {
-            const community = res.data.data;
-            const newCommunity = { name: community.name, id: community.id };
-            setSelectedCommunity(newCommunity);
-
-            const addCommunity = [...communities, newCommunity];
-            setCommunities(addCommunity);
-            setCommunityData(addCommunity);
+            const newCommunity = res.data.data;
+            const newCommunitySummary = {
+              name: newCommunity.name,
+              id: newCommunity.id,
+            };
+            setCommunityData(
+              [...communities, newCommunitySummary],
+              newCommunitySummary
+            );
           }
         },
         (err) => {

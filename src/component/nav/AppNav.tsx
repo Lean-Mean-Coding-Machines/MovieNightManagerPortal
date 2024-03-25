@@ -60,22 +60,11 @@ export default function AppNav() {
     { dropDownName: 'Sign Out', action: logoutUser },
   ];
 
-  const [selectedCommunityVal, setSelectedCommunityVal] = useState(
-    selectedCommunity.id + ''
-  );
+  const [selectedCommunityVal, setSelectedCommunityVal] = useState('');
 
   const handleCommunityChange = (event: SelectChangeEvent) => {
     setSelectedCommunityVal(event.target.value);
-    communities.findIndex(
-      (community) => community.id === Number(event.target.value)
-    );
-    setSelectedCommunity(
-      communities[
-        communities.findIndex(
-          (community) => community.id === Number(event.target.value)
-        )
-      ]
-    );
+    setSelectedCommunity(communities.find(community => community.id === Number(event.target.value))!);
   };
 
   const handleCloseUserMenu = () => {
