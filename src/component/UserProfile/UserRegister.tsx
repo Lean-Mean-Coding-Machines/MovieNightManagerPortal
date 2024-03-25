@@ -333,9 +333,10 @@ export function UserRegister(props: userRegisterProps) {
 
   const [communityValid, setCommunityValid] = useState(true);
   const [communityErrorTxt, setCommunityErrorTxt] = useState('');
+
   const validateCommunitySelect = () => {
     if (selectedCommunities.length === 0) {
-      setCommunityErrorTxt('Please select a watch group to join!');
+      setCommunityErrorTxt('Please select a watch group to join');
       setCommunityValid(false);
       return false;
     }
