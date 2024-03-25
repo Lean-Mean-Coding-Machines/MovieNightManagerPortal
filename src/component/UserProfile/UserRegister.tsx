@@ -1,5 +1,15 @@
-import { Box, Button, TextField } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  ListItemText,
+  OutlinedInput,
+  TextField,
+} from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
 import IUserCreateRequest from '../../model/user/IUserCreateRequest';
 import IUserAuthRequest from '../../model/user/IUserAuthRequest';
 import { UserContext } from '../../context/UserContext';
@@ -7,6 +17,9 @@ import useAxios from '../../hooks/useAxios';
 import IMnmApiResponse from '../../model/IMnmApiResponse';
 import IUserCreateResponse from '../../model/user/IUserCreateResponse';
 import { toast } from 'react-toastify';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import ICommunitySummary from '../../model/community/ICommunitySummary';
 
 interface formValidationReset {
   firstName: () => void;
@@ -14,11 +27,22 @@ interface formValidationReset {
   username: () => void;
   password: () => void;
   email: () => void;
+  communities: () => void;
 }
 
 interface userRegisterProps {
   handleLoginNav: () => void;
 }
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const CommunitySelectProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export function UserRegister(props: userRegisterProps) {
   const api = useAxios();
@@ -34,7 +58,6 @@ export function UserRegister(props: userRegisterProps) {
   const { loginUser } = useContext(UserContext);
 
   const [formValues, setFormValues] = useState(defaultValues);
-  const [submitErrorTxt, setSubmitErrorTxt] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -53,16 +76,27 @@ export function UserRegister(props: userRegisterProps) {
     const isUsernameValid = validateUsernameField();
     const isEmailValid = validateEmailField();
     const isPasswordNameValid = validatePasswordField();
+    const isCommunitySelectValid = validateCommunitySelect();
 
     if (
       isFirstNameValid &&
       isLastNameValid &&
       isUsernameValid &&
       isEmailValid &&
-      isPasswordNameValid
+      isPasswordNameValid &&
+      isCommunitySelectValid
     ) {
+      //Get the ids from the multi selected names list
+      const communityIds = selectedCommunities.map(
+        (selected) =>
+          availCommunities.find((community) => community.name === selected)!.id
+      );
+
       api
-        .post<IMnmApiResponse<IUserCreateResponse>>('/user/create', formValues)
+        .post<IMnmApiResponse<IUserCreateResponse>>('/user/create', {
+          ...formValues,
+          communityIds,
+        })
         .then((res) => {
           if (res.data.status.success) {
             const authRequest: IUserAuthRequest = {
@@ -73,9 +107,10 @@ export function UserRegister(props: userRegisterProps) {
           }
         })
         .catch((error) => {
-          setSubmitErrorTxt(error.response.data.status.message);
           console.error(error.response.data.status.message);
-          toast.error(submitErrorTxt);
+          toast.error(
+            'There was an error submitting your registration. Please try again.'
+          );
         });
     }
   };
@@ -100,6 +135,10 @@ export function UserRegister(props: userRegisterProps) {
     email: () => {
       setEmailErrorTxt('');
       setEmailValid(true);
+    },
+    communities: () => {
+      setCommunityErrorTxt('');
+      setCommunityValid(true);
     },
   };
 
@@ -254,13 +293,64 @@ export function UserRegister(props: userRegisterProps) {
     return true;
   };
 
+  const [availCommunities, setAvailCommunities] = useState(
+    [] as ICommunitySummary[]
+  );
+  const [selectedCommunities, setSelectedCommunities] = React.useState<
+    string[]
+  >([]);
+
+  const getAllCommunities = () => {
+    api
+      .get<IMnmApiResponse<ICommunitySummary[]>>('/community/all')
+      .then((res) => {
+        if (res.data.status.success) {
+          setAvailCommunities(res.data.data!);
+        }
+      })
+      .catch((error) => {
+        console.error(error.response);
+      });
+  };
+
+  useEffect(() => {
+    getAllCommunities();
+  }, []);
+
+  const handleCommunityChange = (
+    event: SelectChangeEvent<typeof selectedCommunities>
+  ) => {
+    const {
+      target: { value },
+    } = event;
+    setSelectedCommunities(
+      typeof value === 'string' ? value.split(',') : value
+    );
+    if (!communityValid) {
+      formValidationResets.communities();
+    }
+  };
+
+  const [communityValid, setCommunityValid] = useState(true);
+  const [communityErrorTxt, setCommunityErrorTxt] = useState('');
+
+  const validateCommunitySelect = () => {
+    if (selectedCommunities.length === 0) {
+      setCommunityErrorTxt('Please select a watch group to join');
+      setCommunityValid(false);
+      return false;
+    }
+    return true;
+  };
+
   return (
     <div
+      // This controls the modals position
       style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        minHeight: '75vh',
+        minHeight: '88vh',
       }}
     >
       <Box
@@ -377,13 +467,34 @@ export function UserRegister(props: userRegisterProps) {
           helperText={passwordErrorTxt}
         />
 
-        <Box
-          component='span'
-          sx={{ m: 1, color: 'red' }}
-          hidden={submitErrorTxt === ''}
-        >
-          {submitErrorTxt}
-        </Box>
+        <FormControl sx={{ width: '100%' }}>
+          <InputLabel id='community-multiple-checkbox-label'>
+            Watch Group
+          </InputLabel>
+          <Select
+            labelId='community-multiple-checkbox-label'
+            id='community-multiple-checkbox'
+            multiple
+            value={selectedCommunities}
+            onChange={handleCommunityChange}
+            input={<OutlinedInput label='Watch Group' />}
+            renderValue={(selected) => selected.join(', ')}
+            MenuProps={CommunitySelectProps}
+            error={!communityValid}
+          >
+            {availCommunities.map((community) => (
+              <MenuItem key={community.id} value={community.name}>
+                <Checkbox
+                  checked={selectedCommunities.indexOf(community.name) > -1}
+                />
+                <ListItemText primary={community.name} />
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText sx={{ color: '#d32f2f' }} hidden={communityValid}>
+            {communityErrorTxt}
+          </FormHelperText>
+        </FormControl>
 
         <Button
           id='create-btn'
