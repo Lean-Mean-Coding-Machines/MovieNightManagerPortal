@@ -47,10 +47,16 @@ export default function AppNav() {
 
   const navigateToLogin = () => {
     navigate('/login');
+    setLoginActive(true);
+  };
+
+  const navigateToCommunities = () => {
+    navigate('/communities');
   };
 
   const settings: menuSettingAction[] = [
     { dropDownName: 'Profile', action: navigateToProfile },
+    { dropDownName: 'Communities', action: navigateToCommunities },
     { dropDownName: 'Sign Out', action: logoutUser },
   ];
 
@@ -119,7 +125,15 @@ export default function AppNav() {
               </Box>
             </Typography>
 
-            {(window.location.pathname === '/' || !loginPageActive) &&
+            {(!loginPageActive ||
+              [
+                '/privacy',
+                '/terms',
+                '/contact',
+                '/',
+                '/profile',
+                '/communities',
+              ].includes(window.location.pathname)) &&
               (username !== '' ? (
                 <Box
                   sx={{ flexGrow: 0, display: 'flex', alignItems: 'center' }}
@@ -152,51 +166,52 @@ export default function AppNav() {
                   </Tooltip>
 
                   {/* #TODO: add tooltip for Select Communities, needs to use open/close state since it covers menu items  */}
-                  {communities.length > 0 && (
-                    <FormControl>
-                      <Select
-                        labelId='selected-community-dropdown-label'
-                        id='selected-community-dropdown'
-                        value={selectedCommunityVal}
-                        onChange={handleCommunityChange}
-                        sx={{
-                          color: '#fff',
-                          height: '38px',
-                          marginRight: '15px',
-                          width: '150px',
-                          '.MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#fff !important',
-                          },
-                          '.MuiSvgIcon-root ': {
-                            fill: '#fff !important',
-                          },
-                          '&:hover fieldset': {
-                            borderColor: '#fff !important',
-                          },
-                          display: { xs: 'none', sm: 'inline-flex' },
-                        }}
-                      >
-                        {communities.map((community) => (
-                          <MenuItem
-                            style={{ whiteSpace: 'normal' }}
-                            sx={{ width: '150px' }}
-                            value={community.id}
-                            key={community.id}
-                            selected={community.id === selectedCommunity.id}
-                          >
-                            <div
-                              style={{
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                              }}
+                  {communities.length > 0 &&
+                    window.location.pathname === '/' && (
+                      <FormControl>
+                        <Select
+                          labelId='selected-community-dropdown-label'
+                          id='selected-community-dropdown'
+                          value={selectedCommunityVal}
+                          onChange={handleCommunityChange}
+                          sx={{
+                            color: '#fff',
+                            height: '38px',
+                            marginRight: '15px',
+                            width: '150px',
+                            '.MuiOutlinedInput-notchedOutline': {
+                              borderColor: '#fff !important',
+                            },
+                            '.MuiSvgIcon-root ': {
+                              fill: '#fff !important',
+                            },
+                            '&:hover fieldset': {
+                              borderColor: '#fff !important',
+                            },
+                            display: { xs: 'none', sm: 'inline-flex' },
+                          }}
+                        >
+                          {communities.map((community) => (
+                            <MenuItem
+                              style={{ whiteSpace: 'normal' }}
+                              sx={{ width: '150px' }}
+                              value={community.id}
+                              key={community.id}
+                              selected={community.id === selectedCommunity.id}
                             >
-                              {community.name}
-                            </div>
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  )}
+                              <div
+                                style={{
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                }}
+                              >
+                                {community.name}
+                              </div>
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    )}
 
                   <Tooltip
                     title={<>{<Typography>Manage Profile</Typography>}</>}
@@ -239,6 +254,10 @@ export default function AppNav() {
                         !(
                           setting.dropDownName === 'Profile' &&
                           window.location.pathname.includes('/profile')
+                        ) &&
+                        !(
+                          setting.dropDownName === 'Communities' &&
+                          window.location.pathname.includes('/communities')
                         ) && (
                           <MenuItem
                             key={setting.dropDownName}

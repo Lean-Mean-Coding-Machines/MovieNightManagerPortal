@@ -1,17 +1,15 @@
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import '../assets/DeleteAccountModal.css';
-import IMnmApiResponse from '../model/IMnmApiResponse';
 import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
-import IWatchParty from '../model/watchParty/IWatchParty';
+import IMnmApiResponse from '../model/IMnmApiResponse';
+import ICommunitySummary from '../model/community/ICommunitySummary';
 
 interface ModalType {
   isOpen: boolean;
   toggle: () => void;
   modalName?: string;
-  watchParty: IWatchParty;
-  watchPartyRefresh: () => void;
 }
 
 const modalStyle = {
@@ -26,16 +24,15 @@ const modalStyle = {
   borderRadius: '1rem',
 };
 
-export default function DeletWatchPartyModal(props: ModalType) {
+export default function DeleteCommunityModal(props: ModalType) {
   const api = useAxios();
 
-  const deleteWatchParty = () => {
+  const deleteCommunity = () => {
     api
-      .delete<IMnmApiResponse<IWatchParty>>(
-        `/segment/delete/${props.watchParty.id}`
-      )
+      // TODO: Replace 33333 with communityID
+      .delete<IMnmApiResponse<ICommunitySummary>>(`/community/delete/${33333}`)
       .then(() => {
-        props.watchPartyRefresh();
+        // TODO: add in community refresh api
       })
       .catch((err) => {
         console.error('Error Deleting Watch Party', err);
@@ -44,19 +41,11 @@ export default function DeletWatchPartyModal(props: ModalType) {
   };
 
   const handleSubmit = () => {
-    deleteWatchParty();
     props.toggle();
+    deleteCommunity();
   };
 
-  if (props.modalName === 'Delete Watch Party') {
-    const chosenWatchDate = new Date(props.watchParty.chosenWatchDate)
-      .toLocaleDateString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: 'numeric',
-      })
-      .replace(/\//g, '-');
-
+  if (props.modalName === 'Delete Community') {
     return (
       <Modal
         open={props.isOpen}
@@ -99,8 +88,8 @@ export default function DeletWatchPartyModal(props: ModalType) {
                       flexWrap: 'wrap',
                     }}
                   >
-                    {`Are you sure you want to delete your Watch Party for\u00A0`}
-                    <b>{chosenWatchDate}</b>?
+                    {`Are you sure you want to delete  ****Community name\u00A0`}
+                    <b>{''}</b>?
                   </p>
                   <div>
                     <b>{`This will also delete all nominations as well.`}</b>

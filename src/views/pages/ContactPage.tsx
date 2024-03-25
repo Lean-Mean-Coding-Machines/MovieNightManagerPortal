@@ -40,10 +40,11 @@ export default function ContactPage() {
         Contact Us
       </Typography>
 
-      <Typography variant='body1'>
+      <p>
         If you have any questions or feedback, please feel free to get in touch
         with us.
-      </Typography>
+      </p>
+      <br></br>
 
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>

@@ -96,21 +96,6 @@ export default function NominationCard(props: NominationCardsProps) {
     }
   };
 
-  const deleteNomination = () => {
-    api
-      .delete<IMnmApiResponse<INomination>>(
-        `/nomination/delete/${props.nomination.id}?userId=${userId}&segmentId=${props.watchPartyId}`
-      )
-      .then(() => {
-        props.watchPartyRefresh();
-        toast.success(` '${props.nomination.movieTitle}' successfully deleted`);
-      })
-      .catch((err) => {
-        console.error('Error deleting nomination:', err);
-        toast.error(`${props.nomination.movieTitle} deletion failed`);
-      });
-  };
-
   const isFilledLikeIcon = () => {
     return nominationLiked ? !nominationLikeHover : nominationLikeHover;
   };
@@ -309,7 +294,8 @@ export default function NominationCard(props: NominationCardsProps) {
         toggle={toggle}
         nomination={props.nomination}
         modalName={modalName}
-        deleteNomination={deleteNomination}
+        watchPartyRefresh={props.watchPartyRefresh}
+        watchPartyId={props.watchPartyId}
       />
     </>
   );

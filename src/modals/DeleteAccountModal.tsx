@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import React, { ReactNode, useContext } from 'react';
+import React, { useContext } from 'react';
 import '../assets/DeleteAccountModal.css';
 import IMnmApiResponse from '../model/IMnmApiResponse';
 import IUser from '../model/user/IUser';
@@ -9,7 +9,6 @@ import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
 
 interface ModalType {
-  children?: ReactNode;
   isOpen: boolean;
   toggle: () => void;
 }
@@ -45,6 +44,10 @@ export default function DeleteAccountModal(props: ModalType) {
       });
   };
 
+  const handleSubmit = () => {
+    props.toggle();
+    deleteUserAccount();
+  };
   return (
     <Modal
       open={props.isOpen}
@@ -53,71 +56,70 @@ export default function DeleteAccountModal(props: ModalType) {
       aria-describedby='modal-modal-description'
     >
       <Box sx={modalStyle}>
-        <div className='close-btn' onClick={props.toggle}>
-          <IconButton>
-            <CloseIcon />
-          </IconButton>
-        </div>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <form onSubmit={handleSubmit}>
+          <div className='close-btn' onClick={props.toggle}>
+            <IconButton>
+              <CloseIcon />
+            </IconButton>
+          </div>
           <Box
-            component='span'
             sx={{
-              fontWeight: 'bold',
-              fontSize: { xs: 25, sm: 25, md: 30, lg: 30, xl: 30 },
-              fontFamily: 'SoraBold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            Delete Account
+            <Box
+              component='span'
+              sx={{
+                fontWeight: 'bold',
+                fontSize: { xs: 25, sm: 25, md: 30, lg: 30, xl: 30 },
+                fontFamily: 'SoraBold',
+              }}
+            >
+              Delete Account
+            </Box>
           </Box>
-        </Box>
-        <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
-          <div className='delete-desc'>
-            {' '}
-            Are you sure you want to delete your account?
-          </div>
+          <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
+            <div className='delete-desc'>
+              {' '}
+              Are you sure you want to delete your account?
+            </div>
 
-          <div className='btn-container'>
-            <Button
-              variant='outlined'
-              id='cancel-btn'
-              name='cancelBtn'
-              sx={{
-                width: 100,
-                backgroundColor: 'primary',
-                borderRadius: 22,
-                ':hover': { backgroundColor: 'primary' },
-              }}
-              onClick={props.toggle}
-            >
-              Cancel
-            </Button>
+            <div className='btn-container'>
+              <Button
+                variant='outlined'
+                id='cancel-btn'
+                name='cancelBtn'
+                sx={{
+                  width: 100,
+                  backgroundColor: 'primary',
+                  borderRadius: 22,
+                  ':hover': { backgroundColor: 'primary' },
+                }}
+                onClick={props.toggle}
+              >
+                Cancel
+              </Button>
 
-            <Button
-              variant='contained'
-              id='delete-btn'
-              name='deleteBtn'
-              sx={{
-                width: 100,
-                backgroundColor: 'primary.main',
-                borderRadius: 22,
-                marginLeft: '10px',
-                ':hover': { backgroundColor: 'primary.dark' },
-              }}
-              onClick={() => {
-                props.toggle();
-                deleteUserAccount();
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        </Box>
+              <Button
+                variant='contained'
+                id='delete-btn'
+                name='deleteBtn'
+                type='submit'
+                sx={{
+                  width: 100,
+                  backgroundColor: 'primary.main',
+                  borderRadius: 22,
+                  marginLeft: '10px',
+                  ':hover': { backgroundColor: 'primary.dark' },
+                }}
+              >
+                Delete
+              </Button>
+            </div>
+          </Box>
+        </form>
       </Box>
     </Modal>
   );

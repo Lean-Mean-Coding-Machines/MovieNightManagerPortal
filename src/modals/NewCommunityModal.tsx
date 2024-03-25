@@ -11,13 +11,13 @@ import {
   TextField,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import {ChangeEvent, FormEvent, useContext, useEffect, useState} from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import IMnmApiResponse from '../model/IMnmApiResponse';
 import ICommunity from '../model/community/ICommunity';
 import useAxios from '../hooks/useAxios';
 import { toast } from 'react-toastify';
-import ICommunityRequest from "../model/community/ICommunityRequest";
+import ICommunityRequest from '../model/community/ICommunityRequest';
 
 interface ModalType {
   isOpen: boolean;
@@ -40,11 +40,7 @@ const modalStyle = {
 export default function NewCommunityModal(props: ModalType) {
   const api = useAxios();
 
-  const {
-    userId,
-    communities,
-    setCommunityData,
-  } = useContext(UserContext);
+  const { userId, communities, setCommunityData } = useContext(UserContext);
 
   const initialCommunityState: ICommunityRequest = {
     userId: userId,
@@ -55,7 +51,7 @@ export default function NewCommunityModal(props: ModalType) {
   useEffect(() => {
     setCommunityRequestState({
       ...communityRequestState,
-      userId: userId
+      userId: userId,
     });
   }, [userId]);
 
@@ -96,16 +92,19 @@ export default function NewCommunityModal(props: ModalType) {
 
   const createCommunity = (communityRequest: ICommunityRequest) => {
     api
-      .post<IMnmApiResponse<ICommunity>>(
-        '/community/create',
-        communityRequest
-      )
+      .post<IMnmApiResponse<ICommunity>>('/community/create', communityRequest)
       .then(
         (res) => {
           if (res.data.data) {
             const newCommunity = res.data.data;
-            const newCommunitySummary = { name: newCommunity.name, id: newCommunity.id };
-            setCommunityData([...communities, newCommunitySummary], newCommunitySummary);
+            const newCommunitySummary = {
+              name: newCommunity.name,
+              id: newCommunity.id,
+            };
+            setCommunityData(
+              [...communities, newCommunitySummary],
+              newCommunitySummary
+            );
           }
         },
         (err) => {
